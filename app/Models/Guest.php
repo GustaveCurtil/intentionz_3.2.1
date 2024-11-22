@@ -22,4 +22,9 @@ class Guest extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function savedPublicEvents()
+    {
+        return $this->belongsToMany(PublicEvent::class, 'saves');
+    }
 }

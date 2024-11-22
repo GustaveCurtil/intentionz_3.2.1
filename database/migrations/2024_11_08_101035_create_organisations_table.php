@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('kleur_achtergrond')->nullable();
             $table->string('kleur_thema')->nullable();
             $table->string('kleur_thema2')->nullable();
+            $table->string('kleur_thema3')->nullable();
             $table->string('kleur_tekst')->nullable();
             $table->timestamps();
         });

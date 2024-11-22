@@ -161,6 +161,7 @@ class PageController extends Controller
         }
         $dagAfkorting = $eventDate->eersteTweeLetters();
         $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m/Y');
+        
         return view('evenement_publiek', ["event" => $event]);
     }
 

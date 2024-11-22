@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PlayController;
+use App\Http\Controllers\SaveController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\PublicEventController;
@@ -23,6 +24,9 @@ Route::get('/registreren', [PageController::class, 'registreren'])->middleware('
 
 Route::get('/{id}-{titel}', [PageController::class, 'publiekEvenement'])->where(['id' => '[0-9]+', 'titel' => '[-a-zA-Z0-9]+'])->middleware('detectDevice');
 Route::get('/uitnodiging', [PageController::class, 'priveEvenement'])->middleware('detectDevice');
+
+/* EVENT OPSLAAN */
+Route::post('/opslaan/{event}', [SaveController::class, 'save']);
 
 /* ACCOUNT CRUD */
 Route::post('/maak-gebruiker', [GuestController::class, 'createUser']);

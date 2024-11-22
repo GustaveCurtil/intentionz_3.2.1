@@ -39,17 +39,6 @@
         </form>
     </section>
     @endorganisatie
-    <section>
-        <h3>voeg deze website toe als app</h3>
-        <p>Dit is een Progressive Web App (PWA), waardoor deze website kan worden geinstalleerd als een applicatie op de meeste toestellen. Hier zijn de instructies:</p>
-        <h4>android</h4>
-        <p>1. Druk op het menu icoon (3 bolletjes bovenaan rechts) en druk op 'add to home screen'.</p>
-        <p>2. Je zal dan de optie krijgen een naam in te vullen voor de shortcut en chrome zal de app toevoegen aan uw scherm.</p>
-        <h4>apple toestellen</h4>
-        <p>1. Druk op de 'deel' knop (de vierkant met een pijl die er langs boven uitkomt) onderaan het scherm.</p>
-        <p>2. Scroll naar beneden de lijst an druk op 'add to home screen'.</p>
-        <p>3. Je zal dan de optie krijgen een naam in te vullen voor de shortcut en safari zal de app toevoegen aan uw scherm.</p>
-    </section>
     @auth
     <section id="account-shmeh">
         <h3>account-shmeh</h3>

@@ -48,7 +48,7 @@ input[type=time]:focus::-webkit-datetime-edit {color: var(--kleur-tekst) !import
 /* #region ALGEMENE STRUCTUUR */
 
 a {color: var(--kleur-tekst);}
-button {font-size: 0.9rem; border: 1px solid var(--kleur-tekst); border-radius: 0;color: var(--kleur-tekst); background-color: var(--kleur-thema3); margin-right: calc(var(--afstand-zijkant) / 2); padding: 0 var(--afstand-zijkant)}
+button, form button {font-size: 0.9rem; border: 1px solid var(--kleur-tekst); border-radius: 0;color: var(--kleur-tekst); background-color: var(--kleur-thema3); margin-right: calc(var(--afstand-zijkant) / 2); padding: 0 var(--afstand-zijkant)}
 
 h3 { font-size: 1.3em; font-weight: 600; margin-bottom: var(--afstand-zijkant);}
 h4 { font-weight: 600; font-size: 1.1em; margin: var(--afstand-zijkant) 0;}
@@ -90,7 +90,7 @@ section:first-of-type {margin-top: var(--afstand-zijkant);}
 form { width: 100%; line-height: 0; font-size: 0;}
 form * { font-size: 1rem;}
 form input, form select, form textarea {-webkit-appearance: none; width: 100%; height: var(--hoogte-velden); color: var(--kleur-tekst);background-color: var(--kleur-thema3); border: 1px solid var(--kleur-tekst); border-radius: 0; font-weight: normal; padding: 0 var(--afstand-zijkant);}
-input[type="submit"], form button  { background-color: var(--kleur-thema);}
+input[type="submit"] { background-color: var(--kleur-thema);}
 
 ::placeholder, div#openstreetmap, label[for="datum"],label[for="tijd"] {color: var(--kleur-tekst); opacity: var(--transparantie); /* Firefox */}
 ::-ms-input-placeholder { color: var(--kleur-tekst);}
@@ -175,13 +175,19 @@ div.commandos div.wat button {text-transform:lowercase;}
 div.commandos div button.actief {background-color: var(--kleur-thema2);}
 
 
-/*/ / EEN UITNODIGING BEANTWOORDEN / /*/
+/*/ / PUBLIEK en PRIVE EVENEMENT / /*/
+
+div.bedieningspaneel {display: flex; flex-wrap: wrap;}
+div.bedieningspaneel form {width: auto;}
+.bedieningspaneel button.actief {background-color: var(--kleur-thema2);}
+
 form#antwoorden {padding: var(--afstand-zijkant);}
 form#antwoorden input:first-of-type {width: 60%;}
 form#antwoorden input[type="submit"] {width: 20%;}
 
 
 /*/ / EVENEMENT AANMAKEN / /*/
+
 section#aanmaken {
     margin-top: var(--afstand-bovenkant);
 }
@@ -222,6 +228,7 @@ button#nieuweKnop {display: none;}
 button#nieuweKnop.actief {display: inherit;}
 
 form textarea {height: calc(12 * var(--hoogte-velden)); line-height: var(--hoogte-velden); resize: none;}
+
 
 /*/ / POSTTER / /*/
 

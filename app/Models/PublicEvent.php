@@ -29,4 +29,9 @@ class PublicEvent extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function savedByGuests()
+    {
+        return $this->belongsToMany(Guest::class, 'saves');
+    }            
 }

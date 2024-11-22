@@ -15,12 +15,24 @@
         <h3>{{$event->titel}}</h3>
         <p>{{$event->datum}} om {{$event->tijd}}</p>
         <p><u>{{$event->user->name}}</u> - <u><i>{{$event->adres}}, {{$event->stad}}</i></u></p>
-        @organisatie
-        <button>evenement aanpassen</button>
-        @else
-        <button id="opslaan">opslaan</button><button>kalender koppelen</button>
-        @endorganisatie
-        <button>link kopieëren</button>
+        <div class='bedieningspaneel'>
+            @organisatie
+            <button>evenement aanpassen</button>
+            @else
+            <form action="/opslaan/{{$event->id}}" method="POST">
+                @csrf
+                <button type='subtmit' id="opslaan" @if ($user->savedPublicEvents->contains($event->id)) class='actief' @endif>
+                    @if ($user->savedPublicEvents->contains($event->id))
+                    opgeslaan
+                    @else 
+                    opslaan
+                    @endif
+                </button>
+            </form>
+            <!-- <button>kalender koppelen</button> -->
+            @endorganisatie
+            <button>link kopiëren</button>
+        </div>
     </section>
     <section>
         {!! nl2br(e($event->beschrijving)) !!}
@@ -30,31 +42,6 @@
 
 @section('script')
 <script>
-    let volgKnop = document.querySelector('#volgen')
-    let opslaanKnop = document.querySelector('#opslaan')
 
-    if(volgKnop) {
-        volgKnop.addEventListener('click', () => {
-            if (volgKnop.classList.contains('actief')) { // Use contains instead of has
-                volgKnop.classList.remove('actief');
-                volgKnop.innerHTML = 'volgen';
-            } else {
-                volgKnop.classList.add('actief');
-                volgKnop.innerHTML = 'volgend'; // Optional: set text when active
-            }
-        });
-    }
-
-    if (opslaanKnop) {
-        opslaanKnop.addEventListener('click', () => {
-        if (opslaanKnop.classList.contains('actief')) { // Use contains instead of has
-            opslaanKnop.classList.remove('actief');
-            opslaanKnop.innerHTML = 'opslaan';
-        } else {
-            opslaanKnop.classList.add('actief');
-            opslaanKnop.innerHTML = 'opgeslaan'; // Optional: set text when active
-        }
-    });
-    }
 </script>
 @endsection
