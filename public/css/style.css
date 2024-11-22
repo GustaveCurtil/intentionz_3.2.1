@@ -70,7 +70,7 @@ main { width: 100%; height: calc(100svh - var(--hoogte-header) - var(--hoogte-na
 
 nav { width: 100%; height: var(--hoogte-navigatie); display: flex; padding-bottom: env(safe-area-inset-bottom); font-size: 1.2rem; border-top: 1px solid var(--kleur-tekst); background-color: var(--kleur-thema);}
 nav a { width: calc(100% / 3); height: calc(var(--hoogte-navigatie) - env(safe-area-inset-bottom)); display: flex; justify-content: center; align-items: center;}
-nav a, header div a {font-size: 0.9rem; text-decoration: none;}
+nav a, header div a {font-size: 0.9rem;}
 nav a.actief, header div a.actief  {text-decoration: none; pointer-events: none; color: var(--kleur-tekst); filter: brightness(0.69);}
 
 

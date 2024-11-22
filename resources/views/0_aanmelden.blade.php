@@ -5,6 +5,9 @@
 @section('main')
 <main>
     <section>
+    <section>
+        <p>Registreren en inloggen als gebruiker heeft op dit moment nog geen functie (buiten dat je dan je opgeslagen evenementen ook op een ander toestel kunt bekijken), maar rond Februari 2025 komt er een update waardoor je ook gesloten evenementen kan maken. :)</p>
+    </section>
         <h3>inloggen</h3>
         <form action="login" method="post" autocomplete="off">
             @csrf
@@ -42,9 +45,6 @@
             <input type="url" name="organisatie_url_website" id="organisatie_url_website" placeholder="website (optioneel)" value="{{old('organisatie_url_website')}}">
             <input type="submit" value="account organisatie aanmaken">
         </form> 
-    </section>
-    <section>
-        <p>Registreren en inloggen als gebruiker heeft op dit moment nog geen functie (buiten dat je dan je opgeslagen evenementen ook op een ander toestel kunt bekijken), maar rond Februari 2025 komt er een update waardoor je ook gesloten evenementen kan maken. :)</p>
     </section>
 </main>
 @endsection

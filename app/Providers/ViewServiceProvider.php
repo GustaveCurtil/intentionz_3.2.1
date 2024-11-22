@@ -30,7 +30,22 @@ class ViewServiceProvider extends ServiceProvider
                 $deviceId = Cookie::get('device_id');
                 $user = Guest::where('device_id', $deviceId)->first();
             }
-            $view->with(['user' => $user]);
+
+
+
+            $view->with([
+                "user" => $user,
+                "vorigePaginaOpWebsite" => $this->vorigePaginaOpWebsite()
+            ]);
         });
     }
+
+    public function vorigePaginaOpWebsite() {
+        $previousUrl = url()->previous();
+        $currentHost = parse_url(config('app.url'), PHP_URL_HOST);
+        $previousHost = parse_url($previousUrl, PHP_URL_HOST);
+    
+        return $previousHost === $currentHost;
+    }
+
 }

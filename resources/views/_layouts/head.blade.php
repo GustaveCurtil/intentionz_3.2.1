@@ -26,9 +26,15 @@
 <body>
     <header>
     @sectionMissing('header')
-            <div><a href="{{ route('zen') }}" class="{{ request()->routeIs('zen') ? 'actief' : '' }}"><span id='loading'>even laden<span></span></span><span id="time"></span></a></div>
+            <div>
+            @if ($vorigePaginaOpWebsite)
+                @if (!request()->routeIs('thuis') && !request()->routeIs('overzicht-organisatie') && !request()->routeIs('overzicht-gebruiker') && !request()->routeIs('instellingen') && !request()->routeIs('aanmaken') && !request()->routeIs('aanmelden'))
+                <a href="{{ url()->previous() }}">terug</a>
+                @endif
+            @endif
+            </div>
             <div><a href="{{ route('over') }}"><img src="{{ asset('favicon.ico') }}" alt="Favicon"></a></div>
-            <div><a href="{{ route('instellingen') }}" class="{{ request()->routeIs('instellingen') ? 'actief' : '' }}">@auth {{$user->name}} @else instellingen @endauth</a></div>
+            <div><a href="{{ route('instellingen') }}" class="{{ request()->routeIs('instellingen') ? 'actief' : '' }}">@auth {{$user->name}} @else profiel @endauth</a></div>
     @else
         @yield('header')
     @endif
