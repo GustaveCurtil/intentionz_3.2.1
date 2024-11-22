@@ -1,0 +1,28 @@
+{
+    "name": "♥",
+    "short_name": "♥",
+    "description": "een film ofzo",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color" : "#f5aeb7",
+    "icons": [
+          {
+            "src": "/media/logo.png",
+            "sizes": "192x192",
+            "type": "image/png"
+          }
+  ],
+  "screenshots": [
+    {
+      "src": "/media/screenshot_wide2.png",
+      "sizes": "1920x1080",
+      "type": "image/png", 
+      "form_factor": "wide"
+    },
+    {
+      "src": "/media/screenshot_mobile.png",
+      "sizes": "372x666",
+      "type": "image/png"
+    }
+  ]
+}
