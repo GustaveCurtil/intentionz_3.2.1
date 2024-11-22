@@ -2,6 +2,7 @@
 
 ## TO DO's
 
+- terugknop voor alle 'speciale pagina's' ✅
 - opslaan evenementen
     - knop maken die dat toelaat
     - knop css aanpassen aan 'actief' of niet
