@@ -86,7 +86,7 @@ class PageController extends Controller
     public function overzichtOrganisatie() 
     {
         $user = auth()->guard()->user();
-        $events = PublicEvent::orderBy('datum', 'asc')->get();
+        $events = PublicEvent::where('user_id', $user->id)->orderBy('datum', 'asc')->get();
         foreach ($events as $event) {
             $event->tijd = Carbon::parse($event->tijd)->format('H\ui');
             $eventDate = Carbon::parse($event->datum);
