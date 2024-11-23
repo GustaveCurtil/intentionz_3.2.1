@@ -32,8 +32,7 @@ class AppServiceProvider extends ServiceProvider
 
         Carbon::macro('eersteTweeLetters', function () {
             $dayName = $this->locale('nl')->translatedFormat('l');
-            // return mb_substr($dayName, 0, 2); 
-            return $dayName;
+            return mb_substr($dayName, 0, 2); 
         });
     }
 }

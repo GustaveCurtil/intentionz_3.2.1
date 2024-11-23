@@ -70,8 +70,8 @@ main { width: 100%; height: calc(100svh - var(--hoogte-header) - var(--hoogte-na
 
 nav { width: 100%; height: var(--hoogte-navigatie); display: flex; padding-bottom: env(safe-area-inset-bottom); font-size: 1.2rem; border-top: 1px solid var(--kleur-tekst); background-color: var(--kleur-thema);}
 nav a { width: calc(100% / 3); height: calc(var(--hoogte-navigatie) - env(safe-area-inset-bottom)); display: flex; justify-content: center; align-items: center;}
-nav a, header div a {font-size: 0.9rem;}
-nav a.actief, header div a.actief  {text-decoration: none; pointer-events: none; color: var(--kleur-tekst); filter: brightness(0.69);}
+nav a, header div a {font-size: 0.9rem; text-transform: lowercase;}
+nav a.actief, header div a.actief  {text-decoration: none; pointer-events: none;}
 
 
 section { width: calc(100% - 2 * var(--afstand-zijkant));}
@@ -129,8 +129,8 @@ form#uitloggen button {-webkit-appearance: none; width: 100%; height: var(--hoog
 /*/ AANMELDEN / REGISTREREN / /*/
 
 div.switcher { width: 100%; height: var(--hoogte-velden); background-color: var(--kleur-thema3); display: inline-flex;}
-div.switcher div {width: 50%; height: 100%; display: flex; justify-content: center; align-items: center; border: 1px solid var(--kleur-tekst);}
-div.switcher div.actief {background-color: var(--kleur-thema2);}
+div.switcher div {width: 50%; height: 100%; display: flex; justify-content: center; align-items: center; border: 1px solid var(--kleur-tekst); text-decoration: underline;}
+div.switcher div.actief {background-color: var(--kleur-thema2); text-decoration: none}
 #maak-organisatie, #maak-gebruiker {display: none;}
 #maak-organisatie.actief, #maak-gebruiker.actief {display: block;}
 
@@ -147,15 +147,16 @@ section.evenementen {width: 100%;margin: 0;}
 
 div.evenement {width: 100%; height: var(--hoogte-evenement); border-bottom:1px solid var(--kleur-tekst);display: flex;}
 div.evenement > div {width: calc(100% - 4 * var(--hoogte-evenement) / 3); height: calc( var(--hoogte-evenement) / 3);}
-div.evenement > div > div {width: 100%; padding: 0 var(--afstand-zijkant);}
-div.evenement div div.titel {font-weight: 600; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; text-overflow:ellipsis;}
+div.evenement > div > div {width: 100%; padding: 0 var(--afstand-zijkant); height: calc( var(--hoogte-evenement) / 3)}
+div.evenement div div.titel {display: flex; align-items: end; font-weight: 400; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; text-overflow:ellipsis;}
+div.evenement > div > div:not(.titel) {font-size: 0.9rem;; font-weight: 300;} 
 div.evenement div div.datum {display: flex; justify-content: space-between; align-items: center;}
-div.evenement div div.datum div:first-of-type{flex-grow: 1; min-width: 76%;}
+div.evenement div div.datum div:first-of-type{flex-grow: 1; min-width: 69%;}
 div.evenement div div.datum div:last-of-type {width: auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-div.evenement div div.locatie {display: flex; justify-content: space-between; align-items: center;}
+div.evenement div div.locatie {display: flex; justify-content: space-between; align-items: start}
 div.evenement div div.locatie div:first-of-type{flex-grow: 1 ;}
 div.evenement div div.locatie div:last-of-type {width: auto; color: var(--kleur-tekst);}
-div.evenement div div.locatie div span {opacity: 0.69; text-transform: capitalize;}
+div.evenement div div div.label {font-size: 0.8rem; opacity: 0.69;}
 
 div.evenement figure { width: auto;height: var(--hoogte-evenement); border-right: 1px solid var(--kleur-tekst);}
 div.evenement.wegfilteren {display: none;}

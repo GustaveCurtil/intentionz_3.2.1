@@ -5,7 +5,9 @@
 @section('main')
 <main>
     <section>
-        <p>Registreren en inloggen als gebruiker heeft op dit moment nog geen functie (buiten dat je dan je opgeslagen evenementen ook op een ander toestel kunt bekijken), maar rond Februari 2025 komt er een update waardoor je ook gesloten evenementen kan maken. :)</p>
+        <h3>Mededeling</h3>
+        <p>Registreren en inloggen als gebruiker heeft op dit moment nog niet echt een functie (buiten dat je opgeslagen evenementen op een ander toestel kan overzetten/bekijken). Als organisatie kan je wel al een account maken om evenementen toe te voegen.</p>
+        <p>Rond Februari 2025 komt er een update waardoor je ook besloten evenementen kan maken.</p>
     </section>
     <section>
         <h3>inloggen</h3>

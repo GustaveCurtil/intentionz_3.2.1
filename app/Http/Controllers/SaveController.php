@@ -13,18 +13,18 @@ class SaveController extends Controller
     public function save(Request $request, PublicEvent $event){ 
 
         // zoeken naar user of gast
-        $loggedIn = auth()->guard()->user();
-        if (!$loggedIn) {
+        $user = auth()->guard()->user();
+        if (!$user) {
             $deviceId = Cookie::get('device_id');
-            $user = Guest::where('device_id', $deviceId)->first();
+            $guest = Guest::where('device_id', $deviceId)->first();
         } else {
-            $user = Guest::where('user_id', $loggedIn->id)->first();
+            $guest = $user->guest;
         }
 
-        if (!$user->savedPublicEvents->contains($event->id)) {
-            $user->savedPublicEvents()->attach($event->id);
+        if (!$guest->savedPublicEvents->contains($event->id)) {
+            $guest->savedPublicEvents()->attach($event->id);
         } else {
-            $user->savedPublicEvents()->detach($event->id);
+            $guest->savedPublicEvents()->detach($event->id);
         }
 
         return redirect()->back();

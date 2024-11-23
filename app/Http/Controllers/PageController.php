@@ -55,15 +55,15 @@ class PageController extends Controller
     public function overzichtGebruiker() 
     {
 
-        $loggedIn = auth()->guard()->user();
-        if (!$loggedIn) {
+        $user = auth()->guard()->user();
+        if (!$user) {
             $deviceId = Cookie::get('device_id');
-            $user = Guest::where('device_id', $deviceId)->first();
+            $guest = Guest::where('device_id', $deviceId)->first();
         } else {
-            $user = Guest::where('user_id', $loggedIn->id)->first();
+            $guest = $user->guest;
         }
 
-        $events = $user->savedPublicEvents()->orderBy('datum', 'asc')->get();
+        $events = $guest->savedPublicEvents()->orderBy('datum', 'asc')->get();
 
         foreach ($events as $event) {
             $event->tijd = Carbon::parse($event->tijd)->format('H\ui');
@@ -161,7 +161,7 @@ class PageController extends Controller
         $event->tijd = Carbon::parse($event->tijd)->format('H\ui');
         $eventDate = Carbon::parse($event->datum);
         if ($eventDate->isToday()) {
-            $event->datum = 'vandaag';
+            $event->datum = 'vandaag'; //dit werkt dus totaal niet lol
         } elseif ($eventDate->isTomorrow()) {
             $event->datum = 'morgen ' . $eventDate->translatedFormat('d/m/Y');
         } else {

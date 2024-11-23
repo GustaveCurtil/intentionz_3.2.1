@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
-    <meta name="description" content="Form follows CSS follows JS follows HTML follows PHP follows Function">
+    <meta name="description" content="een film ofzo">
     <meta name="theme-color" id="theme-color" content="#cedbcf">
+
+    <meta property="og:title" content="♥" />
+    <meta property="og:site_name" content="♥" />
+    <meta property="og:description" content="een film ofzo" />
+    <meta property="og:url" content="{{ url()->current() }}" />
+    <meta property="og:locale" content="nl_BE" />
+    <meta property="og:image" content="{{ asset('media/logo.png') }}" />
 
     {{-- title should be unique on every page... --}}
     <title>@yield('title')</title> 
@@ -36,13 +43,21 @@
     @yield('script')
     <script>
         // VOOR DE TERUGKNOP MOET ELKE KEER DE HUIDIGE PAGINA BIJGEHOUDEN WORDEN
-        let huidigeURL = window.location.href;
-        let vorigeURL = localStorage.getItem('huidigeURL')
+        let actieveURL = window.location.href;
+        let huidigeURL = localStorage.getItem('huidigeURL')
+        let vorigeURL = localStorage.getItem('vorigeURL')
+        let oudsteURL = localStorage.getItem('oudsteURL')
 
-        if (huidigeURL !== vorigeURL) {
-            localStorage.setItem('huidigeURL', huidigeURL);
-            localStorage.setItem('vorigeURL', vorigeURL);
-        }   
+        if (actieveURL !== huidigeURL) {
+            if (actieveURL !== vorigeURL) {
+                localStorage.setItem('huidigeURL', actieveURL);
+                localStorage.setItem('vorigeURL', huidigeURL);
+                localStorage.setItem('oudsteURL', vorigeURL);
+            } else {
+                localStorage.setItem('huidigeURL', actieveURL);
+                localStorage.setItem('vorigeURL', oudsteURL);
+            }
+        } 
 
         //VOOR DIE APPLIFICATIE VAN DE WEBSITE jwz
         if ('serviceWorker' in navigator) {

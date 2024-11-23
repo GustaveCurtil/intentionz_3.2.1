@@ -4,6 +4,9 @@ const ctx = canvas.getContext('2d');
 const foto = document.querySelector('.poster img');
 const formule = document.querySelector('#aanmaken form');
 // imageInput.addEventListener('change', handleFileSelect);
+
+// Set the size limit in bytes (5 MB = 5 * 1024 * 1024)
+const sizeLimit = 15  * 1024 * 1024;
 let compressedImageBlob = null;
 
 function handleFileSelect(event) {
@@ -49,8 +52,7 @@ function handleFileSelect(event) {
     
             if (file) { // Ensure a file is selected
                 if (file.size > sizeLimit) {
-                    alert('De afbeelding is te groot. Kies een afbeelding kleiner dan 5 MB.');
-                    // Clear the file input to prevent form submission with the large file
+                    alert('De afbeelding is te groot. Kies een afbeelding kleiner dan 15 MB.');
                     imageInput.value = '';
                     foto.src = ''
                 } else {
@@ -167,8 +169,6 @@ formule.addEventListener('submit', function (event) {
 
 });
 
-// Set the size limit in bytes (5 MB = 5 * 1024 * 1024)
-const sizeLimit = 1  * 1024 * 1024;
 
 
 // // Add an event listener for file input changes

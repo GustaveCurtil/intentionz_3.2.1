@@ -21,7 +21,7 @@ class PublicEventController extends Controller
             'beschrijving' => 'nullable|string|max:5000',
             'kleur' => 'required',
             'achtergrond_pad' => 'nullable',
-            'foto' => 'nullable|file|mimes:jpg,jpeg,png,gif|max:10240',
+            'foto' => 'nullable|file|mimes:jpg,jpeg,png,gif|max:15240',
             'miniatuur' => 'nullable|file|mimes:jpg,jpeg,png,gif',
             'zoom' => 'Integer',
             'verticaal' => 'Integer',

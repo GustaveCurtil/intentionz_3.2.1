@@ -22,11 +22,11 @@
             <div class="titel">{{$event->titel}}</div>
             <div class="datum">
                 <div>{{$event->datum}} - {{$event->tijd}}</div>
-                <div>{{$event->categorie}}</div>
+                <div class="label">{{$event->categorie}}</div>
             </div>
             <div class="locatie">
                 <div>{{$event->user->name}}</div>
-                <div><span>{{$event->stad}}</span></div>
+                <div class="label">{{$event->stad}}</div>
             </div>
         </div>
     </div>
