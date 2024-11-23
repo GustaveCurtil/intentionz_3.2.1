@@ -6,7 +6,7 @@
 @endif
 
 @auth 
-<a href="{{ route('aanmaken') }}" class="{{ request()->routeIs('aanmaken') ? 'actief' : '' }}">evenement maken</a>
+<a href="{{ route('aanmaken') }}" class="{{ request()->routeIs('aanmaken') ? 'actief' : '' }}">toevoegen</a>
 @else
 <a href="{{ route('aanmelden') }}" class="{{ request()->routeIs('aanmelden') ? 'actief' : '' }}">aanmelden</a> 
 @endauth

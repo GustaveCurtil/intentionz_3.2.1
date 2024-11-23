@@ -7,7 +7,7 @@
     <meta name="theme-color" id="theme-color" content="#cedbcf">
 
     {{-- title should be unique on every page... --}}
-    <title>♥ @yield('title')</title> 
+    <title>@yield('title')</title> 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="manifest" href="{{ asset('manifest.json') }}">
@@ -16,28 +16,18 @@
 </head>
 <style>
     :root {
-        --kleur-achtergrond: {{ $user->guest->kleur_achtergrond ?? $user->organisation->kleur_achtergrond ?? $user->kleur_achtergrond ?? '#cedbcf' }};
-        --kleur-thema: {{ $user->guest->kleur_thema ?? $user->organisation->kleur_thema ?? $user->kleur_thema ?? '#f5aeb7' }};
-        --kleur-thema2: {{ $user->guest->kleur_thema2 ?? $user->organisation->kleur_thema2 ?? $user->kleur_thema2 ?? '#cac9e8' }};
-        --kleur-thema3: {{ $user->guest->kleur_thema3 ?? $user->organisation->kleur_thema3 ?? $user->kleur_thema3 ?? '#f5f5dc' }};
-        --kleur-tekst: {{ $user->guest->kleur_tekst ?? $user->organisation->kleur_tekst ?? $user->kleur_tekst ?? '#4b4b4b' }};
+        --kleur-achtergrond: {{ $guest->kleur_achtergrond ?? $user->organisation->kleur_achtergrond ?? '#cedbcf' }};
+        --kleur-thema: {{ $guest->kleur_thema ?? $user->organisation->kleur_thema ?? '#f5aeb7' }};
+        --kleur-thema2: {{ $guest->kleur_thema2 ?? $user->organisation->kleur_thema2 ?? '#cac9e8' }};
+        --kleur-thema3: {{ $guest->kleur_thema3 ?? $user->organisation->kleur_thema3 ?? '#f5f5dc' }};
+        --kleur-tekst: {{ $guest->kleur_tekst ?? $user->organisation->kleur_tekst ?? '#4b4b4b' }};
     }
 </style>
 <body>
     <header>
-    @sectionMissing('header')
-            <div>
-            @if ($vorigePaginaOpWebsite)
-                @if (!request()->routeIs('thuis') && !request()->routeIs('overzicht-organisatie') && !request()->routeIs('overzicht-gebruiker') && !request()->routeIs('instellingen') && !request()->routeIs('aanmaken') && !request()->routeIs('aanmelden'))
-                <a href="{{ url()->previous() }}">terug</a>
-                @endif
-            @endif
-            </div>
-            <div><a href="{{ route('over') }}"><img src="{{ asset('favicon.ico') }}" alt="Favicon"></a></div>
-            <div><a href="{{ route('instellingen') }}" class="{{ request()->routeIs('instellingen') ? 'actief' : '' }}">@auth {{$user->name}} @else profiel @endauth</a></div>
-    @else
-        @yield('header')
-    @endif
+        <div>@yield('terugknop')</div>
+        <div><a href="{{ route('over') }}"><img src="{{ asset('favicon.ico') }}" alt="Favicon"></a></div>
+        <div><a href="{{ route('instellingen') }}" class="{{ request()->routeIs('instellingen') ? 'actief' : '' }}">@auth {{$user->name}} @else profiel @endauth</a></div>
     </header>
     
     @yield('main')
@@ -45,7 +35,16 @@
     <nav>@include('_partials.navigatie')</nav>
     @yield('script')
     <script>
+        // VOOR DE TERUGKNOP MOET ELKE KEER DE HUIDIGE PAGINA BIJGEHOUDEN WORDEN
+        let huidigeURL = window.location.href;
+        let vorigeURL = localStorage.getItem('huidigeURL')
 
+        if (huidigeURL !== vorigeURL) {
+            localStorage.setItem('huidigeURL', huidigeURL);
+            localStorage.setItem('vorigeURL', vorigeURL);
+        }   
+
+        //VOOR DIE APPLIFICATIE VAN DE WEBSITE jwz
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register("{{ asset('service-worker.js') }}")
             .then(reg => console.log('Service Worker registered!', reg))

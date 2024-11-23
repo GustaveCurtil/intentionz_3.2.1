@@ -25,16 +25,19 @@ class ViewServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('*', function ($view) {
-            $user = Auth::user();
+            $user = auth()->guard()->user();
             if (!$user) {
                 $deviceId = Cookie::get('device_id');
-                $user = Guest::where('device_id', $deviceId)->first();
+                $guest = Guest::where('device_id', $deviceId)->first();
+            } else {
+                $guest = $user->guest;
             }
 
 
 
             $view->with([
                 "user" => $user,
+                "guest" => $guest,
                 "vorigePaginaOpWebsite" => $this->vorigePaginaOpWebsite()
             ]);
         });

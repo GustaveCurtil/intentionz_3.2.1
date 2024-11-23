@@ -1,5 +1,14 @@
 @extends('_layouts.head')
 
+@section('head')
+<script src="{{ asset('js/terugknop.js') }}" defer></script>
+@endsection
+
+@section('terugknop')
+<a id="terugknop" href="/">terug</a>
+@endsection
+
+
 @section('title', 'overzicht')
 
 @section('main')

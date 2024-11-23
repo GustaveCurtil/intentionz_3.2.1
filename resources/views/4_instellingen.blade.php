@@ -8,11 +8,11 @@
         <h3>themakleurtjes aanpassen</h3>
         <form action="kleuren" method="post" id="kleuren">
             @csrf
-            <input type="color" name="kleur_achtergrond" id="kleur_achtergrond" value="{{ $user->guest->kleur_achtergrond ?? $user->organisation->kleur_achtergrond ?? $user->kleur_achtergrond ?? '#cedbcf' }}">
-            <input type="color" name="kleur_thema" id="kleur_thema" value="{{ $user->guest->kleur_thema ?? $user->organisation->kleur_thema ?? $user->kleur_thema ?? '#f5aeb7' }}">
-            <input type="color" name="kleur_thema2" id="kleur_thema2" value="{{ $user->guest->kleur_thema2 ?? $user->organisation->kleur_thema2 ?? $user->kleur_thema2 ?? '#cac9e8' }}">
-            <input type="color" name="kleur_thema3" id="kleur_thema3" value="{{ $user->guest->kleur_thema3 ?? $user->organisation->kleur_thema3 ?? $user->kleur_thema3 ?? '#f5f5dc' }}">
-            <input type="color" name="kleur_tekst" id="kleur_tekst" value="{{ $user->guest->kleur_tekst ?? $user->organisation->kleur_tekst ?? $user->kleur_tekst ?? '#4b4b4b' }}">
+            <input type="color" name="kleur_achtergrond" id="kleur_achtergrond" value="{{ $guest->kleur_achtergrond ?? $user->organisation->kleur_achtergrond ?? '#cedbcf' }}">
+            <input type="color" name="kleur_thema" id="kleur_thema" value="{{ $guest->kleur_thema ?? $user->organisation->kleur_thema ?? '#f5aeb7' }}">
+            <input type="color" name="kleur_thema2" id="kleur_thema2" value="{{ $guest->kleur_thema2 ?? $user->organisation->kleur_thema2 ?? '#cac9e8' }}">
+            <input type="color" name="kleur_thema3" id="kleur_thema3" value="{{ $guest->kleur_thema3 ?? $user->organisation->kleur_thema3 ?? '#f5f5dc' }}">
+            <input type="color" name="kleur_tekst" id="kleur_tekst" value="{{ $guest->kleur_tekst ?? $user->organisation->kleur_tekst ?? '#4b4b4b' }}">
             <input type="submit" value="kleuren verzilveren">
         </form>
         <p>surf naar <a href="/kleuren-resetten">{{ request()->getHost() }}/reset</a> om terug mooie kleuren te hebben.</p>
@@ -44,7 +44,7 @@
         <h3>account-shmeh</h3>
         <form action="wijzignaam#wijzigen-naam" method="post" id="wijzigen-naam">
             @csrf
-            <input type="text" name="naam" id="naam" placeholder='{{ $errors->has('naam') ? $errors->first('naam') : 'wijzig ' . "'" . $user->name . "'"}}'>
+            <input type="text" name="naam" id="naam" placeholder='{{ $errors->has('naam') ? $errors->first('naam') : 'naam: '. $user->name }}'>
             <input type="submit" value="wijzigen">
         </form>
         <form action="wijzigwachtwoord#wijzigen-wachtwoord" method="post" id="wijzigen-wachtwoord">

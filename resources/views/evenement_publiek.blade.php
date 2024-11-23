@@ -1,5 +1,13 @@
 @extends('_layouts.head')
 
+@section('head')
+<script src="{{ asset('js/terugknop.js') }}" defer></script>
+@endsection
+
+@section('terugknop')
+<a id="terugknop" href="/">terug</a>
+@endsection
+
 @section('title', $event->titel)
 
 @section('main')
@@ -21,8 +29,8 @@
             @else
             <form action="/opslaan/{{$event->id}}" method="POST">
                 @csrf
-                <button type='subtmit' id="opslaan" @if ($user->savedPublicEvents->contains($event->id)) class='actief' @endif>
-                    @if ($user->savedPublicEvents->contains($event->id))
+                <button type='subtmit' id="opslaan" @if ($guest->savedPublicEvents->contains($event->id)) class='actief' @endif>
+                    @if ($guest->savedPublicEvents->contains($event->id))
                     opgeslaan
                     @else 
                     opslaan

@@ -55,7 +55,16 @@ class PageController extends Controller
     public function overzichtGebruiker() 
     {
 
-        $events = PublicEvent::orderBy('datum', 'asc')->get();
+        $loggedIn = auth()->guard()->user();
+        if (!$loggedIn) {
+            $deviceId = Cookie::get('device_id');
+            $user = Guest::where('device_id', $deviceId)->first();
+        } else {
+            $user = Guest::where('user_id', $loggedIn->id)->first();
+        }
+
+        $events = $user->savedPublicEvents()->orderBy('datum', 'asc')->get();
+
         foreach ($events as $event) {
             $event->tijd = Carbon::parse($event->tijd)->format('H\ui');
             $eventDate = Carbon::parse($event->datum);
