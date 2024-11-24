@@ -54,23 +54,23 @@ h3 { font-size: 1.3em; font-weight: 600; margin-bottom: var(--afstand-zijkant);}
 h4 { font-weight: 600; font-size: 1.1em; margin: var(--afstand-zijkant) 0;}
 p {margin: var(--afstand-zijkant) 0;}
 
-body { height: 100svh; width: 100vw; overflow: hidden; background-color: var(--kleur-achtergrond); color: var(--kleur-tekst);}
+body { height: 100svh; width: 100vw; overflow: hidden; background-color: var(--kleur-thema); color: var(--kleur-tekst);}
 
-header { height: var(--hoogte-header); width: 100%; line-height: var(--hoogte-header); font-size: 0.9rem; background-color: var(--kleur-achtergrond); display: flex; justify-content: center; align-items: center;border-bottom: 1px solid var(--kleur-tekst);}
+header { height: var(--hoogte-header); width: 100%; line-height: var(--hoogte-header); font-size: 0.9rem; display: flex; justify-content: center; align-items: center;border-bottom: 1px solid var(--kleur-tekst);}
 header div {height: 100%; padding: 0 var(--afstand-zijkant);}
-header div:first-of-type {width: 45%; text-align: left;}
-header div:nth-last-of-type(2) {width: 10%;}
-header div:nth-last-of-type(2) a {display: flex; justify-content: center; align-items: center;}
-header div:last-of-type {width: 45%; text-align: right;}
+header div:first-of-type {width: 25%; text-align: left;}
+header div:nth-last-of-type(2) {width:  50%;}
+header div:nth-last-of-type(2) a {display: flex; justify-content: center; align-items: center; }
+header div:last-of-type {width: 25%; text-align: right;}
 header div a {display: inline-block; width: 100%; height: 100%;}
 header div:last-of-type a {text-align: right;}
 #loading {display: none;}
 
-main { width: 100%; height: calc(100svh - var(--hoogte-header) - var(--hoogte-navigatie)); overflow-y: auto;}
+main { width: 100%; height: calc(100svh - var(--hoogte-header) - var(--hoogte-navigatie)); overflow-y: auto; background-color: var(--kleur-achtergrond);}
 
 nav { width: 100%; height: var(--hoogte-navigatie); display: flex; padding-bottom: env(safe-area-inset-bottom); font-size: 1.2rem; border-top: 1px solid var(--kleur-tekst); background-color: var(--kleur-thema);}
 nav a { width: calc(100% / 3); height: calc(var(--hoogte-navigatie) - env(safe-area-inset-bottom)); display: flex; justify-content: center; align-items: center;}
-nav a, header div a {font-size: 0.9rem; text-transform: lowercase;}
+nav a, header div a {font-size: 0.9rem; text-transform: capitalize;}
 nav a.actief, header div a.actief  {text-decoration: none; pointer-events: none;}
 
 

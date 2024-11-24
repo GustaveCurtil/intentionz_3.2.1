@@ -35,7 +35,7 @@ class PageController extends Controller
         }
 
         foreach ($events as $event) {
-            $event->tijd = Carbon::parse($event->tijd)->format('H\ui');
+            $event->tijd = Carbon::parse($event->tijd)->format('H:i');
             $eventDate = Carbon::parse($event->datum);
             // if ($eventDate->isToday()) {
             //     $event->datum = 'vandaag';
@@ -46,7 +46,7 @@ class PageController extends Controller
             //     $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m/Y');
             // }
             $dagAfkorting = $eventDate->eersteTweeLetters();
-            $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m/Y');
+            $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m');
         }
 
         return view('1_evenementen', ['events' => $events, 'categoriesAll' => $categoriesAll, 'steden' => $stedenMetCategories]);
@@ -77,7 +77,7 @@ class PageController extends Controller
             //     $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m/Y');
             // }
             $dagAfkorting = $eventDate->eersteTweeLetters();
-            $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m/Y');
+            $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m');
         }
         return view('2_overzicht_gebruiker', ['events' => $events]);
 
@@ -99,7 +99,7 @@ class PageController extends Controller
             //     $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m/Y');
             // }
             $dagAfkorting = $eventDate->eersteTweeLetters();
-            $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m/Y');
+            $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m');
         }
         return view('2_overzicht_organisatie', ['events' => $events]);
     }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
     <meta name="description" content="een film ofzo">
-    <meta name="theme-color" id="theme-color" content="#cedbcf">
+    <meta name="theme-color" id="theme-color" content="#f5aeb7">
 
     <meta property="og:title" content="♥" />
     <meta property="og:site_name" content="♥" />
@@ -33,8 +33,12 @@
 <body>
     <header>
         <div>@yield('terugknop')</div>
-        <div><a href="{{ route('over') }}"><img src="{{ asset('favicon.ico') }}" alt="Favicon"></a></div>
-        <div><a href="{{ route('instellingen') }}" class="{{ request()->routeIs('instellingen') ? 'actief' : '' }}">@auth {{$user->name}} @else profiel @endauth</a></div>
+        <div>
+            @if(request()->routeIs('overzicht-organisatie'))
+                <a href="{{ route('aanmaken') }}" id="toevoegen">EVENEMENT MAKEN</a>
+            @endif
+        </div>
+        <div><a href="{{ route('over') }}" class="{{ request()->routeIs('over') ? 'actief' : '' }}">uitleg</a></div>
     </header>
     
     @yield('main')
@@ -66,7 +70,7 @@
             .catch(err => console.error('Service Worker registration failed:', err));
         }
 
-        const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--kleur-achtergrond').trim();
+        const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--kleur-thema').trim();
         document.getElementById('theme-color').setAttribute('content', themeColor);
     </script>
 </body>

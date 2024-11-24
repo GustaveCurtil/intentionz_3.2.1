@@ -5,11 +5,6 @@
 @section('main')
 <main>
     <section>
-        <h3>Mededeling</h3>
-        <p>Registreren en inloggen als gebruiker heeft op dit moment nog niet echt een functie (buiten dat je opgeslagen evenementen op een ander toestel kan overzetten/bekijken). Als organisatie kan je wel al een account maken om evenementen toe te voegen.</p>
-        <p>Rond Februari 2025 komt er een update waardoor je ook besloten evenementen kan maken.</p>
-    </section>
-    <section>
         <h3>inloggen</h3>
         <form action="login" method="post" autocomplete="off">
             @csrf

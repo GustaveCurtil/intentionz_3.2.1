@@ -33,12 +33,13 @@ class ViewServiceProvider extends ServiceProvider
                 $guest = $user->guest;
             }
 
-
+            $userEvents = $guest->savedPublicEvents()->count();
 
             $view->with([
                 "user" => $user,
                 "guest" => $guest,
-                "vorigePaginaOpWebsite" => $this->vorigePaginaOpWebsite()
+                "vorigePaginaOpWebsite" => $this->vorigePaginaOpWebsite(), 
+                "userEvents" => $userEvents
             ]);
         });
     }
