@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
     <meta name="description" content="een film ofzo">
-    <meta name="theme-color" id="theme-color" content="#f5aeb7">
+    <meta name="theme-color" id="theme-color" content="#cedbcf">
 
     <meta property="og:title" content="♥" />
     <meta property="og:site_name" content="♥" />
@@ -33,17 +33,26 @@
 <body>
     <header>
         <div>@yield('terugknop')</div>
+        @if(!request()->routeIs('aanmaken'))
+        <div><a href="{{ route('over') }}"><img src="{{ asset('favicon.ico') }}" alt="" srcset=""></a></div>
         <div>
-            @if(request()->routeIs('overzicht-organisatie'))
-                <a href="{{ route('aanmaken') }}" id="toevoegen">EVENEMENT MAKEN</a>
-            @endif
+            <a href="{{ route('instellingen') }}" class="{{ request()->routeIs('instellingen') ? 'actief' : '' }}">
+                @if ($user)
+                <span>{{$user->name}}</span>
+                @else
+                instellingen
+                @endif
+            </a>
         </div>
-        <div><a href="{{ route('over') }}" class="{{ request()->routeIs('over') ? 'actief' : '' }}">uitleg</a></div>
+        @endif
     </header>
     
     @yield('main')
 
+    @if(!request()->routeIs('aanmaken'))
     <nav>@include('_partials.navigatie')</nav>
+    @endif
+
     @yield('script')
     <script>
         // VOOR DE TERUGKNOP MOET ELKE KEER DE HUIDIGE PAGINA BIJGEHOUDEN WORDEN
@@ -70,7 +79,7 @@
             .catch(err => console.error('Service Worker registration failed:', err));
         }
 
-        const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--kleur-thema').trim();
+        const themeColor = getComputedStyle(document.documentElement).getPropertyValue('--kleur-achtergrond').trim();
         document.getElementById('theme-color').setAttribute('content', themeColor);
     </script>
 </body>

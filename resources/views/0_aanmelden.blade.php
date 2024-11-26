@@ -5,6 +5,11 @@
 @section('main')
 <main>
     <section>
+        <p>Je hebt een login nodig om een evenement te kunnen aanmaken.</p>
+        <p>Registreren als gebruiker voor besloten evenementen. ☼ werkt voorlopig niet ☼</p>
+        <p>Registreren als organisatie voor openbare evenementen.</p>
+    </section>
+    <section>
         <h3>inloggen</h3>
         <form action="login" method="post" autocomplete="off">
             @csrf
@@ -14,7 +19,7 @@
         </form>
     </section>
     <section>
-        <h3>registreren</h3>
+        <h3>account maken</h3>
         <div class="switcher">
             <div class="actief">als gebruiker</div>
             <div>als organisatie</div>
@@ -25,7 +30,7 @@
             <input type="password" name="gebruiker_wachtwoord" id="gebruiker_wachtwoord" placeholder="{{ $errors->has('gebruiker_wachtwoord') ? $errors->first('gebruiker_wachtwoord') : 'wachtwoord*'}}" required>
             <input type="password" name="gebruiker_wachtwoord2" id="gebruiker_wachtwoord2" placeholder="{{ $errors->has('gebruiker_wachtwoord2') ? $errors->first('gebruiker_wachtwoord2') : 'wachtwoord herhalen*'}}" required>
             <input type="hidden" name="gebruiker_email" id="gebruiker_email" placeholder="e-mail (voor als je het wachtwoord vergeten bent)" @if ($errors->any()) value="{{ old('email') }}" @endif>
-            <input type="submit" value="account gebruiker aanmaken">
+            <input type="submit" value="gebruiker aanmaken">
         </form>
         <form action="maak-organisatie" method="post" autocomplete="off" id="maak-organisatie">
             @csrf
@@ -40,7 +45,7 @@
                 <div onclick="window.open('https://www.openstreetmap.org', '_blank')">openstreetmap.org</div>
             </div>
             <input type="url" name="organisatie_url_website" id="organisatie_url_website" placeholder="website (optioneel)" value="{{old('organisatie_url_website')}}">
-            <input type="submit" value="account organisatie aanmaken">
+            <input type="submit" value="organisatie aanmaken">
         </form> 
     </section>
 </main>

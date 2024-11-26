@@ -29,11 +29,15 @@ class ViewServiceProvider extends ServiceProvider
             if (!$user) {
                 $deviceId = Cookie::get('device_id');
                 $guest = Guest::where('device_id', $deviceId)->first();
+                $userEvents = $guest->savedPublicEvents()->count();
             } else {
                 $guest = $user->guest;
+                if ($guest) {
+                    $userEvents = $guest->savedPublicEvents()->count();
+                } else {
+                    $userEvents = $user->publicEvents()->count();
+                }
             }
-
-            $userEvents = $guest->savedPublicEvents()->count();
 
             $view->with([
                 "user" => $user,

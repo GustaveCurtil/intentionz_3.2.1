@@ -1,12 +1,7 @@
 @extends('_layouts.head')
 
 @section('head')
-<script src="{{ asset('js/terugknop.js') }}" defer></script>
 <script src="{{ asset('js/kopieren.js') }}" defer></script>
-@endsection
-
-@section('terugknop')
-<a id="terugknop" href="/">terug</a>
 @endsection
 
 
@@ -20,7 +15,7 @@
         <p onclick="copy('gustave.curtil@tutanota.com', 'mail')"><u>gustave.curtil@tutanota.com</u></p>
     </section>
     <section>
-        <h3>Mededeling</h3>
+        <h3>mededeling</h3>
         <p>Registreren en inloggen als gebruiker heeft op dit moment nog niet echt een functie (buiten dat je opgeslagen evenementen op een ander toestel kan overzetten/bekijken). Als organisatie kan je wel al een account maken om evenementen toe te voegen.</p>
         <p>Rond Februari 2025 komt er een update waardoor je ook besloten evenementen kan maken.</p>
     </section>

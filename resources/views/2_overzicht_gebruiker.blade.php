@@ -8,6 +8,11 @@
 
 @section('main')
 <main>
+    @if ($userEvents === 0)
+    <section>
+        Er zijn momenteel geen bewaarde evenementen.
+    </section>
+    @else
     <section class="evenementen">
         @foreach ($events as $event)
         <div class="evenement" data-stad="{{ $event->stad }}" data-categorie="{{ $event->categorie }}"  onclick="gaNaar('{{ url('/' . $event->id . '-' . \Str::slug($event->titel)) }}', event)" >
@@ -33,6 +38,7 @@
         @endforeach
         <div id="laatst-bijgewerkt"></div>
     </section>
+    @endif
     {{-- <section>
         <p>overzicht van opgeslagen evenementen, uitnodigingen en zelf gemaakte evenementen</p>
         <p>nog aan het twijfelen om organisaties te kunnen volgen; zoja, komen die ook hier te staan</p>

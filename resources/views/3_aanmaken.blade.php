@@ -6,10 +6,16 @@
 {{-- <script src="{{ asset('js/compressor.js') }}" defer></script> --}}
 <script src="{{ asset('js/editor.js') }}" defer></script>
 <script src="{{ asset('js/datetimeplaceholder.js') }}" defer></script>
+<script src="{{ asset('js/terugknop.js') }}" defer></script>
+
+@endsection
+
+@section('terugknop')
+<a id="terugknop" href="/">terug zonder op te slaan</a>
 @endsection
 
 @section('main')
-<main>
+<main id="geen-nav">
     <figure class="poster"><small style='opacity:var(--transparantie)'>ratio 4:3</small><img></figure>
     <canvas id="canvas" style="display:none;"></canvas>
     <section  id="aanmaken">
