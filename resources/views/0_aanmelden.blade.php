@@ -5,6 +5,7 @@
 @section('main')
 <main>
     <section>
+        <h2>evenement  toevoegen</h2>
         <p>Je hebt een login nodig om een evenement te kunnen aanmaken.</p>
         <p>Registreren als gebruiker voor besloten evenementen. ☼ werkt voorlopig niet ☼</p>
         <p>Registreren als organisatie voor openbare evenementen.</p>

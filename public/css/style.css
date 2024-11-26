@@ -74,7 +74,7 @@ main#geen-nav {height: calc(100svh - var(--hoogte-header));}
 
 nav { width: 100%; height: var(--hoogte-navigatie); display: flex; justify-content: space-evenly; align-items: center; padding-bottom: env(safe-area-inset-bottom); font-size: 1.2rem; border-top: 1px solid var(--kleur-tekst); background-color: var(--kleur-thema);}
 nav a { width: calc(100% / 3); height: calc(var(--hoogte-navigatie) - env(safe-area-inset-bottom)); display: flex; justify-content: center; align-items: center; text-transform: capitalize;}
-nav a:not(:nth-child(2)), header div a {font-size: 1rem; text-decoration: none; opacity: 0.69;}
+nav a:not(:nth-child(2)), header div a {font-size: 1rem; text-decoration: underline; opacity: 0.69;}
 nav a.actief, header div a.actief, header div a#terugknop  {text-decoration: none; pointer-events: none; opacity: 1; filter: 0.69;}
 nav a:nth-child(2) {font-size: 1rem; width: auto; height: 1.3rem; aspect-ratio: 1/1; border: 1px solid var(--kleur-tekst); color: var(--kleur-tekst); text-decoration: none; border-radius: 50%; background-color: var(--kleur-thema3);}
 nav a:nth-child(2).actief {background-color: var(--kleur-thema2);}
