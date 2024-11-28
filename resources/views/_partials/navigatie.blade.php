@@ -1,5 +1,5 @@
 <a href="{{ route('thuis') }}" class="{{ request()->routeIs('thuis') ? 'actief' : '' }}">catalogus</a>
-<a href="{{ route('aanmaken') }}" class="{{ request()->routeIs('aanmelden')? 'actief' : '' }}">+</a> 
+<a href="{{ route('aanmaken') }}" class="{{ request()->routeIs('aanmelden')? 'actief' : '' }}">toevoegen</a> 
 @organisatie
 <a href="{{ route('overzicht-organisatie') }}" class="{{ request()->routeIs('overzicht-organisatie') ? 'actief' : '' }}">aangemaakt ({{$userEvents}})</a>
 @else

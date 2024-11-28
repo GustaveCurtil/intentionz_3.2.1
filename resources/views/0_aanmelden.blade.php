@@ -6,9 +6,7 @@
 <main>
     <section>
         <h2>evenement  toevoegen</h2>
-        <p>Je hebt een login nodig om een evenement te kunnen aanmaken.</p>
-        <p>Registreren als gebruiker voor besloten evenementen. ☼ werkt voorlopig niet ☼</p>
-        <p>Registreren als organisatie voor openbare evenementen.</p>
+        <p>Je hebt een account nodig om een evenement te kunnen aanmaken.</p>
     </section>
     <section>
         <h3>inloggen</h3>
@@ -21,6 +19,8 @@
     </section>
     <section>
         <h3>account maken</h3>
+        <p>[werkt voorlopig niet] Als gebruiker kan je besloten evenementen aanmaken. Via een uitnodigingslink kan je je evenement verspreiden en bijhouden wie al dan niet aanwezig zal zijn.</p>
+        <p>Als organisatie kan je openbare evenementen aanmaken om de community van deze website te bereiken.</p>
         <div class="switcher">
             <div class="actief">als gebruiker</div>
             <div>als organisatie</div>

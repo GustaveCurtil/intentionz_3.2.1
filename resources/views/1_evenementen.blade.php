@@ -35,24 +35,30 @@
 </section>
 <div class="commandos">
     <div class="wat" data-stad="overal">
-        <button id="alles" data-soort='categorie'>alles</button>
+        <button id="alles" data-soort='categorie' class="rond">alles</button>
         @foreach ($categoriesAll as $categorie)
         <button data-soort='categorie'>{{$categorie}}</button>
         @endforeach
     </div>
     @foreach ($steden as $stad => $categories)
     <div class="wat" data-stad="{{$stad}}">
-        <button id="alles" data-soort='categorie'>alles</button>
+        <button id="alles" data-soort='categorie' class="rond">alles</button>
         @foreach ($categories as $categorie)
         <button data-soort='categorie'>{{$categorie}}</button>
         @endforeach
     </div>
     @endforeach
     <div id="waar">
-        <button id="alles" data-soort='locatie'>overal</button>
+        <button id="alles" data-soort='locatie' class="rond">overal</button>
         @foreach ($steden as $stad => $categories)
             <button data-soort='locatie'>{{$stad}}</button>
         @endforeach
+    </div>
+    <div id="filters">
+        <button class="rond" data-filter='locatie'>overal</button>
+        <button class="rond" data-filter='categorie'>alles</button>
+        {{-- <button class="rond">subcategorie</button>
+        <button class="rond">periode</button> --}}
     </div>
 </div>
 </main>

@@ -3,12 +3,18 @@ let commandos = document.querySelector('.commandos');
 
 let evenementen = document.querySelectorAll('.evenement');
 
+let filterKeuzes = document.querySelectorAll('#filters button');
+let categorieFilter = document.querySelector('#filters button[data-filter="categorie"]');
+let gekozenFilter;
+
 let categoriegroepPerLocatie = document.querySelectorAll('.wat');
 let knoppen = document.querySelectorAll('button');
+const waarKnoppen = document.querySelectorAll('#waar button');
+
 let locaties = []
 let categorieenPerLocatie = [];
 let systeem
-const waarKnoppen = document.querySelectorAll('#waar button');
+
 let huidigeLocatie = 'overal';
 let huidigeCategorie = 'alles';
 
@@ -17,15 +23,15 @@ const bufferHorizontaal = parseFloat(window.getComputedStyle(document.querySelec
 
 
 /*/ / BEETJE NAAST KUNNEN KLIKKEN / /*/
-document.addEventListener('click', function(event) {
+document.addEventListener('click', function (event) {
     const knop = dichtBijKnop(event); // Check if the click is near a button
     if (knop) {
         knopIndrukken(knop);
-    }    
+    }
 });
 
 function dichtBijKnop(event) {
-    if (event.target.tagName === 'BUTTON') {
+    if (event.target.tagName === 'BUTTON' || event.target.tagName === 'a') {
         return event.target;
     }
 
@@ -52,7 +58,7 @@ function dichtBijKnop(event) {
     return false;
 }
 
-// ga naar evenement zondel op de knop te drukken
+// ga naar evenement zonder op de knop te drukken
 function gaNaar(link, event) {
     let knop = dichtBijKnop(event)
     if (knop) {
@@ -90,29 +96,57 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (systeem.locaties.length <= 2) {
-        systeem.locaties[0].status = 'ON'; 
+        systeem.locaties[0].status = 'ON';
     }
 
     console.log(systeem)
 
     systeemNaarLooks()
-    pasToe(); 
+    pasToe();
 })
 
 
 /*/ / BIJ HET DRUKKEN VAN EEN KNOP / /*/
 function knopIndrukken(knop) {
+    console.log(knop);
     if (knop.dataset.soort === 'locatie') {
         huidigeLocatie = knop.innerHTML;
         localStorage.setItem('stad', huidigeLocatie);
         veranderLocatie(knop.innerHTML);
+
+        if (knop.classList.contains('actief')) {
+            gekozenFilter.classList.remove('actief');
+            gekozenFilter = null;
+        }
+
     } else if (knop.dataset.soort === 'categorie') {
         const locatie = systeem.locaties.find(loc => loc.naam === huidigeLocatie);
         categorie = knop.innerHTML;
         veranderCategorie(locatie, categorie)
+        
+        if (knop.classList.contains('actief')) {
+            gekozenFilter.classList.remove('actief');
+            gekozenFilter = null;
+        }
+    } else {
+        selecteerFilter(knop);
     }
-    systeemNaarLooks() 
-    pasToe(); 
+    systeemNaarLooks()
+    pasToe();
+}
+
+/* KIES DE JUISTE FILTER */
+function selecteerFilter(knop) {
+    if (knop === gekozenFilter) {
+        gekozenFilter = null;
+        knop.classList.remove('actief');
+    } else {
+        filterKeuzes.forEach(filterKeuze => {
+            filterKeuze.classList.remove('actief')
+        });
+        knop.classList.add('actief');
+        gekozenFilter = knop;
+    }
 }
 
 
@@ -121,14 +155,14 @@ function knopIndrukken(knop) {
 /* systeem aanmaken */
 function maakSysteem(locaties, categorieen) {
     const systeem = {
-      locaties: locaties.map((loc, index) => ({
-        naam: loc,
-        status: index === 0 ? "ON" : "OFF",
-        categorieen: categorieen[index].map((cat, index) => ({
-          naam: cat,
-          status: index === 0 ? "ON" : "OFF"
+        locaties: locaties.map((loc, index) => ({
+            naam: loc,
+            status: index === 0 ? "ON" : "OFF",
+            categorieen: categorieen[index].map((cat, index) => ({
+                naam: cat,
+                status: index === 0 ? "ON" : "OFF"
+            }))
         }))
-      }))
     };
     return systeem;
 }
@@ -150,7 +184,7 @@ function veranderLocatie(locatieNaam) {
                 });
             }
         }
-    });  
+    });
 
 }
 function veranderCategorie(locatie, categorieNaam) {
@@ -168,43 +202,63 @@ function veranderCategorie(locatie, categorieNaam) {
 /* systeem vertalen in vorm */
 function systeemNaarLooks() {
     let locatieGroep = document.querySelector('#waar')
-    if (systeem.locaties.length <= 2) {
-        locatieGroep.classList.remove('actief');
-    } else {
-        locatieGroep.classList.add('actief');
-    }
+
+    const locatie = systeem.locaties.find(loc => loc.status === "ON");
+    const categorieGroep = document.querySelector(".wat[data-stad='" + locatie.naam + "']");
+    
+    categorieGroep.classList.remove('actief')   
+    locatieGroep.classList.remove('actief')
 
     knoppen.forEach(knop => {
-        if (knop.dataset.soort === 'locatie') {
-            const locatie = systeem.locaties.find(locatie => locatie.naam === knop.innerHTML);
-            const groep = document.querySelector(".wat[data-stad='" + locatie.naam + "']");
-        
-            if (locatie.status === 'ON') {
+
+        if (knop.dataset.soort === 'locatie' && gekozenFilter.dataset.filter === 'locatie') {
+            locatieGroep.classList.add('actief')
+
+            if (locatie.naam === knop.innerHTML) {
                 console.log(locatie.categorieen.length); //dees kan dus nooit 2 geven, maar dan eerder 1 omdat in de blade file al gefilterd wordt eigenlijk... beetje omslachtig, maar kijkt, ik schrijf het hier dus op voor de zekerheid he
-                if (locatie.categorieen.length <= 2) {
-                    knop.classList.add('actief');
-                    groep.classList.remove('actief');
+                knop.classList.add('actief');
+                if (locatie.naam === 'overal') {
+                    gekozenFilter.innerHTML = knop.innerHTML;
+                    gekozenFilter.classList.add('rond');
                 } else {
-                    knop.classList.add('actief');
-                    groep.classList.add('actief');
+                    gekozenFilter.innerHTML = knop.innerHTML;
+                    gekozenFilter.classList.remove('rond');
                 }
+
+                const categorie = locatie.categorieen.find(cat => cat.status === "ON");
+                if (categorie.naam === 'alles') {
+                    categorieFilter.innerHTML = categorie.naam;
+                    categorieFilter.classList.add('rond');
+                } else {
+                    categorieFilter.innerHTML = categorie.naam;
+                    categorieFilter.classList.remove('rond');
+                }
+
             } else {
                 knop.classList.remove('actief');
-                groep.classList.remove('actief');
             }
-        } else if (knop.dataset.soort === 'categorie') {
+        } else if (knop.dataset.soort === 'categorie' && gekozenFilter.dataset.filter === 'categorie') {
             const actieveLocatie = systeem.locaties.find(loc => loc.status === "ON");
             const categorie = actieveLocatie.categorieen.find(cat => cat.naam === knop.innerHTML);
-
+            
+            categorieGroep.classList.add('actief')
+            
             if (categorie && categorie.status === 'ON') {
                 knop.classList.add('actief');
+                if (categorie.naam === 'alles') {
+                    gekozenFilter.innerHTML = knop.innerHTML
+                    gekozenFilter.classList.add('rond');
+                } else {
+                    gekozenFilter.innerHTML = knop.innerHTML;
+                    gekozenFilter.classList.remove('rond');
+                }
             } else {
                 knop.classList.remove('actief');
             }
         }
     });
-    
-    placeholder.style.height = commandos.offsetHeight + 'px'; 
+
+    placeholder.style.height = commandos.offsetHeight + 'px';
 }
 
 /*/ / FILTEREN / /*/
