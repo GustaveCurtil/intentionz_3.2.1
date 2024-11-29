@@ -4,6 +4,7 @@ let commandos = document.querySelector('.commandos');
 let evenementen = document.querySelectorAll('.evenement');
 
 let filterKeuzes = document.querySelectorAll('#filters button');
+let locatieFilter = document.querySelector('#filters button[data-filter="locatie"]')
 let categorieFilter = document.querySelector('#filters button[data-filter="categorie"]');
 let gekozenFilter;
 
@@ -123,7 +124,6 @@ function knopIndrukken(knop) {
         const locatie = systeem.locaties.find(loc => loc.naam === huidigeLocatie);
         categorie = knop.innerHTML;
         veranderCategorie(locatie, categorie)
-        
         if (knop.classList.contains('actief')) {
             gekozenFilter.classList.remove('actief');
             gekozenFilter = null;
@@ -204,59 +204,39 @@ function systeemNaarLooks() {
     let locatieGroep = document.querySelector('#waar')
 
     const locatie = systeem.locaties.find(loc => loc.status === "ON");
+    const categorie = locatie.categorieen.find(cat => cat.status === "ON");
+
     const categorieGroep = document.querySelector(".wat[data-stad='" + locatie.naam + "']");
     
     categorieGroep.classList.remove('actief')   
     locatieGroep.classList.remove('actief')
 
-    knoppen.forEach(knop => {
+    locatieFilter.innerHTML = 'locatie:&nbsp;<u>' + locatie.naam + '</u>';
+    categorieFilter.innerHTML = 'categorie:&nbsp;<u>' + categorie.naam + '</u>';
 
-        if (knop.dataset.soort === 'locatie' && gekozenFilter.dataset.filter === 'locatie') {
-            locatieGroep.classList.add('actief')
+    if (gekozenFilter) {
+        knoppen.forEach(knop => {
 
-            if (locatie.naam === knop.innerHTML) {
-                console.log(locatie.categorieen.length); //dees kan dus nooit 2 geven, maar dan eerder 1 omdat in de blade file al gefilterd wordt eigenlijk... beetje omslachtig, maar kijkt, ik schrijf het hier dus op voor de zekerheid he
-                knop.classList.add('actief');
-                if (locatie.naam === 'overal') {
-                    gekozenFilter.innerHTML = knop.innerHTML;
-                    gekozenFilter.classList.add('rond');
+            if (knop.dataset.soort === 'locatie' && gekozenFilter.dataset.filter === 'locatie') {
+                locatieGroep.classList.add('actief')
+    
+                if (locatie.naam === knop.innerHTML) {
+                    console.log(locatie.categorieen.length); //dees kan dus nooit 2 geven, maar dan eerder 1 omdat in de blade file al gefilterd wordt eigenlijk... beetje omslachtig, maar kijkt, ik schrijf het hier dus op voor de zekerheid he
+                    knop.classList.add('actief');
                 } else {
-                    gekozenFilter.innerHTML = knop.innerHTML;
-                    gekozenFilter.classList.remove('rond');
+                    knop.classList.remove('actief');
                 }
-
-                const categorie = locatie.categorieen.find(cat => cat.status === "ON");
-                if (categorie.naam === 'alles') {
-                    categorieFilter.innerHTML = categorie.naam;
-                    categorieFilter.classList.add('rond');
+            } else if (knop.dataset.soort === 'categorie' && gekozenFilter.dataset.filter === 'categorie') {             
+                categorieGroep.classList.add('actief')
+                
+                if (categorie.naam === knop.innerHTML) {
+                    knop.classList.add('actief');
                 } else {
-                    categorieFilter.innerHTML = categorie.naam;
-                    categorieFilter.classList.remove('rond');
+                    knop.classList.remove('actief');
                 }
-
-            } else {
-                knop.classList.remove('actief');
             }
-        } else if (knop.dataset.soort === 'categorie' && gekozenFilter.dataset.filter === 'categorie') {
-            const actieveLocatie = systeem.locaties.find(loc => loc.status === "ON");
-            const categorie = actieveLocatie.categorieen.find(cat => cat.naam === knop.innerHTML);
-            
-            categorieGroep.classList.add('actief')
-            
-            if (categorie && categorie.status === 'ON') {
-                knop.classList.add('actief');
-                if (categorie.naam === 'alles') {
-                    gekozenFilter.innerHTML = knop.innerHTML
-                    gekozenFilter.classList.add('rond');
-                } else {
-                    gekozenFilter.innerHTML = knop.innerHTML;
-                    gekozenFilter.classList.remove('rond');
-                }
-            } else {
-                knop.classList.remove('actief');
-            }
-        }
-    });
+        });
+    }
 
     placeholder.style.height = commandos.offsetHeight + 'px';
 }

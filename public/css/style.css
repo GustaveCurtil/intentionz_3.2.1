@@ -135,6 +135,8 @@ form#uitloggen button {-webkit-appearance: none; width: 100%; height: var(--hoog
 div.switcher { width: 100%; height: var(--hoogte-velden); background-color: var(--kleur-thema3); display: inline-flex;}
 div.switcher div {width: 50%; height: 100%; display: flex; justify-content: center; align-items: center; border: 1px solid var(--kleur-tekst); text-decoration: underline;}
 div.switcher div.actief {background-color: var(--kleur-thema2); text-decoration: none}
+div.switcher div span {opacity: var(--transparantie);}
+div.switcher div.actief span {opacity: 1;}
 #maak-organisatie, #maak-gebruiker {display: none;}
 #maak-organisatie.actief, #maak-gebruiker.actief {display: block;}
 
@@ -169,7 +171,7 @@ div.evenement.wegfilteren {display: none;}
 /*/ / FILTERS / /*/
 div#laatst-bijgewerkt { width: 100%; display: flex; justify-content: center; align-items: center;}
 
-div.commandos {width: 100%; position: absolute; bottom: calc(var(--hoogte-navigatie)); padding:  calc(var(--afstand-zijkant)); padding-bottom: 0; pointer-events: none}
+div.commandos {width: 100%; position: absolute; bottom: calc(var(--hoogte-navigatie)); padding:  calc(0.75 * var(--afstand-zijkant)); padding-bottom: 0; pointer-events: none}
 div.commandos div { margin-bottom: calc(var(--afstand-zijkant) - var(--afstand-zijkant)/4) ; display: flex; flex-wrap: wrap;}
 div.commandos div button { height: calc((var(--hoogte-evenement) / 3)); pointer-events: auto; display: inline-flex; margin: calc(var(--afstand-zijkant)/4); touch-action: manipulation;}
 div.commandos div button.rond { color: var(--kleur-tekst); border-radius: calc((var(--hoogte-evenement) / 3));}
@@ -178,6 +180,9 @@ div.commandos div.wat, div.commandos div#waar {display: none;}
 div.commandos div.wat.actief, div.commandos div#waar.actief {display: flex;}
 div.commandos div.wat button {text-transform:lowercase;}
 div.commandos div button.actief {background-color: var(--kleur-thema2);}
+
+div.commandos div#filters button {font-size: 0.9rem;}
+div.commandos div:not(#filters) button {font-weight: 300;}
 
 
 /*/ / PUBLIEK en PRIVE EVENEMENT / /*/

@@ -22,8 +22,8 @@
         <p>[werkt voorlopig niet] Als gebruiker kan je besloten evenementen aanmaken. Via een uitnodigingslink kan je je evenement verspreiden en bijhouden wie al dan niet aanwezig zal zijn.</p>
         <p>Als organisatie kan je openbare evenementen aanmaken om de community van deze website te bereiken.</p>
         <div class="switcher">
-            <div class="actief">als gebruiker</div>
-            <div>als organisatie</div>
+            <div class="actief"><span>als gebruiker</span></div>
+            <div><span>als organisatie</span></div>
         </div>
         <form action="maak-gebruiker" method="post" autocomplete="off" class='actief' id="maak-gebruiker">
             @csrf

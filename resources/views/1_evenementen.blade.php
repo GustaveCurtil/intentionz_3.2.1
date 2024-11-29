@@ -34,8 +34,8 @@
     <div id="laatst-bijgewerkt"></div>
 </section>
 <div class="commandos">
-    <div class="wat" data-stad="overal">
-        <button id="alles" data-soort='categorie' class="rond">alles</button>
+    <div class="wat" data-stad="overal" class="rond">
+        <button id="alles" data-soort='categorie'>alles</button>
         @foreach ($categoriesAll as $categorie)
         <button data-soort='categorie'>{{$categorie}}</button>
         @endforeach
@@ -55,8 +55,8 @@
         @endforeach
     </div>
     <div id="filters">
-        <button class="rond" data-filter='locatie'>overal</button>
-        <button class="rond" data-filter='categorie'>alles</button>
+        <button data-filter='locatie'>locatie: <u>overal</u></button>
+        <button data-filter='categorie'>categorie: <u>alles</u></button>
         {{-- <button class="rond">subcategorie</button>
         <button class="rond">periode</button> --}}
     </div>
