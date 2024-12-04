@@ -48,3 +48,4 @@ Route::post('/wijzig-adres', [OrganisationController::class, 'wijzigAdres']);
 
 /* EVENEMENT CRUD */
 Route::post('/maak-evenenement-openbaar', [PublicEventController::class, 'createEvent']);
+Route::get('/aanpassen/{event}', [PublicEventController::class, 'naarEditor'])->middleware('auth')->name('aanpassen');

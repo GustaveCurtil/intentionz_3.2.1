@@ -2,25 +2,29 @@
 
 @section('title', 'aanmelden')
 
+@section('head')
+@include('_partials.metadata')
+<script src="{{asset('js/loadingtime.js')}}" defer></script>
+@endsection
+
 @section('main')
 <main>
     <section>
-        <h2>evenement  toevoegen</h2>
-        <p>Je hebt een account nodig om een evenement te kunnen aanmaken.</p>
+        <p>Je moet ingelogd zijn om een evenement te kunnen aanmaken.</p>
+        <p>Als gebruiker kan je besloten evenementen aanmaken. Via een uitnodigingslink kan je jouw evenement verspreiden en bijhouden wie al dan niet aanwezig zal zijn. [werkt voorlopig niet] </p>
+        <p>Als organisatie kan je openbare evenementen aanmaken om de community van deze website te bereiken.</p>
     </section>
     <section>
         <h3>inloggen</h3>
         <form action="login" method="post" autocomplete="off">
             @csrf
-            <input type="text" name="naam" id="naam" placeholder="{{ $errors->has('login_naam') ? $errors->first('login_naam') : 'gebruikersnaam*' }}" value="{{ $errors->has('login_wachtwoord') ? old('naam') : "" }}">
+            <input type="text" name="naam" id="naam" placeholder="{{ $errors->has('login_naam') ? $errors->first('login_naam') : 'gebruikersnaam*' }}" value="{{ $errors->has('login_wachtwoord') ? old('login_wachtwoord') : ($user ? $user->name : '') }}">
             <input type="password" name="wachtwoord" id="wachtwoord" placeholder="{{ $errors->has('login_wachtwoord') ? $errors->first('login_wachtwoord') : 'wachtwoord*' }}" required>
             <input type="submit" value="inloggen">
         </form>
     </section>
     <section>
         <h3>account maken</h3>
-        <p>[werkt voorlopig niet] Als gebruiker kan je besloten evenementen aanmaken. Via een uitnodigingslink kan je je evenement verspreiden en bijhouden wie al dan niet aanwezig zal zijn.</p>
-        <p>Als organisatie kan je openbare evenementen aanmaken om de community van deze website te bereiken.</p>
         <div class="switcher">
             <div class="actief"><span>als gebruiker</span></div>
             <div><span>als organisatie</span></div>

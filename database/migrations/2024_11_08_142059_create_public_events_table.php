@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('adres')->nullable(); 
             $table->string('stad'); 
             $table->string('url_locatie')->nullable();
-            $table->string('categorie');  
+            $table->string('categorie'); 
+            $table->string('subcategorie')->nullable();  
             $table->string('url_evenement')->nullable();
             $table->text('beschrijving')->nullable(); 
             $table->string('achtergrond_pad')->nullable(); 

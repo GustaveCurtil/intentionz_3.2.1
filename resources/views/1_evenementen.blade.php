@@ -3,6 +3,7 @@
 @section('title', 'evenementen')
 
 @section('head')
+@include('_partials.metadata')
 <script src="{{asset('js/filters.js')}}" defer></script>
 @endsection
 
@@ -34,8 +35,8 @@
     <div id="laatst-bijgewerkt"></div>
 </section>
 <div class="commandos">
-    <div class="wat" data-stad="overal" class="rond">
-        <button id="alles" data-soort='categorie'>alles</button>
+    <div class="wat" data-stad="overal">
+        <button id="alles" data-soort='categorie' class="rond">alles</button>
         @foreach ($categoriesAll as $categorie)
         <button data-soort='categorie'>{{$categorie}}</button>
         @endforeach

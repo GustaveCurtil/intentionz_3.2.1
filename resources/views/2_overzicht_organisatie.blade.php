@@ -1,6 +1,7 @@
 @extends('_layouts.head')
 
 @section('head')
+@include('_partials.metadata')
 <script src="{{asset('js/filters.js')}}" defer></script>
 @endsection
 

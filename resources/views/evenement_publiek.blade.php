@@ -1,6 +1,9 @@
 @extends('_layouts.head')
 
 @section('head')
+<meta property="og:title" content="{{$event->titel}}" />
+<meta property="og:description" content="{{ Str::limit(strip_tags($event->beschrijving), 200) }}" />
+<meta property="og:image" content="{{ asset('storage/miniaturen/' . $event->foto_pad ) }}" />
 <script src="{{ asset('js/terugknop.js') }}" defer></script>
 <script src="{{ asset('js/kopieren.js') }}" defer></script>
 @endsection
@@ -26,20 +29,23 @@
         <p>{{$event->user->name}} - <u onclick="copy('{{ $event->adres }}, {{ $event->stad }}', 'adres')"><i>{{ $event->adres }}, {{ $event->stad }}</i></u></p>
         <div class='bedieningspaneel'>
             @organisatie
-            {{-- <button>evenement aanpassen</button>  maar ook zeggen dat het jouw evenement moet zijn natuurlijk...--}}
-            @else
+                @if ($user->publicEvents->contains($event->id))
+                <button onclick="window.location.href = '{{ route('aanpassen', $event->id) }}';">evenement aanpassen</button>
+                @endif
+            @endorganisatie
+            @if ($guest)
             <form action="/opslaan/{{$event->id}}" method="POST">
                 @csrf
                 <button type='subtmit' id="opslaan" @if ($guest->savedPublicEvents->contains($event->id)) class='actief' @endif>
                     @if ($guest->savedPublicEvents->contains($event->id))
-                    opgeslaan
+                    bewaard
                     @else 
-                    opslaan
+                    bewaren
                     @endif
                 </button>
             </form>
             <!-- <button>kalender koppelen</button> -->
-            @endorganisatie
+            @endif
             <button onclick="copy(window.location.href, 'link naar dit evenement')">link kopiëren</button>
         </div>
     </section>

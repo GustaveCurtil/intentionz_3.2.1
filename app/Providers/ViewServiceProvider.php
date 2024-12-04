@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Guest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
@@ -32,6 +33,9 @@ class ViewServiceProvider extends ServiceProvider
                 $userEvents = 0;
                 if ($guest) {
                     $userEvents = $guest->savedPublicEvents()->count();
+                    if ($guest->user_id) {
+                        $user = User::find($guest->user_id);
+                    }
                 }
             } else {
                 $guest = $user->guest;

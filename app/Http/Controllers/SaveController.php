@@ -21,6 +21,7 @@ class SaveController extends Controller
             $guest = $user->guest;
         }
 
+        //OPSLAAN - NIET OPSLAAN
         if (!$guest->savedPublicEvents->contains($event->id)) {
             $guest->savedPublicEvents()->attach($event->id);
         } else {

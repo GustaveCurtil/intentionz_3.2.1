@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PublicEvent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PublicEventController extends Controller
 {
@@ -45,6 +46,24 @@ class PublicEventController extends Controller
         PublicEvent::create($incomingFields);
 
         return redirect()->route('overzicht-organisatie');
+    }
+    
+    public function naarEditor(PublicEvent $event) {
+        $user = Auth::user();
+
+        if ($event->user_id !== $user->id) {
+            dd('problematique');
+        }
+
+        if ($user->role === 'organisatie') {
+            $categoriesAll = PublicEvent::select('categorie')
+            ->groupBy('categorie')
+            ->orderByRaw('COUNT(*) DESC')
+            ->pluck('categorie');
+        }
+
+
+        return view('3_aanpassen', ['event' => $event, 'categories' => $categoriesAll]);
     }
 }
 

@@ -23,7 +23,7 @@
         @gebruiker
         <p>Voorlopig is deze pagina nog niet functioneel als gebruiker (wel als organisatie)</p>
         @endgebruiker
-        <form action="maak-evenenement-openbaar" method="post" enctype="multipart/form-data">
+        <form action="aanpassen/{{$event->id}}" method="post" enctype="multipart/form-data">
             @csrf
             <div id="poster-editor">
                 <div>

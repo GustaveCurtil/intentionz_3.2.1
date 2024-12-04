@@ -3,6 +3,7 @@ let commandos = document.querySelector('.commandos');
 
 let evenementen = document.querySelectorAll('.evenement');
 
+let filters = document.querySelector('#filters')
 let filterKeuzes = document.querySelectorAll('#filters button');
 let locatieFilter = document.querySelector('#filters button[data-filter="locatie"]')
 let categorieFilter = document.querySelector('#filters button[data-filter="categorie"]');
@@ -207,6 +208,19 @@ function systeemNaarLooks() {
     const categorie = locatie.categorieen.find(cat => cat.status === "ON");
 
     const categorieGroep = document.querySelector(".wat[data-stad='" + locatie.naam + "']");
+
+    if (systeem.locaties.length <= 2) {
+        locatieFilter.style.display = 'none';
+    }
+
+    if (locatie.categorieen.length <= 2) {
+        categorieFilter.style.display = 'none';
+    }
+
+    if (locatie.categorieen.length <= 2 && systeem.locaties.length <= 2) {
+        filters.style.display = 'none';
+        placeholder.style.display = 'none';
+    }
     
     categorieGroep.classList.remove('actief')   
     locatieGroep.classList.remove('actief')

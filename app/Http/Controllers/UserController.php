@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Guest;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -51,6 +52,13 @@ class UserController extends Controller
         } else {
             // If no user exists with this username/email
             $validator->errors()->add('login_naam', "'" . $incomingFields['naam']. "'" . ' bestaat niet');
+        }
+
+        // Check of er saves zijn op de huidige device ID (die nog niet gelinkt mag zijn met een account).
+        $deviceId = Cookie::get('device_id');
+        $deviceWithoutAccount = Guest::where('device_id', $deviceId)->whereNull('user_id')->first();
+        if ($deviceWithoutAccount) {
+            dd($deviceWithoutAccount->savedPublicEvents());
         }
 
 

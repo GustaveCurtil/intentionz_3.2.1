@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
-    <meta name="description" content="een film ofzo">
+  
     <meta name="theme-color" id="theme-color" content="#cedbcf">
 
-    <meta property="og:title" content="♥" />
-    <meta property="og:site_name" content="♥" />
-    <meta property="og:description" content="een film ofzo" />
     <meta property="og:url" content="{{ url()->current() }}" />
     <meta property="og:locale" content="nl_BE" />
-    <meta property="og:image" content="{{ asset('media/logo.png') }}" />
+
+    @yield('head')
 
     {{-- title should be unique on every page... --}}
     <title>@yield('title')</title> 
@@ -19,7 +17,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="manifest" href="{{ asset('manifest.json') }}">
     <script src="{{ asset('js/loadingtime.js') }}" defer></script>
-    @yield('head')
+
 </head>
 <style>
     :root {
@@ -49,7 +47,7 @@
     
     @yield('main')
 
-    @if(!request()->routeIs('aanmaken'))
+    @if(!request()->routeIs('aanmaken') && !request()->routeIs('aanpassen'))
     <nav>@include('_partials.navigatie')</nav>
     @endif
 

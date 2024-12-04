@@ -27,7 +27,7 @@
 
 
 ## Parkeren voor later
-- op termijn ga ik 'opslaan' in cookies bewaren die dan kunnen gelezen worden en naar database gestuurd worden wanneer er een andere request naar de server wordt gestuurd.
+- op termijn ga ik 'opslaan' in local storage bewaren die dan kunnen gelezen worden en naar database gestuurd worden wanneer er een andere request naar de server wordt gestuurd ofzo.
 
 ## feedback
 

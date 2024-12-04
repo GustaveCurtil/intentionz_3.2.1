@@ -15,7 +15,7 @@ class PageController extends Controller
     public function thuis() 
     {
 
-        $events = PublicEvent::orderBy('datum', 'asc')->get();
+        $events = PublicEvent::where('datum', '>=', Carbon::today())->orderBy('datum', 'asc')->get();
         $categoriesAll = PublicEvent::select('categorie')
         ->groupBy('categorie')
         ->orderByRaw('COUNT(*) DESC')
