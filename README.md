@@ -1,5 +1,7 @@
 # INTENTIONZ_3.2.1
 
+Productie-updates worden geüpload op <a href="https://codequest.be/">deze website<a>.
+
 ## TO DO's
 
 - terugknop voor alle 'speciale pagina's' ✅
@@ -30,6 +32,3 @@
 - op termijn ga ik 'opslaan' in local storage bewaren die dan kunnen gelezen worden en naar database gestuurd worden wanneer er een andere request naar de server wordt gestuurd ofzo.
 
 ## feedback
-
-### maan
-- 
