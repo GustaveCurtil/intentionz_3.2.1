@@ -74,7 +74,15 @@
 
             @organisatie
             <fieldset id="categorieen">
-                <input type="text" name="categorie" id="categorie" placeholder="categorie*" maxlength="22" required>
+                <select name="categorie" id="categorie">
+                    <option value="geen">categorie*</option>
+                    <option value="film">film</option>
+                    <option value="muziek">muziek</option>
+                    <option value="voorstelling">voorstelling</option>
+                    <option value="dansen">dansen</option>
+                    <option value="expo">expo</option>
+                </select>
+                <input type="text" name="label" id="label" placeholder="label*" maxlength="22" required>
                 <div>
                     @foreach ($categories as $category)
                     <button>{{$category}}</button>
@@ -108,7 +116,7 @@
 <script>
     let categorieen = document.querySelector('#categorieen');
     let knoppen = document.querySelectorAll('#categorieen button');
-    let categorieVeld = document.querySelector('#categorie')
+    let labelVeld = document.querySelector('#label')
     let nieuweKnop = document.querySelector("#nieuweKnop");
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -119,17 +127,17 @@
                 knoppen.forEach(knop => {
                     knop.classList.remove('actief');
                 });
-                categorieVeld.value = knop.textContent;
+                labelVeld.value = knop.textContent;
                 knop.classList.add('actief');
             })
         });
 
 
-        categorieVeld.addEventListener('input', (e) => {
+        labelVeld.addEventListener('input', (e) => {
             knoppen.forEach(knop => {
                 knop.classList.remove('actief');
             });
-            nieuweKnop.innerHTML = categorieVeld.value;
+            nieuweKnop.innerHTML = labelVeld.value;
             nieuweKnop.style.display = 'inherit';
             nieuweKnop.classList.add('actief');
         })

@@ -29,14 +29,26 @@ class ViewServiceProvider extends ServiceProvider
             $user = auth()->guard()->user();
             if (!$user) {
                 $deviceId = Cookie::get('device_id');
+
+                if (!$deviceId) {
+                    $deviceId = request()->get('device_id');
+                }
+
                 $guest = Guest::where('device_id', $deviceId)->first();
-                $userEvents = 0;
+
+                if (!$guest) {
+                    $guest = request()->get('guest');
+                }
+
+                $userEvents=0;
+
                 if ($guest) {
                     $userEvents = $guest->savedPublicEvents()->count();
                     if ($guest->user_id) {
                         $user = User::find($guest->user_id);
                     }
                 }
+                
             } else {
                 $guest = $user->guest;
                 if ($guest) {

@@ -43,9 +43,9 @@
             <input type="password" name="organisatie_wachtwoord" id="organisatie_wachtwoord" placeholder="{{ $errors->has('organisatie_wachtwoord') ? $errors->first('organisatie_wachtwoord') : 'wachtwoord*'}}">
             <input type="password" name="organisatie_wachtwoord2" id="organisatie_wachtwoord2" placeholder="{{ $errors->has('organisatie_wachtwoord2') ? $errors->first('organisatie_wachtwoord2') : 'wachtwoord herhalen*'}}">
             <input type="hidden" name="organisatie_email" id="organisatie_email" placeholder="e-mail (optioneel)">
-            <div class="adres">
-                <input type="text" name="organisatie_adres" id="organisatie_adres" placeholder="straat en nummer (optioneel)" value="{{old('organisatie_adres')}}">
-                <input type="text" name="organisatie_stad" id="organisatie_stad" placeholder="stad (optioneel)" value="{{old('organisatie_stad')}}">    
+            <input type="text" name="organisatie_adres" id="organisatie_adres" placeholder="straat en nummer (optioneel)" value="{{old('organisatie_adres')}}">
+            <input type="text" name="organisatie_stad" id="organisatie_stad" placeholder="stad (optioneel)" value="{{old('organisatie_stad')}}">    
+            <div id="url_locatie">
                 <input type="url" name="organisatie_url_locatie" id="organisatie_url_locatie" placeholder="map link (optioneel)" value="{{old('organisatie_url_locatie')}}">
                 <div onclick="window.open('https://www.openstreetmap.org', '_blank')">openstreetmap.org</div>
             </div>

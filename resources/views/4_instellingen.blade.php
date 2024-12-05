@@ -27,11 +27,11 @@
         <h3>automatisch invullen bij evenementen</h3>
         <form action="wijzig-adres#standaard-gegevens" method="post">
             @csrf
-            <div class="adres">
-                <input type="text" name="adres" id="adres" placeholder="straat + nr{{ $user->organisation->adres ? ": " . $user->organisation->adres : ""}}" value="{{ $user->organisation->adres ? $user->organisation->adres : ""}}">
-                <input type="text" name="stad" id="stad" placeholder='stad{{ $user->organisation->stad ? ": " . $user->organisation->stad : ""}}' value="{{ $user->organisation->stad ? $user->organisation->stad : ""}}">    
+            <input type="text" name="adres" id="adres" placeholder="straat + nr{{ $user->organisation->adres ? ": " . $user->organisation->adres : ""}}" value="{{ $user->organisation->adres ? $user->organisation->adres : ""}}">
+            <input type="text" name="stad" id="stad" placeholder='stad{{ $user->organisation->stad ? ": " . $user->organisation->stad : ""}}' value="{{ $user->organisation->stad ? $user->organisation->stad : ""}}">    
+            <div id="url_locatie">
                 <input type="text" name="url_locatie" id="url_locatie" placeholder="{{ $errors->has('url_locatie') ? $errors->first('url_locatie') : "url locatie" . ($user->organisation->url_locatie ? ": " . $user->organisation->url_locatie : "")}}" value="{{ $user->organisation->url_locatie ? $user->organisation->url_locatie : ""}}">
-                <div onclick="window.open('https://www.openstreetmap.org', '_blank')" id="openstreetmap">openstreetmap.org</div>
+                <div onclick="window.open('https://www.openstreetmap.org', '_blank')" id="openstreetmap">openstreetmap.org</div>    
             </div>
             <input type="text" name="url_website" id="url_website" placeholder="{{ $errors->has('url_website') ? $errors->first('url_website') : "url website" . ($user->organisation->url_website ? ": " . $user->organisation->url_website : "")}}" value="{{ $user->organisation->url_website ? $user->organisation->url_website : ""}}">
             <div id="hiddengegevens">
@@ -145,54 +145,6 @@
         })
 
     })
-
-    const gebruikerKnop = document.querySelector('.switcher div');
-    const gebruikerForm = document.querySelector('form#maak-gebruiker');
-    const organisatieKnop = document.querySelector('.switcher div:last-of-type');
-    const organisatieForm = document.querySelector('form#maak-organisatie');
-
-    const organisatieSubmit = organisatieForm.querySelector('input[type="submit"]')
-    
-    document.addEventListener('DOMContentLoaded', (e) => {
-        let formTab;
-        if (localStorage.getItem('formTab')) {
-            formTab = localStorage.getItem('formTab');
-            localStorage.setItem('formTab', 'gebruiker')
-        } else {
-            formTab = 'gebruiker';
-        }
-        doeMaar(formTab);
-    })
-
-    organisatieSubmit.addEventListener('click', (e) => {
-        localStorage.setItem('formTab', 'organisatie');
-    })
-
-    gebruikerKnop.addEventListener('click', (e) => {
-        let formTab = 'gebruiker';
-        // localStorage.setItem('formTab', 'gebruiker');
-        doeMaar(formTab);
-    })
-
-    organisatieKnop.addEventListener('click', (e) => {
-        let formTab = 'organisatie';
-        // localStorage.setItem('formTab', 'organisatie');
-        doeMaar(formTab);
-    })
-
-    function doeMaar(formTab) {
-        if (formTab === 'gebruiker') {
-            organisatieKnop.classList.remove('actief');
-            organisatieForm.classList.remove('actief');
-            gebruikerKnop.classList.add('actief');
-            gebruikerForm.classList.add('actief');
-        } else {
-            gebruikerKnop.classList.remove('actief');
-            gebruikerForm.classList.remove('actief');
-            organisatieKnop.classList.add('actief');
-            organisatieForm.classList.add('actief');
-        }
-    }
 
 </script>
 @endsection

@@ -146,11 +146,13 @@ div.switcher div.actief span {opacity: 1;}
 #maak-organisatie, #maak-gebruiker {display: none;}
 #maak-organisatie.actief, #maak-gebruiker.actief {display: block;}
 
-form div.adres {display: flex; flex-wrap: wrap; position: relative;}
-form div.adres input:nth-of-type(1){width: 100%;}
-form div.adres input:nth-of-type(2), form div.adres input:nth-of-type(3) {width: 100%; border-bottom: 0;}
-form div.adres div {width: 40%; position: absolute; right: 0; bottom: 0;}
-form div.adres div {height: var(--hoogte-velden); line-height: var(--hoogte-velden); text-align: right; padding-right: var(--afstand-zijkant); text-decoration: underline;}
+#standaard-gegevens form {display: flex; flex-wrap: wrap;}
+form div#url_locatie {width: 100%; position: relative;}
+#standaard-gegevens form div#url_locatie input {width: 100%; border-bottom: 0;}
+fieldset#standaard-gegevens input#stad {border-bottom: 0;}
+
+form div#url_locatie div {width: 40%; position: absolute; right: 0; top: 0;}
+form div#url_locatie div {height: var(--hoogte-velden); line-height: var(--hoogte-velden); text-align: right; padding-right: var(--afstand-zijkant); text-decoration: underline;}
 
 
 /*/ EVENEMENTEN DISPLAYEN / /*/

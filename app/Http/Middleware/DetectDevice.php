@@ -23,16 +23,23 @@ class DetectDevice
 
         if (!$user) {
             $deviceId = Cookie::get('device_id');
+
+            if (!$deviceId) {
+                $deviceId = (string) Str::uuid();
+                Cookie::queue('device_id', $deviceId, 60 * 24 * 365);
+            }
+
+            $request->merge(['device_id' => $deviceId]);
+
             $guest = Guest::where('device_id',$deviceId)->first(); 
     
             if (!$guest) {
-                $ipAddress = request()->ip();
-                $deviceId = (string) Str::uuid();
-                Cookie::queue('device_id', $deviceId, 60 * 24 * 365);
+                $ipAddress = request()->ip();;
                 $guest = Guest::create(['device_id' => $deviceId, 'ip_address' => $ipAddress]);
             } 
             
-            $user = $guest;
+            $request->merge(['guest' => $guest]);
+
 
         }
 

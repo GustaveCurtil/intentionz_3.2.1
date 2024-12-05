@@ -1,6 +1,6 @@
 @extends('_layouts.head')
 
-@section('title', 'evenementen')
+@section('title', 'Catalogus')
 
 @section('head')
 @include('_partials.metadata')
