@@ -10,7 +10,7 @@
     <div class="titel">{{$event->titel}}</div>
     <div class="datum">
         <div>{{$event->datum}} - {{$event->tijd}}</div>
-        <div class="label">{{ $event->subcategorie ?? $event->categorie }}</div>
+        <div class="label">{{ $event->subcategorie ? "(" . $event->subcategorie . ") " : '' }}{{$event->categorie }}</div>
     </div>
     <div class="locatie">
         <div>{{$event->user->name}}</div>

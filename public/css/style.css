@@ -29,7 +29,7 @@ html {
     --hoogte-navigatie: calc(2.2rem + env(safe-area-inset-bottom)); 
     --hoogte-velden: 1.8rem;
     --hoogte-evenement: 3.8rem;
-    --hoogte-knoppen: 1.8rem;
+    --hoogte-knoppen: 1.6rem;
     --afstand-zijkant: 0.5rem;
     --afstand-bovenkant: 1.2rem;
 
@@ -163,6 +163,10 @@ form div#url_locatie div {height: var(--hoogte-velden); line-height: var(--hoogt
 
 section.evenementen {width: 100%;margin: 0;}
 
+div.week {position: relative; display: flex; flex-direction: column;}
+div.week > div:first-of-type {position: sticky; top: 0; z-index: 30; width: 100%; height: var(--hoogte-knoppen); display: flex; align-items: center; text-transform: uppercase; border-bottom: 1px solid var(--kleur-tekst); padding-left: calc(var(--afstand-zijkant)); background-color: var(--kleur-thema3);}
+div.geen-evenementen {height: var(--hoogte-knoppen); border-bottom: 1px solid var(--kleur-tekst); padding-left: var(--afstand-zijkant); display: flex; align-items:center;}
+
 div.evenement {width: 100%; height: var(--hoogte-evenement); border-bottom: 1px solid var(--kleur-tekst); display: flex;}
 div.evenement > div {width: calc(100% - 4 * var(--hoogte-evenement) / 3); height: calc( var(--hoogte-evenement) / 3);}
 div.evenement > div > div {width: 100%; padding: 0 var(--afstand-zijkant); height: calc( var(--hoogte-evenement) / 3)}
@@ -189,7 +193,7 @@ div.evenement.wegfilteren {display: none;}
 /*/ / FILTERS / /*/
 div#laatst-bijgewerkt { width: 100%; display: flex; justify-content: center; align-items: center;}
 
-div.commandos {width: 100%; position: absolute; bottom: calc(var(--hoogte-navigatie)); padding:  calc(0.75 * var(--afstand-zijkant)); padding-bottom: 0; pointer-events: none}
+div.commandos {width: 100%; position: absolute; bottom: calc(var(--hoogte-navigatie)); padding:  calc(0.75 * var(--afstand-zijkant)); padding-bottom: 0; pointer-events: none; z-index: 40;}
 div.commandos div { margin-bottom: calc(var(--afstand-zijkant) - var(--afstand-zijkant)/4) ; display: flex; flex-wrap: wrap;}
 div.commandos div button { pointer-events: auto; display: inline-flex; margin: calc(var(--afstand-zijkant)/4); touch-action: manipulation;}
 div.commandos div button.rond { color: var(--kleur-tekst); border-radius: calc((var(--hoogte-evenement) / 3));}
@@ -204,7 +208,7 @@ div.commandos div#filters button.actief {box-shadow: 0px 0px 0px 1px var(--kleur
 div.commandos div:not(#filters) button {font-weight: 300;}
 
 button[data-filter = 'locatie'], button[data-filter = 'locatie'] u, div#waar button {font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;}
-button[data-filter = 'categorie'], button[data-filter = 'categorie'] u, div.wat button {font-family: fantasy}
+button[data-filter = 'categorie'], button[data-filter = 'categorie'] u, div.wat button {font-family:cursive;}
 
 /*/ / PUBLIEK en PRIVE EVENEMENT / /*/
 

@@ -15,7 +15,29 @@ class PageController extends Controller
     public function thuis() 
     {
 
-        $events = PublicEvent::where('datum', '>=', Carbon::today())->orderBy('datum', 'asc')->get();
+        $today = Carbon::today();
+        $startOfWeek = $today->startOfWeek(); // Start of this week (Sunday or Monday based on locale)
+        $endOfWeek = $today->endOfWeek();   // End of this week
+        $startNextWeek = $endOfWeek->addDay(); // Start of next week
+        $endNextWeek = $startNextWeek->copy()->endOfWeek(); // End of next week
+
+        // Events this week
+        $eventsDezeWeek = PublicEvent::where('datum', '>=', $startOfWeek)
+                                    ->where('datum', '<=', $endOfWeek)
+                                    ->orderBy('datum', 'asc')
+                                    ->get();
+
+        // Events next week
+        $eventsVolgendeWeek = PublicEvent::where('datum', '>=', $startNextWeek)
+                                        ->where('datum', '<=', $endNextWeek)
+                                        ->orderBy('datum', 'asc')
+                                        ->get();
+
+        // Events after next week
+        $eventsVerder = PublicEvent::where('datum', '>', $endNextWeek)
+                                ->orderBy('datum', 'asc')
+                                ->get();
+
         $categoriesAll = PublicEvent::select('categorie')
         ->groupBy('categorie')
         ->orderByRaw('COUNT(*) DESC')
@@ -34,22 +56,34 @@ class PageController extends Controller
             ->pluck('categorie');
         }
 
-        foreach ($events as $event) {
-            $event->tijd = Carbon::parse($event->tijd)->format('H:i');
-            $eventDate = Carbon::parse($event->datum);
-            // if ($eventDate->isToday()) {
-            //     $event->datum = 'vandaag';
-            // } elseif ($eventDate->isTomorrow()) {
-            //     $event->datum = 'morgen ' . $eventDate->translatedFormat('d/m/Y');
-            // } else {
-            //     $dagAfkorting = $eventDate->eersteTweeLetters();
-            //     $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m/Y');
-            // }
-            $dagAfkorting = $eventDate->eersteTweeLetters();
-            $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m');
+        foreach ($eventsDezeWeek as $event) {
+            $event->tijd = Carbon::parse($event->tijd)->format('H:i'); // Format time
+            $eventDate = Carbon::parse($event->datum); // Parse date
+        
+            // Format datum (date)
+            $dagAfkorting = $eventDate->eersteTweeLetters(); // Custom method for the first two letters of the day
+            $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m'); // Apply the format
+        }
+        
+        foreach ($eventsVolgendeWeek as $event) {
+            $event->tijd = Carbon::parse($event->tijd)->format('H:i'); // Format time
+            $eventDate = Carbon::parse($event->datum); // Parse date
+        
+            // Format datum (date)
+            $dagAfkorting = $eventDate->eersteTweeLetters(); // Custom method for the first two letters of the day
+            $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m'); // Apply the format
+        }
+        
+        foreach ($eventsVerder as $event) {
+            $event->tijd = Carbon::parse($event->tijd)->format('H:i'); // Format time
+            $eventDate = Carbon::parse($event->datum); // Parse date
+        
+            // Format datum (date)
+            $dagAfkorting = $eventDate->eersteTweeLetters(); // Custom method for the first two letters of the day
+            $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m'); // Apply the format
         }
 
-        return view('1_evenementen', ['events' => $events, 'categoriesAll' => $categoriesAll, 'steden' => $stedenMetCategories]);
+        return view('1_evenementen', ['eventsDezeWeek' => $eventsDezeWeek, 'eventsVolgendeWeek' => $eventsVolgendeWeek, 'eventsVerder' => $eventsVerder, 'categoriesAll' => $categoriesAll, 'steden' => $stedenMetCategories]);
     }
 
     public function overzichtGebruiker() 

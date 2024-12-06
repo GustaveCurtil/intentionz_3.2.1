@@ -23,6 +23,7 @@
     </section>
     <section>
         <h3>voeg deze website toe als app</h3>
+        <p>Bij een update zal je de app moeten verwijderen en vervolgens opnieuw moeten installeren (let op: de data kan enkel bijgehouden worden mbv een login).</p>
         <p>Dit is een Progressive Web App (PWA), waardoor deze website kan worden geinstalleerd als een applicatie op de meeste toestellen. Hier zijn de instructies:</p>
         <h4>android</h4>
         <p>1. Druk op het menu icoon (3 bolletjes bovenaan rechts) en druk op 'add to home screen'.</p>

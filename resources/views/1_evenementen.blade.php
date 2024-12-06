@@ -10,11 +10,39 @@
 @section('main')
 <main>
 <section class="evenementen">
-    @foreach ($events as $event)
-    <div class="evenement" data-stad="{{ $event->stad }}" data-categorie="{{ $event->categorie }}"  onclick="gaNaar('{{ url('/' . $event->id . '-' . \Str::slug($event->titel)) }}', event)" >
-        @include('_partials.evenement')
+
+    <div class="week">
+        <div>deze week</div>
+        @if ($eventsDezeWeek->isNotEmpty())
+        @foreach ($eventsDezeWeek as $event)
+        <div class="evenement" data-stad="{{ $event->stad }}" data-categorie="{{ $event->categorie }}"  onclick="gaNaar('{{ url('/' . $event->id . '-' . \Str::slug($event->titel)) }}', event)" >
+            @include('_partials.evenement')
+        </div>
+        @endforeach
+        @endif
     </div>
-    @endforeach
+
+    <div class="week">
+        <div>volgende week</div>
+        @if ($eventsVolgendeWeek->isNotEmpty())
+        @foreach ($eventsVolgendeWeek as $event)
+        <div class="evenement" data-stad="{{ $event->stad }}" data-categorie="{{ $event->categorie }}"  onclick="gaNaar('{{ url('/' . $event->id . '-' . \Str::slug($event->titel)) }}', event)" >
+            @include('_partials.evenement')
+        </div>
+        @endforeach
+        @endif
+    </div>
+
+    <div class="week">
+        <div>verder</div>
+        @if ($eventsVerder->isNotEmpty())
+        @foreach ($eventsVerder as $event)
+        <div class="evenement" data-stad="{{ $event->stad }}" data-categorie="{{ $event->categorie }}"  onclick="gaNaar('{{ url('/' . $event->id . '-' . \Str::slug($event->titel)) }}', event)" >
+            @include('_partials.evenement')
+        </div>
+        @endforeach
+        @endif
+    </div>
     <div id="laatst-bijgewerkt"></div>
 </section>
 <div class="commandos">

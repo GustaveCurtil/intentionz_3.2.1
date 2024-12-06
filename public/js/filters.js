@@ -2,6 +2,7 @@ let placeholder = document.querySelector('#laatst-bijgewerkt');
 let commandos = document.querySelector('.commandos');
 
 let evenementen = document.querySelectorAll('.evenement');
+let weken = document.querySelectorAll('.week');
 
 let filters = document.querySelector('#filters')
 let filterKeuzes = document.querySelectorAll('#filters button');
@@ -105,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     systeemNaarLooks()
     pasToe();
+    placeholderPlaatser()
 })
 
 
@@ -133,6 +135,7 @@ function knopIndrukken(knop) {
     }
     systeemNaarLooks()
     pasToe();
+    placeholderPlaatser() 
 }
 
 /* KIES DE JUISTE FILTER */
@@ -254,6 +257,31 @@ function systeemNaarLooks() {
     }
 
     placeholder.style.height = commandos.offsetHeight + 'px';
+}
+
+//wat als er geen evenementen zijn voor die week
+function placeholderPlaatser() {
+    weken.forEach(week => {
+        const evenementen = week.querySelectorAll('.evenement:not(.wegfilteren)');
+        
+        // Check if the 'geen-evenementen' div already exists
+        const existingPlaceholder = week.querySelector('.geen-evenementen');
+        
+        // If no evenementen and no existing placeholder, create a new placeholder
+        if (evenementen.length === 0 && !existingPlaceholder) {
+            const geenEvenementen = document.createElement('div');
+            geenEvenementen.classList.add('geen-evenementen');
+            geenEvenementen.textContent = 'geen evenementen';
+    
+            // Append the new placeholder div to the week element
+            week.appendChild(geenEvenementen);
+        }
+        
+        // If there are evenementen, remove the placeholder if it exists
+        if (evenementen.length > 0 && existingPlaceholder) {
+            existingPlaceholder.remove();
+        }
+    });
 }
 
 /*/ / FILTEREN / /*/
