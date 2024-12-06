@@ -188,7 +188,7 @@
             selecta.style.color= 'var(--kleur-tekst)';
             knoppen.forEach(knop => {
                 if (knop.dataset.categorie == selecta.value) {
-                    knop.style.display = 'inherit';
+                    knop.style.display = 'flex';
                     zichtbareKnoppen.push(knop);
                 }
             });
@@ -227,7 +227,7 @@
         
         if (labelVeld.value.length > 0) {
             nieuweKnop.innerHTML = labelVeld.value;
-            nieuweKnop.style.display = 'inherit';
+            nieuweKnop.style.display = 'flex';
             nieuweKnop.classList.add('actief');
         } else {
             nieuweKnop.style.display = 'none'

@@ -29,6 +29,7 @@ html {
     --hoogte-navigatie: calc(2.2rem + env(safe-area-inset-bottom)); 
     --hoogte-velden: 1.8rem;
     --hoogte-evenement: 3.8rem;
+    --hoogte-knoppen: 1.8rem;
     --afstand-zijkant: 0.5rem;
     --afstand-bovenkant: 1.2rem;
 
@@ -49,7 +50,7 @@ input[type=time]:focus::-webkit-datetime-edit {color: var(--kleur-tekst) !import
 /* #region ALGEMENE STRUCTUUR */
 
 a {color: var(--kleur-tekst);}
-button, form button {font-size: 0.9rem; border: 1px solid var(--kleur-tekst); border-radius: 0;color: var(--kleur-tekst); background-color: var(--kleur-thema3); margin-right: calc(var(--afstand-zijkant) / 2); padding: 0 var(--afstand-zijkant)}
+button, form button {font-size: 0.9rem; height: var(--hoogte-knoppen); display: flex; align-items: center; border: 1px solid var(--kleur-tekst); border-radius: 0;color: var(--kleur-tekst); background-color: var(--kleur-thema3); margin-right: calc(var(--afstand-zijkant) / 2); padding: 0 var(--afstand-zijkant)}
 
 h3 { font-size: 1.3em; font-weight: 600; margin-bottom: var(--afstand-zijkant);}
 h4 { font-weight: 600; font-size: 1.1em; margin: var(--afstand-zijkant) 0;}
@@ -184,7 +185,7 @@ div#laatst-bijgewerkt { width: 100%; display: flex; justify-content: center; ali
 
 div.commandos {width: 100%; position: absolute; bottom: calc(var(--hoogte-navigatie)); padding:  calc(0.75 * var(--afstand-zijkant)); padding-bottom: 0; pointer-events: none}
 div.commandos div { margin-bottom: calc(var(--afstand-zijkant) - var(--afstand-zijkant)/4) ; display: flex; flex-wrap: wrap;}
-div.commandos div button { height: calc((var(--hoogte-evenement) / 3)); pointer-events: auto; display: inline-flex; margin: calc(var(--afstand-zijkant)/4); touch-action: manipulation;}
+div.commandos div button { pointer-events: auto; display: inline-flex; margin: calc(var(--afstand-zijkant)/4); touch-action: manipulation;}
 div.commandos div button.rond { color: var(--kleur-tekst); border-radius: calc((var(--hoogte-evenement) / 3));}
 
 div.commandos div.wat, div.commandos div#waar {display: none;}
