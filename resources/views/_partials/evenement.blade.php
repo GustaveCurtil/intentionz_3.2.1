@@ -16,4 +16,14 @@
         <div>{{$event->user->name}}</div>
         <div class="label">{{$event->stad}}</div>
     </div>
+    @organisatie
+    <div class="statistieken">
+        <div>
+            @if ($user->publicEvents->contains($event->id))
+                bewaard: {{$event->savedByGuests->count()}}
+            @endif
+        </div>
+        <div class="label">{{$event->stad}}</div>
+    </div>
+    @endorganisatie
 </div>

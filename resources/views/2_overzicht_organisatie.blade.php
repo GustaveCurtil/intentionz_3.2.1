@@ -9,7 +9,7 @@
 
 @section('main')
 <main>
-    <section class="evenementen">
+    <section class="evenementen dashboard">
         @foreach ($events as $event)
         <div class="evenement" onclick="gaNaar('{{ url('/' . $event->id . '-' . \Str::slug($event->titel)) }}', event)" >
             @include('_partials.evenement')

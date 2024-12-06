@@ -50,7 +50,7 @@ input[type=time]:focus::-webkit-datetime-edit {color: var(--kleur-tekst) !import
 /* #region ALGEMENE STRUCTUUR */
 
 a {color: var(--kleur-tekst);}
-button, form button {font-size: 0.9rem; height: var(--hoogte-knoppen); display: flex; align-items: center; border: 1px solid var(--kleur-tekst); border-radius: 0;color: var(--kleur-tekst); background-color: var(--kleur-thema3); margin-right: calc(var(--afstand-zijkant) / 2); padding: 0 var(--afstand-zijkant)}
+button {font-size: 0.9rem; height: var(--hoogte-knoppen); display: flex; align-items: center; border: 1px solid var(--kleur-tekst); border-radius: 0;color: var(--kleur-tekst); background-color: var(--kleur-thema3); margin-right: calc(var(--afstand-zijkant) / 2); padding: 0 var(--afstand-zijkant)}
 
 h3 { font-size: 1.3em; font-weight: 600; margin-bottom: var(--afstand-zijkant);}
 h4 { font-weight: 600; font-size: 1.1em; margin: var(--afstand-zijkant) 0;}
@@ -135,7 +135,7 @@ form input[type="checkbox"] { -webkit-appearance: none; appearance: none; backgr
 form input[type="checkbox"]::before {content: "v"; transform: scale(0);}
 form input[type="checkbox"]:checked::before {transform: scale(1);}
 
-form#uitloggen button {-webkit-appearance: none; width: 100%; height: var(--hoogte-velden); color: var(--kleur-tekst);background-color: var(--kleur-thema); border: 1px solid var(--kleur-tekst); border-radius: 0; font-weight: normal; padding: 0 var(--afstand-zijkant);}
+form#uitloggen button {-webkit-appearance: none; justify-content: center; width: 100%; height: var(--hoogte-velden); color: var(--kleur-tekst);background-color: var(--kleur-thema); border: 1px solid var(--kleur-tekst); border-radius: 0; font-weight: normal; padding: 0 var(--afstand-zijkant);}
 
 
 
@@ -167,14 +167,20 @@ div.evenement {width: 100%; height: var(--hoogte-evenement); border-bottom: 1px 
 div.evenement > div {width: calc(100% - 4 * var(--hoogte-evenement) / 3); height: calc( var(--hoogte-evenement) / 3);}
 div.evenement > div > div {width: 100%; padding: 0 var(--afstand-zijkant); height: calc( var(--hoogte-evenement) / 3)}
 div.evenement > div > div.titel {display: flex; align-items: end; font-weight: 400; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; text-overflow:ellipsis;}
-div.evenement > div > div div:not(.titel) {font-size: 0.9rem;; font-weight: 300;} 
+div.evenement > div > div > div:not(.titel) {font-size: 0.9rem;; font-weight: 300;} 
 div.evenement > div > div.datum {display: flex; justify-content: space-between; align-items: center;}
 div.evenement > div > div.datum > div:first-of-type{flex-grow: 1; min-width: 69%;}
 div.evenement > div > div.datum > div:last-of-type {width: auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 div.evenement > div > div.locatie {display: flex; justify-content: space-between; align-items: start}
 div.evenement > div > div.locatie > div:first-of-type{flex-grow: 1 ;}
 div.evenement > div > div.locatie > div:last-of-type {width: auto; color: var(--kleur-tekst);}
+div.evenement > div > div.statistieken {display: none;}
 div.evenement > div > div > div.label {font-size: 0.8rem; opacity: 0.69;}
+
+.dashboard > div.evenement > div > div.locatie {display: none;}
+.dashboard > div.evenement > div > div.statistieken {display: flex; justify-content: space-between; align-items: start}
+.dashboard > div.evenement > div > div.statistieken > div:first-of-type {flex-grow: 1 ;}
+.dashboard > div.evenement > div > div.statistieken > div:last-of-type {width: auto; color: var(--kleur-tekst);}
 
 div.evenement figure { width: auto;height: var(--hoogte-evenement); border-right: 1px solid var(--kleur-tekst);}
 div.evenement.wegfilteren {display: none;}
@@ -191,11 +197,14 @@ div.commandos div button.rond { color: var(--kleur-tekst); border-radius: calc((
 div.commandos div.wat, div.commandos div#waar {display: none;}
 div.commandos div.wat.actief, div.commandos div#waar.actief {display: flex;}
 div.commandos div.wat button {text-transform:lowercase;}
-div.commandos div button.actief {background-color: var(--kleur-thema2);}
+div.commandos div.wat button.actief, div.commandos div#waar button.actief {background-color: var(--kleur-thema2);}
 
 div.commandos div#filters button {font-size: 0.9rem;}
+div.commandos div#filters button.actief {box-shadow: 0px 0px 0px 1px var(--kleur-tekst);}
 div.commandos div:not(#filters) button {font-weight: 300;}
 
+button[data-filter = 'locatie'], button[data-filter = 'locatie'] u, div#waar button {font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;}
+button[data-filter = 'categorie'], button[data-filter = 'categorie'] u, div.wat button {font-family: fantasy}
 
 /*/ / PUBLIEK en PRIVE EVENEMENT / /*/
 
@@ -206,7 +215,6 @@ div.bedieningspaneel form {width: auto;}
 form#antwoorden {padding: var(--afstand-zijkant);}
 form#antwoorden input:first-of-type {width: 60%;}
 form#antwoorden input[type="submit"] {width: 20%;}
-
 
 /*/ / EVENEMENT AANMAKEN / /*/
 

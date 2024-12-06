@@ -1,6 +1,6 @@
 <a href="{{ route('thuis') }}" class="{{ request()->routeIs('thuis') ? 'actief' : '' }}">catalogus</a> 
 @organisatie
-<a href="{{ route('overzicht-organisatie') }}" class="{{ request()->routeIs('overzicht-organisatie') ? 'actief' : '' }}">aangemaakt ({{$userEvents}})</a>
+<a href="{{ route('overzicht-organisatie') }}" class="{{ request()->routeIs('overzicht-organisatie') ? 'actief' : '' }}">dashboard ({{$userEvents}})</a>
 @else
 <a href="{{ route('overzicht-gebruiker') }}" class="{{ request()->routeIs('overzicht-gebruiker') ? 'actief' : '' }}">bewaard ({{$userEvents}})</a>
 @endif
