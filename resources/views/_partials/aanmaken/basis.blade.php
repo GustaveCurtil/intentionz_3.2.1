@@ -34,11 +34,13 @@
     <input type="text" name="stad" id="stad" maxlength="100" required 
     placeholder="stad*" 
     @if ($errors->any()) value="{{ old('stad') }}"
+    @elseif (isset($event)) value='{{ $event->stad}}'
     @elseif ($user->organisation && $user->organisation->stad) value="{{ $user->organisation->stad }}"  @endif>
 
     <div id="url_locatie">
         <input type="url" name="url_locatie" placeholder="url locatie"
         @if ($errors->any()) value="{{ old('url_locatie') }}"
+        @elseif (isset($event)) value='{{ $event->url_locatie}}'
         @elseif ($user->organisation && $user->organisation->url_locatie) value="{{ $user->organisation->url_locatie }}"  @endif>
         <div onclick="window.open('https://www.openstreetmap.org', '_blank')" id="openstreetmap">openstreetmap.org</div>
     </div>

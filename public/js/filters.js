@@ -110,7 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /*/ / BIJ HET DRUKKEN VAN EEN KNOP / /*/
 function knopIndrukken(knop) {
-    console.log(knop);
     if (knop.dataset.soort === 'locatie') {
         huidigeLocatie = knop.innerHTML;
         localStorage.setItem('stad', huidigeLocatie);
@@ -215,12 +214,14 @@ function systeemNaarLooks() {
 
     if (locatie.categorieen.length <= 2) {
         categorieFilter.style.display = 'none';
+    } else {
+        categorieFilter.style.display = 'inherit';
     }
 
     if (locatie.categorieen.length <= 2 && systeem.locaties.length <= 2) {
         filters.style.display = 'none';
         placeholder.style.display = 'none';
-    }
+    } 
     
     categorieGroep.classList.remove('actief')   
     locatieGroep.classList.remove('actief')

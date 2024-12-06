@@ -104,21 +104,6 @@ class PageController extends Controller
         return view('2_overzicht_organisatie', ['events' => $events]);
     }
 
-    public function aanmaken() 
-    {
-        $user = Auth::user();
-        if ($user->role === 'organisatie') {
-            $categoriesAll = PublicEvent::select('categorie')
-            ->groupBy('categorie')
-            ->orderByRaw('COUNT(*) DESC')
-            ->pluck('categorie');
-
-            return view('3_aanmaken', ['categories' => $categoriesAll]);
-        }
-
-        return view('3_aanmaken');
-    }
-
     public function aanmakenOrganisatie() 
     {
         $user = Auth::user();

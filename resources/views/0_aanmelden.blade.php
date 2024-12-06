@@ -5,6 +5,7 @@
 @section('head')
 @include('_partials.metadata')
 <script src="{{asset('js/loadingtime.js')}}" defer></script>
+<script src="{{asset('js/openstreetmaps.js')}}" defer></script>
 @endsection
 
 @section('main')
@@ -47,7 +48,7 @@
             <input type="text" name="organisatie_stad" id="organisatie_stad" placeholder="stad (optioneel)" value="{{old('organisatie_stad')}}">    
             <div id="url_locatie">
                 <input type="url" name="organisatie_url_locatie" id="organisatie_url_locatie" placeholder="map link (optioneel)" value="{{old('organisatie_url_locatie')}}">
-                <div onclick="window.open('https://www.openstreetmap.org', '_blank')">openstreetmap.org</div>
+                <div onclick="window.open('https://www.openstreetmap.org', '_blank')" id="openstreetmap">openstreetmap.org</div>
             </div>
             <input type="url" name="organisatie_url_website" id="organisatie_url_website" placeholder="website (optioneel)" value="{{old('organisatie_url_website')}}">
             <input type="submit" value="organisatie aanmaken">

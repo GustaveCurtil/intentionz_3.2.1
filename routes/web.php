@@ -13,11 +13,10 @@ use App\Http\Controllers\OrganisationController;
 Route::get('/', [PageController::class, 'thuis'])->middleware('detectDevice')->name('thuis');
 Route::get('/⌂', [PageController::class, 'overzichtGebruiker'])->middleware('detectDevice')->name('overzicht-gebruiker');
 Route::get('/⌨', [PageController::class, 'overzichtOrganisatie'])->middleware('detectDevice')->name('overzicht-organisatie');
-Route::get('/aanmaken', [PageController::class, 'aanmaken'])->middleware('auth')->name('aanmaken');
+Route::get('/aanmaken', [PublicEventController::class, 'aanmaken'])->middleware('auth')->name('aanmaken');
 // Route::get('/aanmaken-organisatie', [PageController::class, 'aanmakenOrganisatie'])->middleware('auth')->name('aanmaken-organisatie');
 Route::get('/instellingen', [PageController::class, 'instellingen'])->middleware('detectDevice')->name('instellingen');
 Route::get('/over', [PageController::class, 'over'])->middleware('detectDevice')->name('over');
-Route::get('/zen', [PageController::class, 'zen'])->middleware('detectDevice')->name('zen');
 
 Route::get('/aanmelden', [PageController::class, 'aanmelden'])->middleware('detectDevice')->name('aanmelden');
 Route::get('/registreren', [PageController::class, 'registreren'])->middleware('detectDevice')->name('registreren');
@@ -47,5 +46,6 @@ Route::post('/wijzigemail', [UserController::class, 'wijzigemail']);
 Route::post('/wijzig-adres', [OrganisationController::class, 'wijzigAdres']);
 
 /* EVENEMENT CRUD */
-Route::post('/maak-evenenement-openbaar', [PublicEventController::class, 'createEvent']);
-Route::get('/aanpassen/{event}', [PublicEventController::class, 'naarEditor'])->middleware('auth')->name('aanpassen');
+Route::post('/publiceer', [PublicEventController::class, 'createEvent']);
+Route::get('/editor/{event}', [PublicEventController::class, 'naarEditor'])->name('aanpassen');
+Route::post('/editor/{event}/publiceer', [PublicEventController::class, 'editEvent']);

@@ -16,8 +16,8 @@ function handleFileSelect(event) {
 
         img.onload = () => {
             // Set the desired output size (width and height)
-            const maxWidth = 600;  // Set the desired width
-            const maxHeight = 450; // Set the desired height
+            const maxWidth = 400;  // Set the desired width
+            const maxHeight = 300; // Set the desired height
 
             // Calculate the new dimensions based on the aspect ratio
             let width = img.width;
@@ -91,25 +91,32 @@ let sliderVerticaal = document.querySelector('#verticaal');
 let fotokader = document.querySelector('figure')
 let sliders = document.querySelector('#sliders')
 let colorPicker = document.querySelector('input[type="color"');
-// let achtergrond = document.querySelector('#achtergrond')
+let achtergrond = document.querySelector('#achtergrond')
 
-// achtergrond.addEventListener('change', (e) => {
-//     console.log(e.target.value);
-//     placeholder.remove();
-//     fotokader.style.backgroundImage = "url('./media/achtergronden/" + e.target.value + "')";
-// });
+achtergrond.addEventListener('change', (e) => {
+    console.log(e.target.value);
 
-if (foto.src && foto.src !== "") {
-    sliders.style.display = "inherit";
-}
+    if (editting) {
+        fotokader.style.backgroundImage = "url('../media/achtergronden/" + e.target.value + "')";     
+    } else {
+        fotokader.style.backgroundImage = "url('./media/achtergronden/" + e.target.value + "')";
+    }
+
+});
+
+// if (foto.src && foto.src !== "") {
+//     sliders.style.display = "inherit";
+// }
 
 let scaleValue = (sliderZoom.value / 100);
 let horizontaal = sliderHorizontaal.value;
 let verticaal = sliderVerticaal.value;
-foto.style.scale = scaleValue;
-foto.style.transform = "translate(-" + (50/scaleValue) + "%, -" + (50/scaleValue) + "%)"
-foto.style.top = verticaal + "%";
-foto.style.left = horizontaal + "%";
+
+document.addEventListener('DOMContentLoaded', (e) => {
+    foto.style.transform = "translate(-50%, -50%) scale(" + scaleValue + ")"
+    foto.style.top = verticaal + "%";
+    foto.style.left = horizontaal + "%";
+});
 
 let uploadButton = document.querySelector('input[type="file"]');
 uploadButton.addEventListener('change', handleFileSelect);
@@ -124,10 +131,8 @@ uploadButton.addEventListener('change', handleFileSelect);
 
 sliderZoom.addEventListener('input', (e) => {
     scaleValue = (e.target.value / 100);
-    foto.style.scale = scaleValue;
-    foto.style.transform = "translate(-" + (50/scaleValue) + "%, -" + (50/scaleValue) + "%)"
+    foto.style.transform = "translate(-50%, -50%) scale(" + scaleValue + ")"
 })
-
 
 sliderVerticaal.addEventListener('input', (e) => {
     verticaal = e.target.value
@@ -143,29 +148,26 @@ colorPicker.addEventListener('input', (e) => {
     fotokader.style.backgroundColor = e.target.value;
 });
 
+
+// Bij submition: maak een onzichtbaar inputveld aan om miniatuur te kunnen sturen naar de server.
 formule.addEventListener('submit', function (event) {
-    // Only prevent default if no image is compressed yet
-    if (!compressedImageBlob) {
-        alert('No image has been compressed yet.');
-        event.preventDefault(); // Prevent the form from submitting
-        return;
+    // Doe dit enkel als er een foto werd geüpload.
+    if (compressedImageBlob) {
+
+        // Create a new hidden file input element
+        const newFileInput = document.createElement('input');
+        newFileInput.type = 'file';
+        newFileInput.name = 'miniatuur'; // The name that the server will use to access the file
+        newFileInput.style.display = 'none'; // Hide the input element
+
+        // Create a DataTransfer object to simulate file selection
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(new File([compressedImageBlob], 'compressed_image.jpg'));
+        newFileInput.files = dataTransfer.files;
+
+        // Append the new file input to the form
+        formule.appendChild(newFileInput);
     }
-
-    // Create a new hidden file input element
-    const newFileInput = document.createElement('input');
-    newFileInput.type = 'file';
-    newFileInput.name = 'miniatuur'; // The name that the server will use to access the file
-    newFileInput.style.display = 'none'; // Hide the input element
-
-    // Create a DataTransfer object to simulate file selection
-    const dataTransfer = new DataTransfer();
-    dataTransfer.items.add(new File([compressedImageBlob], 'compressed_image.jpg'));
-    newFileInput.files = dataTransfer.files;
-
-    // Append the new file input to the form
-    formule.appendChild(newFileInput);
-
-    console.log('File input added:', dataTransfer.files);
 
 });
 

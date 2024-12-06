@@ -9,21 +9,28 @@
 <script src="{{ asset('js/datetimeplaceholder.js') }}" defer></script>
 <script src="{{ asset('js/terugknop.js') }}" defer></script>
 <script src="{{asset('js/loadingtime.js')}}" defer></script>
+<script src="{{asset('js/openstreetmaps.js')}}" defer></script>
 @endsection
 
 @section('terugknop')
-<a id="terugknop" href="/">terug zonder op te slaan</a>
+<a id="terugknop" href="/">terug zonder opslaan</a>
 @endsection
 
 @section('main')
 <main id="geen-nav">
-    <figure class="poster"><small style='opacity:var(--transparantie)'>ratio 4:3</small><img></figure>
+    <figure class="poster" @if (isset($event)) style="background-color: {{$event->kleur}}; background-image: url(../media/achtergronden/{{$event->achtergrond_pad}})" @endif><small style='opacity:var(--transparantie)'>ratio 4:3</small>
+        <img @if (isset($event)) src="../storage/posters/{{ $event->foto_pad }}" style="left: {{ $event->horizontaal }}%; top: {{ $event->verticaal }}%;" @endif>
+    </figure>
     <canvas id="canvas" style="display:none;"></canvas>
     <section  id="aanmaken">
         @gebruiker
         <p>Voorlopig is deze pagina nog niet functioneel als gebruiker (wel als organisatie)</p>
         @endgebruiker
-        <form action="maak-evenenement-openbaar" method="post" enctype="multipart/form-data">
+        @if (isset($event))
+        <form action="/editor/{{$event->id}}/publiceer" method="post" enctype="multipart/form-data">
+        @else
+        <form action="publiceer" method="post" enctype="multipart/form-data">
+        @endif
             @csrf
             <div id="poster-editor">
                 <div>
@@ -32,12 +39,17 @@
                         <input type="file" name="foto" id="foto" accept=".jpg, .jpeg, .png">
                     </fieldset>      
                     <fieldset>
-                        <select name="achtergrond" id="achtergrond">
+                        <select name="achtergrond_pad" id="achtergrond">
                             <option value="geen">achtergrondbeeld</option>
-                            <option value="konijnen.gif">konijnen.gif</option>
-                            <option value="trippen.gif">trippen.gif</option>
-                            <option value="vierkanten.gif">vierkanten.gif</option>
-                            <option value="hellal.jpeg">hellal.jpeg</option>
+                            @foreach ($achtergronden as $achtergrond)
+                            @if ($errors->any())    
+                            <option value="{{ $achtergrond }}" {{ old('achtergrond') == $achtergrond ? 'selected' : '' }}>{{$achtergrond }}</option>
+                            @elseif (isset($event))
+                            <option value="{{ $achtergrond }}" {{ $event->achtergrond_pad == $achtergrond ? 'selected' : '' }}>{{$achtergrond }}</option>
+                            @else
+                            <option value="{{ $achtergrond }}" >{{$achtergrond }}</option>
+                            @endif
+                            @endforeach
                         </select>
                         <input type="color" name="kleur" id="kleur" value="#e1e177">
                     </fieldset>
@@ -45,7 +57,7 @@
                 <fieldset id="sliders">
                     <div>
                         <label for="zoom">zoom</label>
-                        <input type="range" name="zoom" id="zoom" min="50" max="400" value="100" list="zoom-punt">
+                        <input type="range" name="zoom" id="zoom" min="50" max="400" value="{{ old('zoom') ?? $event->zoom ?? 100 }}" list="zoom-punt">
                         <datalist id="zoom-punt">
                             <option value="100"></option>
                         </datalist>
@@ -53,7 +65,7 @@
         
                     <div>
                         <label for="horizontaal">horizontaal</label>
-                        <input type="range" name="horizontaal" id="horizontaal" min="0" max="100" value="50" list="horizontaal-punt">
+                        <input type="range" name="horizontaal" id="horizontaal" min="-100" max="200" value="{{ old('horizontaal') ?? $event->horizontaal ?? 50 }}" list="horizontaal-punt">
                         <datalist id="horizontaal-punt">
                             <option value="50"></option>
                         </datalist>
@@ -61,7 +73,7 @@
         
                     <div>
                         <label for="verticaal">verticaal</label>
-                        <input type="range" name="verticaal" id="verticaal" min="0" max="100" value="50" list="verticaal-punt">
+                        <input type="range" name="verticaal" id="verticaal" min="-100" max="200" value="{{ old('verticaal') ?? $event->verticaal ?? 50 }}" list="verticaal-punt">
                         <datalist id="verticaal-punt">
                             <option value="50"></option>
                         </datalist>
@@ -73,19 +85,37 @@
             @include('_partials.aanmaken.basis')
 
             @organisatie
+            <fieldset>
+                <input type="url" name='evenement_url' id='evenement-url' placeholder="website v/h evenement (of organisatie)" 
+                @if ($errors->any()) value="{{ old('evenement_url') }}"
+                @elseif ($user->organisation->url_website) value="{{ $user->organisation->url_website }}"  @endif>
+            </fieldset>
+
             <fieldset id="categorieen">
-                <select name="categorie" id="categorie">
-                    <option value="geen">categorie*</option>
-                    <option value="film">film</option>
-                    <option value="muziek">muziek</option>
-                    <option value="voorstelling">voorstelling</option>
-                    <option value="dansen">dansen</option>
-                    <option value="expo">expo</option>
+                <select name="categorie" id="categorie" required>
+                    <option value="" disabled selected hidden>categorie*</option>
+                    @foreach ($categories as $categorie => $labels)
+                    @if ($errors->any())    
+                    <option value="{{ $categorie }}" {{ old('categorie') == $categorie ? 'selected' : '' }}>{{$categorie }}</option>
+                    @elseif (isset($event))
+                    <option value="{{ $categorie }}" {{ $event->categorie == $categorie ? 'selected' : '' }}>{{$categorie }}</option>
+                    @else
+                    <option value="{{ $categorie }}">{{$categorie }}</option>
+                    @endif
+                    @endforeach
                 </select>
-                <input type="text" name="label" id="label" placeholder="label*" maxlength="22" required>
+            
+                <input type="text" name="subcategorie" id="subcategorie" placeholder="label" maxlength="22"
+                @if ($errors->any()) value="{{ old('subcategorie') }}" 
+                @elseif (isset($event)) value='{{ $event->subcategorie}}'
+                @endif
+                >
+            
                 <div>
-                    @foreach ($categories as $category)
-                    <button>{{$category}}</button>
+                    @foreach ($categories as $categorie => $labels)
+                        @foreach ($labels as $label)
+                            <button data-categorie="{{ $categorie }}">{{ $label }}</button>
+                        @endforeach
                     @endforeach
                     <button id="nieuweKnop"></button>
                 </div>
@@ -93,17 +123,14 @@
             @endorganisatie
 
             <fieldset>
-                <textarea name="beschrijving" id="beschrijving" maxlength="5000" placeholder="beschrijving">@if ($errors->any()) {{ old('beschrijving') }} @endif</textarea>
+                @if ($errors->any())
+                <textarea name="beschrijving" id="beschrijving" maxlength="5000" placeholder="beschrijving">{{ old('beschrijving') }}</textarea>
+                @elseif (isset($event))
+                <textarea name="beschrijving" id="beschrijving" maxlength="5000" placeholder="beschrijving">{{$event->beschrijving}}</textarea>
+                @else
+                <textarea name="beschrijving" id="beschrijving" maxlength="5000" placeholder="beschrijving"></textarea>
+                @endif
             </fieldset>
-
-            @organisatie
-            <fieldset>
-                <input type="url" name='evenement_url' id='evenement-url' placeholder="website evenement" 
-                @if ($errors->any()) value="{{ old('evenement_url') }}"
-                @elseif ($user->organisation->url_website) value="{{ $user->organisation->url_website }}"  @endif>
-            </fieldset>
-            @endorganisatie
-
             
             <input type="submit" value="opslaan">
         </form>
@@ -114,54 +141,110 @@
 @section('script')
 
 <script>
+    let editting = false;
+    @if (isset($event))
+    editting = true;
+    @endif
     let categorieen = document.querySelector('#categorieen');
     let knoppen = document.querySelectorAll('#categorieen button');
-    let labelVeld = document.querySelector('#label')
+    let zichtbareKnoppen = [];
+    let labelVeld = document.querySelector('#subcategorie')
     let nieuweKnop = document.querySelector("#nieuweKnop");
 
     document.addEventListener('DOMContentLoaded', function() {
+        
+        //DIT IS OM DE KLEUR VAN DE SELECT ELEMENT GRIJZIG TE MAKEN WANNEER ER NOG NIETS IS GESELECTEERD!
+        const selecta = document.querySelector('#categorie');
+        const options = document.querySelectorAll('#categorie option');
+        const textarea = document.querySelector('textarea');
+        const placeholderColor = window.getComputedStyle(textarea, '::placeholder').color;
+
+        const rgbColor = placeholderColor;
+        const rgbMatch = rgbColor.match(/\d+/g);
+        const red = rgbMatch[0];
+        const green = rgbMatch[1];
+        const blue = rgbMatch[2];
+        const alpha = 'var(--transparantie)';
+        const rgbaColor = `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+
+        if (selecta.value == '') {
+            selecta.style.color = rgbaColor;
+        } else {
+            zichtbareKnoppen = [];
+            knoppen.forEach(knop => {
+                if (knop.dataset.categorie == selecta.value) {
+                    knop.style.display = 'inherit';
+                    zichtbareKnoppen.push(knop);
+                    knop.classList.add('actief');
+                }
+            });
+        }
+
+        selecta.addEventListener('change', (e) => {
+            knoppen.forEach(knop => {
+                knop.style.display = 'none';
+            });
+            zichtbareKnoppen = [];
+            selecta.style.color= 'var(--kleur-tekst)';
+            knoppen.forEach(knop => {
+                if (knop.dataset.categorie == selecta.value) {
+                    knop.style.display = 'inherit';
+                    zichtbareKnoppen.push(knop);
+                }
+            });
+            inhoudNieuweKnop(labelVeld)
+        })
+
+        // EINDE SELECT GRIJSMAKER
+
+        // Toon welke knop is ingedrukt
         knoppen.forEach(knop => {
             knop.addEventListener('click', (e) => {
                 e.preventDefault();
-                console.log(e);
                 knoppen.forEach(knop => {
                     knop.classList.remove('actief');
                 });
-                labelVeld.value = knop.textContent;
-                knop.classList.add('actief');
+                if (knop.innerHTML === labelVeld.value) {
+                    labelVeld.value = "";
+                } else {
+                    labelVeld.value = knop.textContent;
+                    knop.classList.add('actief');
+                }
+                inhoudNieuweKnop(labelVeld)
             })
         });
 
-
+        // Bij aanpassen inputveld, maak een nieuwe knop en laat deze actief staan.
         labelVeld.addEventListener('input', (e) => {
             knoppen.forEach(knop => {
                 knop.classList.remove('actief');
             });
+            inhoudNieuweKnop(labelVeld)
+        })
+    });
+
+    function inhoudNieuweKnop(labelVeld) {
+        
+        if (labelVeld.value.length > 0) {
             nieuweKnop.innerHTML = labelVeld.value;
             nieuweKnop.style.display = 'inherit';
             nieuweKnop.classList.add('actief');
-        })
-
-
-
-        //LOCATIE URL voor OpenStreetMap verstoppen bij een value
-        let urlLocatie = document.querySelector('#url_locatie');
-        let osm = document.querySelector('#openstreetmap');
-
-        if (urlLocatie.value) {
-            osm.style.display='none';
         } else {
-            osm.style.display='block'
+            nieuweKnop.style.display = 'none'
         }
 
-        urlLocatie.addEventListener('input', (e) => {
-            if (urlLocatie.value) {
-            osm.style.display='none';
-        } else {
-            osm.style.display='block'
-        }
-        })
-    });
+        zichtbareKnoppen.forEach(knop => {
+            if (knop.innerHTML === labelVeld.value) {
+                knop.classList.add('actief');
+                nieuweKnop.style.display = 'none';
+                nieuweKnop.classList.remove('actief');
+                nieuweKnop.innerHTML = "";
+            }
+        });
+    }
+
+
+    
 </script>
 
 @endsection
