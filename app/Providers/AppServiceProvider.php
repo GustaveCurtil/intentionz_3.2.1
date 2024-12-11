@@ -31,8 +31,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Carbon::macro('eersteTweeLetters', function () {
-            $dayName = $this->locale('nl')->translatedFormat('l');
-            return mb_substr($dayName, 0, 2); 
+            $dayName = $this->locale('nl')->translatedFormat('l'); // Haal de volledige naam van de dag op in het Nederlands
+            $shortDayName = mb_substr($dayName, 0, 2); // Haal de eerste twee letters van de dagnaam
+            return ucfirst($shortDayName); // Zet de eerste letter van de afkorting om naar een hoofdletter
         });
     }
 }

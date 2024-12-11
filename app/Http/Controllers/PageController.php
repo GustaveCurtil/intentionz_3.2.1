@@ -15,27 +15,31 @@ class PageController extends Controller
     public function thuis() 
     {
 
-        $today = Carbon::today();
-        $startOfWeek = $today->startOfWeek(); // Start of this week (Sunday or Monday based on locale)
-        $endOfWeek = $today->endOfWeek();   // End of this week
-        $startNextWeek = $endOfWeek->addDay(); // Start of next week
+        $today = Carbon::now()->startOfDay();
+        // $startOfWeek = $today->startOfWeek(); // Start of this week (Sunday or Monday based on locale)
+        $endOfWeek = $today->copy()->endOfWeek();   // End of this week
+        $startNextWeek = $endOfWeek->copy()->addDay(); // Start of next week
         $endNextWeek = $startNextWeek->copy()->endOfWeek(); // End of next week
 
         // Events this week
-        $eventsDezeWeek = PublicEvent::where('datum', '>=', $startOfWeek)
+        $eventsDezeWeek = PublicEvent::where('datum', '>=', $today)
                                     ->where('datum', '<=', $endOfWeek)
                                     ->orderBy('datum', 'asc')
+                                    ->orderBy('tijd', 'asc')   
                                     ->get();
+
 
         // Events next week
         $eventsVolgendeWeek = PublicEvent::where('datum', '>=', $startNextWeek)
                                         ->where('datum', '<=', $endNextWeek)
                                         ->orderBy('datum', 'asc')
+                                        ->orderBy('tijd', 'asc')   
                                         ->get();
 
         // Events after next week
         $eventsVerder = PublicEvent::where('datum', '>', $endNextWeek)
                                 ->orderBy('datum', 'asc')
+                                ->orderBy('tijd', 'asc')   
                                 ->get();
 
         $categoriesAll = PublicEvent::select('categorie')
@@ -57,30 +61,15 @@ class PageController extends Controller
         }
 
         foreach ($eventsDezeWeek as $event) {
-            $event->tijd = Carbon::parse($event->tijd)->format('H:i'); // Format time
-            $eventDate = Carbon::parse($event->datum); // Parse date
-        
-            // Format datum (date)
-            $dagAfkorting = $eventDate->eersteTweeLetters(); // Custom method for the first two letters of the day
-            $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m'); // Apply the format
+            $this->dataVershroemelaar($event);
         }
         
         foreach ($eventsVolgendeWeek as $event) {
-            $event->tijd = Carbon::parse($event->tijd)->format('H:i'); // Format time
-            $eventDate = Carbon::parse($event->datum); // Parse date
-        
-            // Format datum (date)
-            $dagAfkorting = $eventDate->eersteTweeLetters(); // Custom method for the first two letters of the day
-            $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m'); // Apply the format
+            $this->dataVershroemelaar($event);
         }
         
         foreach ($eventsVerder as $event) {
-            $event->tijd = Carbon::parse($event->tijd)->format('H:i'); // Format time
-            $eventDate = Carbon::parse($event->datum); // Parse date
-        
-            // Format datum (date)
-            $dagAfkorting = $eventDate->eersteTweeLetters(); // Custom method for the first two letters of the day
-            $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m'); // Apply the format
+            $this->dataVershroemelaar($event);
         }
 
         return view('1_evenementen', ['eventsDezeWeek' => $eventsDezeWeek, 'eventsVolgendeWeek' => $eventsVolgendeWeek, 'eventsVerder' => $eventsVerder, 'categoriesAll' => $categoriesAll, 'steden' => $stedenMetCategories]);
@@ -100,21 +89,28 @@ class PageController extends Controller
         $events = $guest->savedPublicEvents()->orderBy('datum', 'asc')->get();
 
         foreach ($events as $event) {
-            $event->tijd = Carbon::parse($event->tijd)->format('H\ui');
-            $eventDate = Carbon::parse($event->datum);
-            // if ($eventDate->isToday()) {
-            //     $event->datum = 'vandaag';
-            // } elseif ($eventDate->isTomorrow()) {
-            //     $event->datum = 'morgen ' . $eventDate->translatedFormat('d/m/Y');
-            // } else {
-            //     $dagAfkorting = $eventDate->eersteTweeLetters();
-            //     $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m/Y');
-            // }
-            $dagAfkorting = $eventDate->eersteTweeLetters();
-            $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m');
+            $this->dataVershroemelaar($event);
         }
+
         return view('2_overzicht_gebruiker', ['events' => $events]);
 
+    }
+
+    public function dataVershroemelaar($event) {
+        $event->tijd = Carbon::parse($event->tijd)->format('H:i');
+        $eventDate = Carbon::parse($event->datum);
+        if ($eventDate->isToday()) {
+            $event->datum = 'Vandaag';
+        } elseif ($eventDate->isTomorrow()) {
+            $event->datum = 'Morgen';
+        } else {
+            $dagAfkorting = $eventDate->eersteTweeLetters();
+            $event->dag = $dagAfkorting . ",";
+            $event->datum = $eventDate->translatedFormat('d M');
+
+            $event->datum = str_replace('.', '', $event->datum);
+        }
+        return $event;
     }
 
     public function overzichtOrganisatie() 
@@ -122,18 +118,7 @@ class PageController extends Controller
         $user = auth()->guard()->user();
         $events = PublicEvent::where('user_id', $user->id)->orderBy('datum', 'asc')->get();
         foreach ($events as $event) {
-            $event->tijd = Carbon::parse($event->tijd)->format('H\ui');
-            $eventDate = Carbon::parse($event->datum);
-            // if ($eventDate->isToday()) {
-            //     $event->datum = 'vandaag';
-            // } elseif ($eventDate->isTomorrow()) {
-            //     $event->datum = 'morgen ' . $eventDate->translatedFormat('d/m/Y');
-            // } else {
-            //     $dagAfkorting = $eventDate->eersteTweeLetters();
-            //     $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m/Y');
-            // }
-            $dagAfkorting = $eventDate->eersteTweeLetters();
-            $event->datum = $dagAfkorting . ' ' . $eventDate->translatedFormat('d/m');
+            $this->dataVershroemelaar($event);
         }
         return view('2_overzicht_organisatie', ['events' => $events]);
     }

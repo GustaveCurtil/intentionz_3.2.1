@@ -30,9 +30,15 @@
 </style>
 <body>
     <header>
-        <div>@yield('terugknop')</div>
+        <div>
+            @hasSection('terugknop')
+                @yield('terugknop')
+            @else
+                <a href="{{ route('over') }}" class="{{ request()->routeIs('over') ? 'actief' : '' }}">over</a>
+            @endif
+        </div>
         @if(!request()->routeIs('aanmaken'))
-        <div><a href="{{ route('over') }}"><img src="{{ asset('favicon.ico') }}" alt="" srcset=""></a></div>
+        <div>wo 10 dec</div>
         <div>
             <a href="{{ route('instellingen') }}" class="{{ request()->routeIs('instellingen') ? 'actief' : '' }}">
                 @if ($user)

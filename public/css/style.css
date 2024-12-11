@@ -12,7 +12,7 @@ html {
     font-size: 1rem;
     padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
-@media (min-width: 1020px) {html { font-size: 20px;}}
+/* @media (min-width: 1140px) {html { font-size: 26px;}} */
 
 :root {
     --kleur-achtergrond:#cedbcf;
@@ -24,16 +24,15 @@ html {
 
     --transparantie: 0.69;
 
-    --hoogte-header: 1.6rem;
-/*    --hoogte-navigatie: calc(1.8rem + env(safe-area-inset-bottom));*/
+    --hoogte-header: 1.8rem;
     --hoogte-navigatie: calc(2.2rem + env(safe-area-inset-bottom)); 
     --hoogte-velden: 1.8rem;
-    --hoogte-evenement: 3.8rem;
+    --hoogte-evenement: 5.4rem;
     --hoogte-knoppen: 1.6rem;
     --afstand-zijkant: 0.5rem;
     --afstand-bovenkant: 1.2rem;
 
-    --screen-wide:1020px;
+    --screen-wide:1140px;
 }
 
 ::-webkit-scrollbar {width: var(--afstand-zijkant);}
@@ -50,7 +49,7 @@ input[type=time]:focus::-webkit-datetime-edit {color: var(--kleur-tekst) !import
 /* #region ALGEMENE STRUCTUUR */
 
 a {color: var(--kleur-tekst);}
-button {font-size: 0.9rem; height: var(--hoogte-knoppen); display: flex; align-items: center; border: 1px solid var(--kleur-tekst); border-radius: 0;color: var(--kleur-tekst); background-color: var(--kleur-thema3); margin-right: calc(var(--afstand-zijkant) / 2); padding: 0 var(--afstand-zijkant)}
+button {font-size: 0.9rem; height: var(--hoogte-knoppen); display: flex; align-items: center; border: 1px solid var(--kleur-tekst); border-radius: 0;color: var(--kleur-tekst); background-color: var(--kleur-thema3); padding: 0 var(--afstand-zijkant)}
 
 h3 { font-size: 1.3em; font-weight: 600; margin-bottom: var(--afstand-zijkant);}
 h4 { font-weight: 600; font-size: 1.1em; margin: var(--afstand-zijkant) 0;}
@@ -60,17 +59,14 @@ body { height: 100svh; width: 100vw; overflow: hidden; background-color: var(--k
 
 header { height: var(--hoogte-header); width: 100%; line-height: var(--hoogte-header); font-size: 0.9rem; display: flex; align-items: center; border-bottom: 1px solid var(--kleur-tekst);}
 header div {height: 100%;}
-header div:first-of-type {width: 45%; text-align: left; padding-left: var(--afstand-zijkant);}
-header div:nth-last-of-type(2) {width: 10%; display: flex; justify-content: center;}
-header div:nth-last-of-type(2) img { margin: calc(var(--afstand-zijkant) / 2);}
-header div:nth-last-of-type(2) a {display: flex; justify-content: center; align-items: center; }
-header div:last-of-type {width: 45%; text-align: right; padding-right: var(--afstand-zijkant);}
+header div:first-of-type {width: 35%; text-align: left; padding-left: var(--afstand-zijkant);}
+header div:nth-last-of-type(2) {width: 30%; display: flex; justify-content: center; font-weight: 400;}
+header div:last-of-type {width: 35%; text-align: right; padding-right: var(--afstand-zijkant);}
 header div:last-of-type:first-of-type {width: 100%; text-align: left;}
 header div:last-of-type:first-of-type span {font-weight: 500;}
 header div a {display: inline-block; width: 100%; height: 100%;}
-#loading {display: none;}
 
-main { width: 100%; height: calc(100svh - var(--hoogte-header) - var(--hoogte-navigatie)); overflow-y: auto; background-color: var(--kleur-achtergrond);}
+main { width: 100%; height: calc(100svh - var(--hoogte-header) - var(--hoogte-navigatie)); overflow-y: auto; position: relative;}
 main#geen-nav {height: calc(100svh - var(--hoogte-header));}
 
 nav { width: 100%; height: var(--hoogte-navigatie); display: flex; justify-content: space-evenly; align-items: center; padding-bottom: env(safe-area-inset-bottom); font-size: 1.2rem; border-top: 1px solid var(--kleur-tekst); background-color: var(--kleur-thema);}
@@ -83,8 +79,8 @@ section { width: calc(100% - 2 * var(--afstand-zijkant));}
 section {margin: var(--afstand-bovenkant) auto;}
 section:first-of-type {margin-top: var(--afstand-zijkant);}
 
-@media (min-width: 1020px) {
-    figure.poster, section:not(.evenementen, .organisaties) { width: calc(100% / 3);}
+@media (min-width: 1140px) {
+    figure.poster, section:not(.organisaties) { width: calc(100% / 2);}
     figure.poster {margin: 0 auto; border: 1px solid var(--kleur-tekst); border-top: 0;}
 }
 
@@ -161,57 +157,76 @@ form div#url_locatie div {height: var(--hoogte-velden); line-height: var(--hoogt
 
 /*/ EVENEMENTEN DISPLAYEN / /*/
 
-section.evenementen {width: 100%;margin: 0;}
+section.evenementen { width: 100%;margin: 0;}
 
-div.week {position: relative; display: flex; flex-direction: column;}
-div.week > div:first-of-type {position: sticky; top: 0; z-index: 30; width: 100%; height: var(--hoogte-knoppen); display: flex; align-items: center; text-transform: uppercase; border-bottom: 1px solid var(--kleur-tekst); padding-left: calc(var(--afstand-zijkant)); background-color: var(--kleur-thema3);}
-div.geen-evenementen {height: var(--hoogte-knoppen); border-bottom: 1px solid var(--kleur-tekst); padding-left: var(--afstand-zijkant); display: flex; align-items:center;}
+div.week { display: flex; flex-direction: column; position: relative}
+div.week > div:first-of-type {position: sticky; top:0; z-index: 30; width: 100%; font-weight: 400; height: calc(var(--hoogte-evenement) / 4); font-size: 1rem; display: flex; justify-content: center; border-bottom: 1px solid var(--kleur-tekst); background-color: var(--kleur-thema3);}
+div.geen-evenementen {height: calc(var(--hoogte-evenement) / 4); border-bottom: 1px solid var(--kleur-tekst); padding-left: var(--afstand-zijkant); display: flex; align-items:center;}
 
-div.evenement {width: 100%; height: var(--hoogte-evenement); border-bottom: 1px solid var(--kleur-tekst); display: flex;}
-div.evenement > div {width: calc(100% - 4 * var(--hoogte-evenement) / 3); height: calc( var(--hoogte-evenement) / 3);}
-div.evenement > div > div {width: 100%; padding: 0 var(--afstand-zijkant); height: calc( var(--hoogte-evenement) / 3)}
-div.evenement > div > div.titel {display: flex; align-items: end; font-weight: 400; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; text-overflow:ellipsis;}
-div.evenement > div > div > div:not(.titel) {font-size: 0.9rem;; font-weight: 300;} 
+div.evenement {width: 100%; height: var(--hoogte-evenement); border-bottom: 1px solid var(--kleur-tekst); display: flex; font-weight: 300;}
+div.evenement > div {position: relative; width: calc(100% - 4 * var(--hoogte-evenement) / 3); height: var(--hoogte-evenement); display: flex; flex-direction: column; justify-content: space-evenly;}
+div.evenement > div > div {width: 100%; padding: 0 calc(var(--afstand-zijkant));}
+div.evenement > div > div.titel {height: calc(var(--hoogte-evenement) / 2) ; display: flex; flex-direction: column; justify-content: center;}
+div.evenement > div > div.titel span {font-size: 1.1rem; max-height: calc(var(--hoogte-evenement) / 2); line-height: calc(var(--hoogte-evenement) / 4); display: -webkit-box; /* Use a flexbox-like container */ -webkit-box-orient: vertical; /* Make the box vertical */-webkit-line-clamp: 2;  align-items: center; font-weight: 500; text-overflow: ellipsis; overflow: hidden;}
+div.evenement > div > div:not(.titel) { height: calc(var(--hoogte-evenement) / 4); display: flex; align-items: center;}
+div.evenement > div > div > div:not(.titel) {font-size: 0.9rem; justify-content: center; line-height: calc(var(--hoogte-evenement) / 4);} 
+
 div.evenement > div > div.datum {display: flex; justify-content: space-between; align-items: center;}
-div.evenement > div > div.datum > div:first-of-type{flex-grow: 1; min-width: 69%;}
-div.evenement > div > div.datum > div:last-of-type {width: auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-div.evenement > div > div.locatie {display: flex; justify-content: space-between; align-items: start}
-div.evenement > div > div.locatie > div:first-of-type{flex-grow: 1 ;}
-div.evenement > div > div.locatie > div:last-of-type {width: auto; color: var(--kleur-tekst);}
-div.evenement > div > div.statistieken {display: none;}
-div.evenement > div > div > div.label {font-size: 0.8rem; opacity: 0.69;}
+div.evenement > div > div.datum > div:first-of-type {font-weight: 400;}
+div.evenement > div > div.datum > div:first-of-type span:first-of-type {font-weight: 500;}
+div.evenement > div > div.datum > div:last-of-type {width: auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 0.8rem;}
 
-.dashboard > div.evenement > div > div.locatie {display: none;}
-.dashboard > div.evenement > div > div.statistieken {display: flex; justify-content: space-between; align-items: start}
+div.evenement > div > div.labels {display: flex; justify-content: space-between; align-items: center;}
+div.evenement > div > div.labels > div:last-of-type {width: auto; color: var(--kleur-tekst);}
+div.evenement > div > div.statistieken {display: none;}
+div.evenement > div > div > div.label {font-size: 0.8rem; display: flex; justify-content:  center; text-transform: capitalize; font-weight: 300;}
+div.evenement > div > div > div.label span {font-style: italic;}
+
+.dashboard > div.evenement > div > div.labels {display: none;}
+.dashboard > div.evenement > div > div.statistieken {display: flex; justify-content: center; align-items: center;}
 .dashboard > div.evenement > div > div.statistieken > div:first-of-type {flex-grow: 1 ;}
 .dashboard > div.evenement > div > div.statistieken > div:last-of-type {width: auto; color: var(--kleur-tekst);}
 
-div.evenement figure { width: auto;height: var(--hoogte-evenement); border-right: 1px solid var(--kleur-tekst);}
+div.evenement figure { width: auto;height: var(--hoogte-evenement); border-right: 0px solid var(--kleur-tekst);}
 div.evenement.wegfilteren {display: none;}
 
+@media (min-width: 1140px) {
+    section.evenementen{ width: calc(100% / 3);}
+    div.evenement {border-left: 1px solid var(--kleur-tekst);}
+    div.week > div:first-of-type {border: 1px solid var(--kleur-tekst); border-top: 0;}
+}
 
 /*/ / FILTERS / /*/
 div#laatst-bijgewerkt { width: 100%; display: flex; justify-content: center; align-items: center;}
 
-div.commandos {width: 100%; position: absolute; bottom: calc(var(--hoogte-navigatie)); padding:  calc(0.75 * var(--afstand-zijkant)); padding-bottom: 0; pointer-events: none; z-index: 40;}
-div.commandos div { margin-bottom: calc(var(--afstand-zijkant) - var(--afstand-zijkant)/4) ; display: flex; flex-wrap: wrap;}
-div.commandos div button { pointer-events: auto; display: inline-flex; margin: calc(var(--afstand-zijkant)/4); touch-action: manipulation;}
-div.commandos div button.rond { color: var(--kleur-tekst); border-radius: calc((var(--hoogte-evenement) / 3));}
+div.commandos {width: 100%; position: fixed; bottom: calc(var(--hoogte-navigatie)); padding:  calc(var(--afstand-zijkant)); padding-bottom: 0; pointer-events: none; z-index: 40; display: flex; flex-direction: column; align-items: left;}
+div.commandos > div { margin-bottom: var(--afstand-zijkant); display: flex; flex-wrap: wrap;}
+div.commandos > div button { pointer-events: auto; display: inline-flex; touch-action: manipulation;}
+div.commandos > div button.rond { color: var(--kleur-tekst); border-radius: calc((var(--hoogte-evenement) / 3));}
 
-div.commandos div.wat, div.commandos div#waar {display: none;}
-div.commandos div.wat.actief, div.commandos div#waar.actief {display: flex;}
-div.commandos div.wat button {text-transform:lowercase;}
-div.commandos div.wat button.actief, div.commandos div#waar button.actief {background-color: var(--kleur-thema2);}
+div.commandos > div.wat, div.commandos > div#waar {display: none;}
+div.commandos > div.wat.actief, div.commandos > div#waar.actief {display: flex;}
+div.commandos > div.wat button {text-transform:lowercase;}
+div.commandos > div.wat button.actief, > div.commandos > div#waar button.actief {background-color: var(--kleur-thema2);}
 
-div.commandos div#filters button {font-size: 0.9rem;}
-div.commandos div#filters button.actief {box-shadow: 0px 0px 0px 1px var(--kleur-tekst);}
-div.commandos div:not(#filters) button {font-weight: 300;}
-
-button[data-filter = 'locatie'], button[data-filter = 'locatie'] u, div#waar button {font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;}
-button[data-filter = 'categorie'], button[data-filter = 'categorie'] u, div.wat button {font-family:cursive;}
+div.commandos > div#filters {width: 100%;}
+div.commandos > div#filters > div {display: flex; gap: calc(var(--afstand-zijkant) / 2); width: 100%;}
+div.commandos > div#filters > div:not(:last-of-type) {margin-bottom: calc(var(--afstand-zijkant) / 2);}
+div.commandos > div#filters > div button {margin: O; font-size: 0.9rem; flex: 1; display: inline-flex; justify-content: space-between;}
+div.commandos > div#filters > div button.actief {background-color: var(--kleur-thema2);} /*/ box-shadow: 0px 0px 0px 1px var(--kleur-tekst); /*/
+div.commandos > div:not(#filters) button {font-weight: 300;}
+div.commandos > div#filters > div button span {pointer-events: none;}
+div.commandos > div#filters > div button span:first-of-type {padding-right: var(--afstand-zijkant);}
+div.commandos > div#filters > div button span:last-of-type {text-decoration: underline;}
+/* button[data-filter = 'locatie'] span:first-of-type, div#waar button {font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;}
+button[data-filter = 'categorie'] span:first-of-type, div.wat button {font-family:cursive;} */
 
 /*/ / PUBLIEK en PRIVE EVENEMENT / /*/
-
+@media (min-width: 1140px) {
+    main#evenement-pagina {display: flex; justify-content: space-evenly; align-items: start; overflow-y: hidden;}
+    main#evenement-pagina > div {width: 50%; overflow-y: auto; height: 100%;}
+    main#evenement-pagina > div > * {width: 100%; padding: 0 var(--afstand-zijkant);}
+}
 div.bedieningspaneel {display: flex; flex-wrap: wrap;}
 div.bedieningspaneel form {width: auto;}
 .bedieningspaneel button.actief {background-color: var(--kleur-thema2);}
@@ -269,7 +284,7 @@ form textarea {height: calc(12 * var(--hoogte-velden)); line-height: var(--hoogt
 
 section#aanmaken form {position: relative; margin-bottom: calc(var(--hoogte-velden) + var(--afstand-bovenkant));}
 section#aanmaken form input[type='submit'] {position: fixed; bottom: 0; left: 0; width: 100%; border: 0; border-top: 1px solid var(--kleur-tekst); z-index: 20;}
-@media (min-width: 1020px) {
+@media (min-width: 1140px) {
     section#aanmaken form input[type='submit'] { width: 100%;}
 }
 

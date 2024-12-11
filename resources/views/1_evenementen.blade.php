@@ -67,8 +67,14 @@
         @endforeach
     </div>
     <div id="filters">
-        <button data-filter='locatie'>locatie: <u>overal</u></button>
-        <button data-filter='categorie'>categorie: <u>alles</u></button>
+        <div>
+            <button data-filter='locatie'><span>locatie:</span><span>overal</span></button>
+            <button data-filter='categorie'><span>categorie:</span><span>alles</span></button>
+        </div>
+        <div>
+            <button data-filter='periode'>periode</button>
+            <button data-filter='label'><span>label:</span><span>allesbehalvemanennogveellangr</span></button>
+        </div>
         {{-- <button class="rond">subcategorie</button>
         <button class="rond">periode</button> --}}
     </div>

@@ -21,8 +21,8 @@ let systeem
 let huidigeLocatie = 'overal';
 let huidigeCategorie = 'alles';
 
-const bufferVerticaal = parseFloat(window.getComputedStyle(document.querySelector('div.commandos div')).marginBottom) * 3;
-const bufferHorizontaal = parseFloat(window.getComputedStyle(document.querySelector('div.commandos div button')).margin);
+const bufferVerticaal = parseFloat(window.getComputedStyle(document.querySelector('div.commandos')).padding);
+const bufferHorizontaal = parseFloat(window.getComputedStyle(document.querySelector('div.commandos')).padding);
 
 
 /*/ / BEETJE NAAST KUNNEN KLIKKEN / /*/
