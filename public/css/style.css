@@ -35,7 +35,7 @@ html {
     --screen-wide:1140px;
 }
 
-::-webkit-scrollbar {width: var(--afstand-zijkant);}
+::-webkit-scrollbar {width: calc(var(--afstand-zijkant));}
 ::-webkit-scrollbar-track {background: var(--kleur-achtergrond); border-left: 1px solid var(--kleur-tekst);}
 ::-webkit-scrollbar-thumb {border-left: 1px solid var(--kleur-tekst); background: var(--kleur-thema); }
 ::-webkit-scrollbar-thumb:hover {background: var(--kleur-thema2);}
@@ -218,6 +218,28 @@ div.commandos > div:not(#filters) button {font-weight: 300;}
 div.commandos > div#filters > div button span {pointer-events: none;}
 div.commandos > div#filters > div button span:first-of-type {padding-right: var(--afstand-zijkant);}
 div.commandos > div#filters > div button span:last-of-type {text-decoration: underline;}
+
+/* div#laatst-bijgewerkt { width: 100%; display: flex; justify-content: center; align-items: center;}
+
+div.commandos {width: 100%; position: fixed; bottom: calc(var(--hoogte-navigatie)); padding:  calc(var(--afstand-zijkant)); padding-bottom: 0; pointer-events: none; z-index: 40; display: flex; flex-direction: column; align-items: left;}
+div.commandos > div { margin-bottom: var(--afstand-zijkant); display: flex; flex-wrap: wrap;}
+div.commandos > div button { pointer-events: auto; display: inline-flex; touch-action: manipulation;}
+div.commandos > div button.rond { color: var(--kleur-tekst); border-radius: calc((var(--hoogte-evenement) / 3));}
+
+div.commandos > div.wat, div.commandos > div#waar {display: none;}
+div.commandos > div.wat.actief, div.commandos > div#waar.actief {display: flex;}
+div.commandos > div.wat button {text-transform:lowercase;}
+div.commandos > div.wat button.actief, > div.commandos > div#waar button.actief {background-color: var(--kleur-thema2);}
+
+div.commandos > div#filters {width: 100%;}
+div.commandos > div#filters > div {display: flex; gap: calc(var(--afstand-zijkant) / 2); width: 100%;}
+div.commandos > div#filters > div:not(:last-of-type) {margin-bottom: calc(var(--afstand-zijkant) / 2);}
+div.commandos > div#filters > div button {margin: O; font-size: 0.9rem; flex: 1; display: inline-flex; justify-content: space-between;}
+div.commandos > div#filters > div button.actief {background-color: var(--kleur-thema2);} /*/ box-shadow: 0px 0px 0px 1px var(--kleur-tekst); /*/
+div.commandos > div:not(#filters) button {font-weight: 300;}
+div.commandos > div#filters > div button span {pointer-events: none;}
+div.commandos > div#filters > div button span:first-of-type {padding-right: var(--afstand-zijkant);}
+div.commandos > div#filters > div button span:last-of-type {text-decoration: underline;} */
 /* button[data-filter = 'locatie'] span:first-of-type, div#waar button {font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;}
 button[data-filter = 'categorie'] span:first-of-type, div.wat button {font-family:cursive;} */
 
