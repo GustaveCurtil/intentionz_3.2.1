@@ -38,7 +38,7 @@
             @endif
         </div>
         @if(!request()->routeIs('aanmaken'))
-        <div>wo 10 dec</div>
+        <div id="datum">wo 10 dec</div>
         <div>
             <a href="{{ route('instellingen') }}" class="{{ request()->routeIs('instellingen') ? 'actief' : '' }}">
                 @if ($user)

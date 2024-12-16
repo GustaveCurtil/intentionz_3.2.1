@@ -17,19 +17,19 @@
         <div class="label">
             {{ $event->categorie }}
             @if ($event->subcategorie)
-                <span>&nbsp;- {{ $event->subcategorie }}</span>
+                <span>&nbsp;| {{ $event->subcategorie }}</span>
             @endif
         </div>
         <div class="label">{{$event->stad}}</div>
     </div>
     @organisatie
     <div class="statistieken">
+        <div class="label">{{$event->categorie }}{{ $event->subcategorie ? " |" . $event->subcategorie : '' }}</div>
         <div>
             @if ($user->publicEvents->contains($event->id))
                 bewaard: {{$event->savedByGuests->count()}}
             @endif
         </div>
-        <div class="label">{{ $event->subcategorie ? "(" . $event->subcategorie . ") " : '' }}{{$event->categorie }}</div>
     </div>
     @endorganisatie
 </div>

@@ -27,7 +27,7 @@ html {
     --hoogte-header: 1.8rem;
     --hoogte-navigatie: calc(2.2rem + env(safe-area-inset-bottom)); 
     --hoogte-velden: 1.8rem;
-    --hoogte-evenement: 5.4rem;
+    --hoogte-evenement: 5.2rem;
     --hoogte-knoppen: 1.6rem;
     --afstand-zijkant: 0.5rem;
     --afstand-bovenkant: 1.2rem;
@@ -190,35 +190,72 @@ div.evenement > div > div > div.label span {font-style: italic;}
 div.evenement figure { width: auto;height: var(--hoogte-evenement); border-right: 0px solid var(--kleur-tekst);}
 div.evenement.wegfilteren {display: none;}
 
-@media (min-width: 1140px) {
+/* @media (min-width: 1140px) {
     section.evenementen{ width: calc(100% / 3);}
     div.evenement {border-left: 1px solid var(--kleur-tekst);}
     div.week > div:first-of-type {border: 1px solid var(--kleur-tekst); border-top: 0;}
-}
+} */
 
 /*/ / FILTERS / /*/
 div#laatst-bijgewerkt { width: 100%; display: flex; justify-content: center; align-items: center;}
 
-div.commandos {width: 100%; position: fixed; bottom: calc(var(--hoogte-navigatie)); padding:  calc(var(--afstand-zijkant)); padding-bottom: 0; pointer-events: none; z-index: 40; display: flex; flex-direction: column; align-items: left;}
-div.commandos > div { margin-bottom: var(--afstand-zijkant); display: flex; flex-wrap: wrap;}
-div.commandos > div button { pointer-events: auto; display: inline-flex; touch-action: manipulation;}
+div.commandos {width: 100%; position: fixed; bottom: calc(var(--hoogte-navigatie)); padding: var(--afstand-zijkant); padding-bottom: 0; z-index: 40; display: flex; flex-direction: column; align-items: left;}
+/* div.commandos > div { margin-bottom: var(--afstand-zijkant); display: flex; flex-wrap: wrap;}
+div.commandos > div button { pointer-events: auto; display: inline-flex; touch-action: manipulation;} */
 div.commandos > div button.rond { color: var(--kleur-tekst); border-radius: calc((var(--hoogte-evenement) / 3));}
-
-div.commandos > div.wat, div.commandos > div#waar {display: none;}
-div.commandos > div.wat.actief, div.commandos > div#waar.actief {display: flex;}
-div.commandos > div.wat button {text-transform:lowercase;}
-div.commandos > div.wat button.actief, > div.commandos > div#waar button.actief {background-color: var(--kleur-thema2);}
+div.commandos > div {margin-bottom: var(--afstand-zijkant); width: 100%;}
+div.commandos > div button.actief {background-color: var(--kleur-thema2);}
 
 div.commandos > div#filters {width: 100%;}
 div.commandos > div#filters > div {display: flex; gap: calc(var(--afstand-zijkant) / 2); width: 100%;}
 div.commandos > div#filters > div:not(:last-of-type) {margin-bottom: calc(var(--afstand-zijkant) / 2);}
 div.commandos > div#filters > div button {margin: O; font-size: 0.9rem; flex: 1; display: inline-flex; justify-content: space-between;}
-div.commandos > div#filters > div button.actief {background-color: var(--kleur-thema2);} /*/ box-shadow: 0px 0px 0px 1px var(--kleur-tekst); /*/
 div.commandos > div:not(#filters) button {font-weight: 300;}
 div.commandos > div#filters > div button span {pointer-events: none;}
 div.commandos > div#filters > div button span:first-of-type {padding-right: var(--afstand-zijkant);}
 div.commandos > div#filters > div button span:last-of-type {text-decoration: underline;}
+div.commandos > div#filters > div button.eenzaad {pointer-events: visibleStroke;}
+div.commandos > div#filters > div button.eenzaad span {text-decoration: none; opacity: var(--transparantie);}
 
+div.commandos > div.filter  {display: none; gap: calc(var(--afstand-zijkant) / 2); flex-wrap: wrap;}
+div.commandos > div.filter.actief {display: flex;}
+div.commandos > div.filter > button {}
+
+div#periode table {
+    width: 100%;
+    background-color: var(--kleur-thema3);
+    border-collapse: collapse;
+    border: 1px solid var(--kleur-tekst);
+}
+
+div#periode table tr td,
+div#periode table tr th {
+    border: 1px solid var(--kleur-tekst);
+}
+
+div#periode table tr td { 
+    width: calc(100% / 7);
+}
+
+div#periode table tr td div {
+    width: 100%;
+    aspect-ratio: 1/1;
+    padding: calc(var(--afstand-zijkant) / 3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+div#periode table tr td div span {width: 100%;}
+div#periode table tr td div span:first-of-type {font-size: 0.8rem;text-align: center;}
+div#periode table tr td div span:nth-last-of-type(2) {font-size: 0.6rem; text-align: center;}
+div#periode table tr td div span:last-of-type {font-size: 0.6rem; text-align: center;}
+
+div#periode table tr td.voorbij {position: relative; opacity: var(--transparantie);}
+div#periode table tr td.voorbij::before,
+div#periode table tr td.voorbij::after {content: ''; position: absolute; top: 50%; left: 50%; width: 1px; height: calc(sqrt(2) * 100%); background-color: var(--kleur-tekst); transform-origin: center; transform: translate(-50%, -50%) rotate(45deg); }
+div#periode table tr td.voorbij::after {transform: translate(-50%, -50%) rotate(-45deg);}
+
+div#periode table tr td.actief {background-color: var(--kleur-thema2);}
 /* div#laatst-bijgewerkt { width: 100%; display: flex; justify-content: center; align-items: center;}
 
 div.commandos {width: 100%; position: fixed; bottom: calc(var(--hoogte-navigatie)); padding:  calc(var(--afstand-zijkant)); padding-bottom: 0; pointer-events: none; z-index: 40; display: flex; flex-direction: column; align-items: left;}

@@ -16,64 +16,83 @@ class PageController extends Controller
     {
 
         $today = Carbon::now()->startOfDay();
-        // $startOfWeek = $today->startOfWeek(); // Start of this week (Sunday or Monday based on locale)
-        $endOfWeek = $today->copy()->endOfWeek();   // End of this week
-        $startNextWeek = $endOfWeek->copy()->addDay(); // Start of next week
-        $endNextWeek = $startNextWeek->copy()->endOfWeek(); // End of next week
 
         // Events this week
-        $eventsDezeWeek = PublicEvent::where('datum', '>=', $today)
-                                    ->where('datum', '<=', $endOfWeek)
+        $events = PublicEvent::where('datum', '>=', $today)
                                     ->orderBy('datum', 'asc')
                                     ->orderBy('tijd', 'asc')   
                                     ->get();
 
 
-        // Events next week
-        $eventsVolgendeWeek = PublicEvent::where('datum', '>=', $startNextWeek)
-                                        ->where('datum', '<=', $endNextWeek)
-                                        ->orderBy('datum', 'asc')
-                                        ->orderBy('tijd', 'asc')   
-                                        ->get();
-
-        // Events after next week
-        $eventsVerder = PublicEvent::where('datum', '>', $endNextWeek)
-                                ->orderBy('datum', 'asc')
-                                ->orderBy('tijd', 'asc')   
-                                ->get();
-
-        $categoriesAll = PublicEvent::select('categorie')
-        ->groupBy('categorie')
-        ->orderByRaw('COUNT(*) DESC')
-        ->limit(8)
-        ->pluck('categorie');
-
-        $steden = PublicEvent::select('stad')->groupBy('stad')->orderByRaw('COUNT(*) DESC')->limit(6)->pluck('stad');
-        $stedenMetCategories = [];
-
-        foreach ($steden as $stad) {
-            $stedenMetCategories[$stad] = PublicEvent::where('stad', $stad)
-            ->select('categorie', DB::raw('COUNT(*) as category_count'))
-            ->groupBy('categorie')
-            ->orderByDesc('category_count')
-            ->limit(8)
-            ->pluck('categorie');
-        }
-
-        foreach ($eventsDezeWeek as $event) {
-            $this->dataVershroemelaar($event);
-        }
-        
-        foreach ($eventsVolgendeWeek as $event) {
-            $this->dataVershroemelaar($event);
-        }
-        
-        foreach ($eventsVerder as $event) {
+        foreach ($events as $event) {
             $this->dataVershroemelaar($event);
         }
 
-        return view('1_evenementen', ['eventsDezeWeek' => $eventsDezeWeek, 'eventsVolgendeWeek' => $eventsVolgendeWeek, 'eventsVerder' => $eventsVerder, 'categoriesAll' => $categoriesAll, 'steden' => $stedenMetCategories]);
+        return view('1_evenementen', ['events' => $events]);
     }
+
+    // public function thuis() 
+    // {
+
+    //     $today = Carbon::now()->startOfDay();
+    //     // $startOfWeek = $today->startOfWeek(); // Start of this week (Sunday or Monday based on locale)
+    //     $endOfWeek = $today->copy()->endOfWeek();   // End of this week
+    //     $startNextWeek = $endOfWeek->copy()->addDay(); // Start of next week
+    //     $endNextWeek = $startNextWeek->copy()->endOfWeek(); // End of next week
+
+    //     // Events this week
+    //     $eventsDezeWeek = PublicEvent::where('datum', '>=', $today)
+    //                                 ->where('datum', '<=', $endOfWeek)
+    //                                 ->orderBy('datum', 'asc')
+    //                                 ->orderBy('tijd', 'asc')   
+    //                                 ->get();
+
+
+    //     // Events next week
+    //     $eventsVolgendeWeek = PublicEvent::where('datum', '>=', $startNextWeek)
+    //                                     ->where('datum', '<=', $endNextWeek)
+    //                                     ->orderBy('datum', 'asc')
+    //                                     ->orderBy('tijd', 'asc')   
+    //                                     ->get();
+
+    //     // Events after next week
+    //     $eventsVerder = PublicEvent::where('datum', '>', $endNextWeek)
+    //                             ->orderBy('datum', 'asc')
+    //                             ->orderBy('tijd', 'asc')   
+    //                             ->get();
+
+    //     $categoriesAll = PublicEvent::select('categorie')
+    //     ->groupBy('categorie')
+    //     ->orderByRaw('COUNT(*) DESC')
+    //     ->limit(8)
+    //     ->pluck('categorie');
+
+    //     $steden = PublicEvent::select('stad')->groupBy('stad')->orderByRaw('COUNT(*) DESC')->limit(6)->pluck('stad');
+    //     $stedenMetCategories = [];
+
+    //     foreach ($steden as $stad) {
+    //         $stedenMetCategories[$stad] = PublicEvent::where('stad', $stad)
+    //         ->select('categorie', DB::raw('COUNT(*) as category_count'))
+    //         ->groupBy('categorie')
+    //         ->orderByDesc('category_count')
+    //         ->limit(8)
+    //         ->pluck('categorie');
+    //     }
+
+    //     foreach ($eventsDezeWeek as $event) {
+    //         $this->dataVershroemelaar($event);
+    //     }
+        
+    //     foreach ($eventsVolgendeWeek as $event) {
+    //         $this->dataVershroemelaar($event);
+    //     }
+        
+    //     foreach ($eventsVerder as $event) {
+    //         $this->dataVershroemelaar($event);
+    //     }
+
+    //     return view('1_evenementen', ['eventsDezeWeek' => $eventsDezeWeek, 'eventsVolgendeWeek' => $eventsVolgendeWeek, 'eventsVerder' => $eventsVerder, 'categoriesAll' => $categoriesAll, 'steden' => $stedenMetCategories]);
+    // }
 
     public function overzichtGebruiker() 
     {

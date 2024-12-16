@@ -64,9 +64,7 @@ function dichtBijKnop(event) {
 // ga naar evenement zonder op de knop te drukken
 function gaNaar(link, event) {
     let knop = dichtBijKnop(event)
-    if (knop) {
-        knopIndrukken(knop)
-    } else {
+    if (!knop) {
         window.location.href = link;
     }
 }

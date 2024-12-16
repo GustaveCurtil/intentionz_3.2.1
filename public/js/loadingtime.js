@@ -26,3 +26,21 @@ function updateLoadingText(button) {
     button.value = 'aan het laden' + loadingStates[currentIndex]; // Update the text content
     currentIndex = (currentIndex + 1) % loadingStates.length; // Move to the next state, and loop back to the start when we reach the end
 }
+
+
+let datumPlaceholder = document.querySelector('header div#datum');
+
+datumPlaceholder.innerHTML = getFormattedDate();
+
+function getFormattedDate() {
+    const daysOfWeek = ["zo", "ma", "di", "wo", "do", "vr", "za"];
+    const months = ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"];
+
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // 0 = zondag, 1 = maandag, ...
+    const day = today.getDate(); // Dag van de maand (1-31)
+    const month = today.getMonth(); // Maand (0 = januari, 11 = december)
+
+    // Format de datum als "wo 10 dec"
+    return `${daysOfWeek[dayOfWeek]} ${day} ${months[month]}`;
+}
