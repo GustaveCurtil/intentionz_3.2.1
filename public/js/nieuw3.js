@@ -1,13 +1,15 @@
 let placeholder = document.querySelector('#laatst-bijgewerkt');
 let commandos = document.querySelector('.commandos');
-// knoppen
+
 let knoppen = document.querySelectorAll('button');
 let selectieKnoppen = document.querySelectorAll("[data-filter]");
 let filterKnoppen;
 let filters = document.querySelectorAll('.filter');
+
 // voor naast de knoppen te kunnen drukken
 const bufferVerticaal = parseFloat(window.getComputedStyle(document.querySelector('div.commandos')).padding);
 const bufferHorizontaal = parseFloat(window.getComputedStyle(document.querySelector('div.commandos')).padding);
+
 
 /*/ / ZOEKEN NAAR KNOP, IN DE BUURT of GEEN KNOP / /*/
 document.addEventListener('click', function (event) {
@@ -85,10 +87,12 @@ function knopIndrukken(knop) {
             weergeefActieveKnoppen('locatie', statusLocaties, zichtbareLocaties)
 
             zichtbareCategorieen = getZichtbareCategorieen(data);
+            checkStatus(statusCategorieen, zichtbareCategorieen)
             maakKnoppen('categorie', zichtbareCategorieen, statusCategorieen)
             weergeefActieveKnoppen('categorie', statusCategorieen, zichtbareCategorieen)
 
             zichtbareLabels = getZichtbareLabels(data);
+            checkStatus(statusLabels, zichtbareLabels)
             maakKnoppen('label', zichtbareLabels, statusLabels)
             weergeefActieveKnoppen('label', statusLabels, zichtbareLabels)
 
@@ -98,6 +102,7 @@ function knopIndrukken(knop) {
             weergeefActieveKnoppen('categorie', statusCategorieen, zichtbareCategorieen)
 
             zichtbareLabels = getZichtbareLabels(data);
+            checkStatus(statusLabels, zichtbareLabels)
             maakKnoppen('label', zichtbareLabels, statusLabels)
             weergeefActieveKnoppen('label', statusLabels, zichtbareLabels)
 
@@ -107,6 +112,7 @@ function knopIndrukken(knop) {
             weergeefActieveKnoppen('label', statusLabels, zichtbareLabels)
         }
 
+        wegfilteren();
     }
 
 }
@@ -137,4 +143,21 @@ function veranderStatus(soort, naam, statusData, zichtbareData) {
             }
         }
     });
+}
+
+function checkStatus(statusData, zichtbareData) {
+    // Filter statusData to include only items that are also in zichtbareData based on 'naam'
+    const zichtbareStatusData = statusData.filter(item => 
+        zichtbareData.some(zichtbaarItem => zichtbaarItem.naam === item.naam)
+    );
+
+    // Check if any item in zichtbareStatusData has the status 'ON'
+    const anyOn = zichtbareStatusData.some(item => item.status === "ON");
+
+    // If no item has status 'ON', change all the items in zichtbareStatusData to 'MAAGD'
+    if (!anyOn) {
+        zichtbareStatusData.forEach(item => {
+            item.status = 'MAAGD';
+        });
+    }
 }

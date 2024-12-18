@@ -28,7 +28,7 @@ html {
     --hoogte-navigatie: calc(2.2rem + env(safe-area-inset-bottom)); 
     --hoogte-velden: 1.8rem;
     --hoogte-evenement: 5.2rem;
-    --hoogte-knoppen: 1.6rem;
+    --hoogte-knoppen: 2rem;
     --afstand-zijkant: 0.5rem;
     --afstand-bovenkant: 1.2rem;
 
@@ -164,6 +164,7 @@ div.week > div:first-of-type {position: sticky; top:0; z-index: 30; width: 100%;
 div.geen-evenementen {height: calc(var(--hoogte-evenement) / 4); border-bottom: 1px solid var(--kleur-tekst); padding-left: var(--afstand-zijkant); display: flex; align-items:center;}
 
 div.evenement {width: 100%; height: var(--hoogte-evenement); border-bottom: 1px solid var(--kleur-tekst); display: flex; font-weight: 300;}
+div.evenement.wegfilteren {display: none}
 div.evenement > div {position: relative; width: calc(100% - 4 * var(--hoogte-evenement) / 3); height: var(--hoogte-evenement); display: flex; flex-direction: column; justify-content: space-evenly;}
 div.evenement > div > div {width: 100%; padding: 0 calc(var(--afstand-zijkant));}
 div.evenement > div > div.titel {height: calc(var(--hoogte-evenement) / 2) ; display: flex; flex-direction: column; justify-content: center;}
@@ -202,7 +203,7 @@ div#laatst-bijgewerkt { width: 100%; display: flex; justify-content: center; ali
 div.commandos {width: 100%; position: fixed; bottom: calc(var(--hoogte-navigatie)); padding: var(--afstand-zijkant); padding-bottom: 0; z-index: 40; display: flex; flex-direction: column; align-items: left;}
 /* div.commandos > div { margin-bottom: var(--afstand-zijkant); display: flex; flex-wrap: wrap;}
 div.commandos > div button { pointer-events: auto; display: inline-flex; touch-action: manipulation;} */
-div.commandos > div button.rond { color: var(--kleur-tekst); border-radius: calc((var(--hoogte-evenement) / 3));}
+div.commandos > div button.rond { color: var(--kleur-tekst); border-radius: calc((var(--hoogte-knoppen) / 2));}
 div.commandos > div {margin-bottom: var(--afstand-zijkant); width: 100%;}
 div.commandos > div button.actief {background-color: var(--kleur-thema2);}
 
@@ -210,7 +211,7 @@ div.commandos > div#filters {width: 100%;}
 div.commandos > div#filters > div {display: flex; gap: calc(var(--afstand-zijkant) / 2); width: 100%;}
 div.commandos > div#filters > div:not(:last-of-type) {margin-bottom: calc(var(--afstand-zijkant) / 2);}
 div.commandos > div#filters > div button {margin: O; font-size: 0.9rem; flex: 1; display: inline-flex; justify-content: space-between;}
-div.commandos > div:not(#filters) button {font-weight: 300;}
+div.commandos > div:not(#filters) button {font-weight: 400;}
 div.commandos > div#filters > div button span {pointer-events: none;}
 div.commandos > div#filters > div button span:first-of-type {padding-right: var(--afstand-zijkant);}
 div.commandos > div#filters > div button span:last-of-type {text-decoration: underline;}
@@ -219,7 +220,7 @@ div.commandos > div#filters > div button.eenzaad span {text-decoration: none; op
 
 div.commandos > div.filter  {display: none; gap: calc(var(--afstand-zijkant) / 2); flex-wrap: wrap;}
 div.commandos > div.filter.actief {display: flex;}
-div.commandos > div.filter > button {}
+div.commandos > div.filter > button {border-radius: calc((var(--hoogte-knoppen) / 2))}
 
 div#periode table {
     width: 100%;
@@ -246,8 +247,8 @@ div#periode table tr td div {
     justify-content: space-between;
 }
 div#periode table tr td div span {width: 100%;}
-div#periode table tr td div span:first-of-type {font-size: 0.8rem;text-align: center;}
-div#periode table tr td div span:nth-last-of-type(2) {font-size: 0.6rem; text-align: center;}
+div#periode table tr td div span:first-of-type {font-size: 0.9rem;text-align: center;}
+div#periode table tr td div span:nth-last-of-type(2) {font-size: 0.7rem; text-align: center;}
 div#periode table tr td div span:last-of-type {font-size: 0.6rem; text-align: center;}
 
 div#periode table tr td.voorbij {position: relative; opacity: var(--transparantie);}

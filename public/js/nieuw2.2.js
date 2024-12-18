@@ -28,21 +28,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    
 
-    filterRectifiator(locatieOpties, 'locatie')
-    filterRectifiator(categorieOpties, 'categorie')
-    filterRectifiator(labelOpties, 'label')
-    console.log(categorieOpties);
-    console.log(labelOpties);
+    kalenderDagen.forEach(dag => {
+
+        if (!dag.classList.contains('voorbij')) {
+            dag.addEventListener('click', (e) => {
+                if (dag.classList.contains('actief')) {
+                    dag.classList.remove('actief')
+                } else {
+                    dag.classList.add('actief')
+                }
+            })
+        }
+    });
+
+
 })
 
-function filterRectifiator(opties, filter) {
-    let filterDiv = document.getElementById(filter);
-    opties.forEach(optie => {
-        let button = document.createElement('button');
-        button.innerHTML = optie.naam + " (" + optie.hoeveelheid + ")";
-        filterDiv.appendChild(button);
-    });
-    filterKnoppen = document.querySelectorAll('button:not([data-filter])')
-}

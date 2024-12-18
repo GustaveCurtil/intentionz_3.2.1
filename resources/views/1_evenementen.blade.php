@@ -5,8 +5,10 @@
 @section('head')
 @include('_partials.metadata')
 <script src="{{asset('js/nieuw.js')}}" defer></script>
-<script src="{{asset('js/nieuw2.js')}}" defer></script>
+<script src="{{asset('js/nieuw2.1.js')}}" defer></script>
+<script src="{{asset('js/nieuw2.2.js')}}" defer></script>
 <script src="{{asset('js/nieuw3.js')}}" defer></script>
+<script src="{{asset('js/nieuw4.js')}}" defer></script>
 @endsection
 
 @section('main')
@@ -39,7 +41,7 @@
                 <td><div><span>do</span><span></span><span></span></div></td>
                 <td><div><span>vr</span><span></span><span></span></div></td>
                 <td><div><span>za</span><span></span><span></span></div></td>
-                <td class="actief"><div><span>zo</span><span></span><span></span></div></td>
+                <td><div><span>zo</span><span></span><span></span></div></td>
             </tr>
             <tr>
                 <td><div><span>ma</span><span></span><span></span></div></td>
@@ -65,7 +67,7 @@
     <div id="filters">
         <div>
             <button data-filter='locatie'><span>locatie:</span><span>overal</span></button>
-            <button data-filter='periode'><span>periode:</span><span>altijd</span></button>
+            <button data-filter='periode'><span>periode:</span><span>🏗️ 🛠️</span></button>
         </div>
         <div>
             <button data-filter='categorie'><span>categorie:</span><span>alles</span></button>
@@ -146,8 +148,8 @@
 </div> --}}
 </main>
 <script>
-    const evenementen = @json($events);
-    // Paste the updated JavaScript code here.
+    const evenementenData = @json($events);
+    let evenementen = document.querySelectorAll('div.evenement')
 </script>
 @endsection
 

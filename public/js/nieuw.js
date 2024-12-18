@@ -1,5 +1,5 @@
 const data = {};
-evenementen.forEach(event => {
+evenementenData.forEach(event => {
     const { stad, categorie, subcategorie } = event;
 
     // Ensure locatie exists
@@ -29,8 +29,6 @@ evenementen.forEach(event => {
     // Increment event count for the label
     data[stad].categories[categorie].labels[subcategorie].hoeveelheid++;
 });
-
-console.log(data);
 
 // LIJSTEN MET STATUS FILTERS
 const statusLocaties = Object.keys(data).map(key => ({
@@ -88,7 +86,7 @@ function getZichtbareCategorieen(data) {
         acc[category.naam] = (acc[category.naam] || 0) + category.hoeveelheid;
         return acc;
     }, {});
-    console.log(mergedCategories);
+
     return Object.entries(mergedCategories)
         .map(([naam, hoeveelheid]) => ({ naam, hoeveelheid }))
         .sort((a, b) => b.hoeveelheid - a.hoeveelheid); // Descending order by hoeveelheid
@@ -124,8 +122,6 @@ function getZichtbareLabels(data) {
         acc[label.naam] = (acc[label.naam] || 0) + label.hoeveelheid;
         return acc;
     }, {});
-
-    console.log(mergedLabels);
 
     // Step 4: Convert merged results to an array and sort by "hoeveelheid"
     return Object.entries(mergedLabels)
