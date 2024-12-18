@@ -30,11 +30,12 @@ evenementen.forEach(event => {
     data[stad].categories[categorie].labels[subcategorie].hoeveelheid++;
 });
 
+console.log(data);
 
 // LIJSTEN MET STATUS FILTERS
 const statusLocaties = Object.keys(data).map(key => ({
     naam: data[key].naam,
-    status: "ON" // Default status
+    status: "MAAGD" // Default status
 }));
 const statusCategorieen = [
     ...new Set(
@@ -42,7 +43,7 @@ const statusCategorieen = [
     )
 ].map(category => ({
     naam: category,
-    status: "ON" // Default status
+    status: "MAAGD" // Default status
 }));
 const statusLabels = [
     ...new Set(
@@ -54,7 +55,7 @@ const statusLabels = [
     )
 ].map(label => ({
     naam: label,
-    status: "ON" // Default status
+    status: "MAAGD" // Default status
 }));
 
 
@@ -72,10 +73,8 @@ zichtbareLocaties = Object.values(data)
 
 function getZichtbareCategorieen(data) {
     const activeLocaties = statusLocaties
-        .filter(locatie => locatie.status === "ON")
+        .filter(locatie => locatie.status === "ON" || locatie.status === "MAAGD")
         .map(locatie => locatie.naam);
-
-    console.log(activeLocaties);
 
     const categories = activeLocaties.flatMap(locatieNaam => {
         const locatie = data[locatieNaam];
@@ -89,22 +88,35 @@ function getZichtbareCategorieen(data) {
         acc[category.naam] = (acc[category.naam] || 0) + category.hoeveelheid;
         return acc;
     }, {});
-
+    console.log(mergedCategories);
     return Object.entries(mergedCategories)
         .map(([naam, hoeveelheid]) => ({ naam, hoeveelheid }))
         .sort((a, b) => b.hoeveelheid - a.hoeveelheid); // Descending order by hoeveelheid
 }
 
 function getZichtbareLabels(data) {
-    const activeCategorieen = zichtbareCategorieen.map(categorie => categorie.naam);
+    const zichtbareStatusCategorieen = statusCategorieen.filter(item =>
+        zichtbareCategorieen.some(zichtbaarItem => zichtbaarItem.naam === item.naam)
+    ).map(item => ({
+        naam: item.naam,
+        status: item.status
+    }));
+    // Get the names of the categories from zichtbareCategorieen (already filtered and sorted)
+    const actieveCategorieenNamen = zichtbareStatusCategorieen
+    .filter(categorie => categorie.status === "ON" || categorie.status === "MAAGD")
+    .map(categorie => categorie.naam);
 
+    // Extract the labels only from the categories that are in zichtbareCategorieen
     const labels = Object.values(data).flatMap(city => {
         return Object.values(city.categories)
-            .filter(category => activeCategorieen.includes(category.naam))
-            .flatMap(category => Object.values(category.labels).map(label => ({
-                naam: label.naam,
-                hoeveelheid: label.hoeveelheid
-            })));
+            // Check if the category is in zichtbareCategorieen
+            .filter(category => actieveCategorieenNamen.includes(category.naam))
+            .flatMap(category => 
+                Object.values(category.labels).map(label => ({
+                    naam: label.naam,
+                    hoeveelheid: label.hoeveelheid
+                }))
+            );
     });
 
     // Step 3: Merge labels with the same name and sum their "hoeveelheid"
@@ -112,6 +124,8 @@ function getZichtbareLabels(data) {
         acc[label.naam] = (acc[label.naam] || 0) + label.hoeveelheid;
         return acc;
     }, {});
+
+    console.log(mergedLabels);
 
     // Step 4: Convert merged results to an array and sort by "hoeveelheid"
     return Object.entries(mergedLabels)

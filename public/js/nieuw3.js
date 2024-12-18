@@ -81,54 +81,60 @@ function knopIndrukken(knop) {
         let actieveFilter = knop.parentElement;
 
         if (actieveFilter.id === 'locatie') {
-            veranderStatus(knop.dataset.naam, statusLocaties)
-            weergeefActieveKnoppen(statusLocaties, zichtbareLocaties, 'locatie')
-            zichtbareCategorieen = getZichtbareCategorieen(data);
-            maakCategorieKnoppen()
-            zichtbareLabels = getZichtbareLabels(data);
-        } else if (actieveFilter.id === 'categorie') {
-            veranderStatus(knop.dataset.naam, statusCategorieen)
-            weergeefActieveKnoppen(statusCategorieen, zichtbareCategorieen ,'categorie')
-            zichtbareLabels = getZichtbareLabels(data);
-        } else if (actieveFilter.id === 'label') {
-            
-        }
+            veranderStatus('locatie', knop.dataset.naam, statusLocaties, zichtbareLocaties)
+            weergeefActieveKnoppen('locatie', statusLocaties, zichtbareLocaties)
 
+            zichtbareCategorieen = getZichtbareCategorieen(data);
+            maakKnoppen('categorie', zichtbareCategorieen, statusCategorieen)
+            weergeefActieveKnoppen('categorie', statusCategorieen, zichtbareCategorieen)
+
+            zichtbareLabels = getZichtbareLabels(data);
+            maakKnoppen('label', zichtbareLabels, statusLabels)
+            weergeefActieveKnoppen('label', statusLabels, zichtbareLabels)
+
+        } else if (actieveFilter.id === 'categorie') {
+
+            veranderStatus('categorie', knop.dataset.naam, statusCategorieen, zichtbareCategorieen)
+            weergeefActieveKnoppen('categorie', statusCategorieen, zichtbareCategorieen)
+
+            zichtbareLabels = getZichtbareLabels(data);
+            maakKnoppen('label', zichtbareLabels, statusLabels)
+            weergeefActieveKnoppen('label', statusLabels, zichtbareLabels)
+
+        } else if (actieveFilter.id === 'label') {
+
+            veranderStatus('label', knop.dataset.naam, statusLabels,  zichtbareLabels)
+            weergeefActieveKnoppen('label', statusLabels, zichtbareLabels)
+        }
 
     }
 
 }
 
-function veranderStatus(naam, statusData) {
-    let allesOn = statusData.every(item => item.status === "ON");
-    let allesOff = statusData.every(item => item.status === "OFF");
-
-    if (!allesOn) {
-        statusData.forEach(item => {
-            if (item.naam === naam) {
-                item.status = (item.status === "ON") ? "OFF" : "ON";
+function veranderStatus(soort, naam, statusData, zichtbareData) {
+    statusData.forEach(item => {
+        if (item.naam === naam) {
+            if (item.status === "ON") {
+                item.status = 'OFF'
+                const zichtbareStatusData = statusData.filter(item => zichtbareData.some(zichtbaarItem => zichtbaarItem.naam === item.naam)).map(item => ({naam: item.naam, status: item.status}));
+                const anyOn = zichtbareStatusData.some(otherItem => otherItem.status === "ON");
+                if (!anyOn) {
+                    statusData.forEach(otherItem => {
+                        if (zichtbareData.some(zichtbaarItem => zichtbaarItem.naam === otherItem.naam)) {
+                            otherItem.status = 'MAAGD';
+                        }
+                    });
+                }
+            } else if (item.status === "MAAGD") {
+                item.status = 'ON'
+                statusData.forEach(item => {
+                    if (item.naam !== naam && zichtbareData.some(zichtbaarItem => zichtbaarItem.naam === item.naam)) {
+                        item.status = 'OFF'
+                    }
+                })
+            } else if (item.status === "OFF") {
+                item.status = 'ON';
             }
-        });
-    } else {
-        if (statusData.length > 2) {
-            statusData.forEach(item => {
-                if (item.naam !== naam) {
-                    item.status = "OFF";
-                }
-            });
-        } else if (statusData.length === 2) {
-            statusData.forEach(item => {
-                if (item.naam === naam) {
-                    item.status = "OFF";
-                }
-            });
-        } else {
-            statusData.forEach(item => {
-                if (item.naam === naam) {
-                    item.status = "OFF";
-                }
-            });
         }
-    }
-    console.log(statusData);
+    });
 }
