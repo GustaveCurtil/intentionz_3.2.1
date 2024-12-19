@@ -9,14 +9,14 @@ function maakKnoppen(soort, zichtbareData, statusData) {
     let filterDiv = document.getElementById(soort);
     filterDiv.innerHTML = '';
 
-    if (zichtbareData.length > 1 && soort === 'label') {
-        let button = document.createElement('button');
-        button.dataset.naam = 'alles';
-        button.innerHTML = 'alles';
-        button.classList.add('actief');
-        button.classList.add('rond');
-        filterDiv.appendChild(button);
-    }
+    // if (zichtbareData.length > 1 && soort === 'label') {
+    //     let button = document.createElement('button');
+    //     button.dataset.naam = 'alles';
+    //     button.innerHTML = 'alles';
+    //     button.classList.add('actief');
+    //     button.classList.add('rond');
+    //     filterDiv.appendChild(button);
+    // }
 
     zichtbareData.forEach(locatie => {
         let button = document.createElement('button');

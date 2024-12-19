@@ -19,15 +19,20 @@ evenementenData.forEach(event => {
     data[stad].categories[categorie].hoeveelheid++;
 
     // Ignore labels with no value
-    if (!subcategorie) return;
+    if (!subcategorie) {
+        if (!data[stad].categories[categorie].labels['labelloos']) {
+            data[stad].categories[categorie].labels['labelloos'] = { naam: 'labelloos', hoeveelheid: 0 };
+        }
+        data[stad].categories[categorie].labels['labelloos'].hoeveelheid++;
+    } else {
+        // Ensure label (subcategorie) exists under the categorie
+        if (!data[stad].categories[categorie].labels[subcategorie]) {
+            data[stad].categories[categorie].labels[subcategorie] = { naam: subcategorie, hoeveelheid: 0 };
+        }
 
-    // Ensure label (subcategorie) exists under the categorie
-    if (!data[stad].categories[categorie].labels[subcategorie]) {
-        data[stad].categories[categorie].labels[subcategorie] = { naam: subcategorie, hoeveelheid: 0 };
+        // Increment event count for the label
+        data[stad].categories[categorie].labels[subcategorie].hoeveelheid++;
     }
-
-    // Increment event count for the label
-    data[stad].categories[categorie].labels[subcategorie].hoeveelheid++;
 });
 
 // LIJSTEN MET STATUS FILTERS
